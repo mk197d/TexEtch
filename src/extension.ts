@@ -90,7 +90,12 @@ export function activate(context: vscode.ExtensionContext) {
 		// for(let j = 0; j < text_indices.length; j++) {
 		// 	putText(charArray, nodes, nodes['limit'], text_indices[j]);
 		// }
-		drawCircleLarge(charArray, nodes, nodes['limit'], 2);
+		putText(charArray, nodes, nodes['limit'], 1);
+		// putText(charArray, nodes, nodes['limit'], 4);
+		// putText(charArray, nodes, nodes['limit'], 5);
+		drawRectangle(charArray, nodes, nodes['limit'], 0);
+		// drawRectangle(charArray, nodes, nodes['limit'], 2);
+		// drawRectangle(charArray, nodes, nodes['limit'], 3);
 
 		const outPath = '/home/mknined/Desktop/test_ext/output.txt';
 		(async () => {
