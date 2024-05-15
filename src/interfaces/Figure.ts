@@ -1,6 +1,7 @@
 import { StyleObject } from "./StyleObject";
 
 export interface Figure {
+    type: string;
     id: string;
     value: string;
     divisons: any[];

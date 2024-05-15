@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-import { Node } from '../interfaces/Node';
 import { Data } from '../interfaces/Data';
 
 export function readJsonFile(filePath: string): Data {

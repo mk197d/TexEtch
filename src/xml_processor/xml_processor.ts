@@ -22,23 +22,24 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                     if (cell.$.id && cell.$.id !== '0' && cell.$.id !== '1') {
                         const id = cell.$.id;
                         const value = cell.$.value || '';
-
+                        let type: string = "";
                         const styleAttr = cell.$.style || '';
                         const styleObj: StyleObject = {};
                         const fields = styleAttr.split(';');
                         fields.forEach((field: any) => {
+                            if(field === "ellipse") {
+                                type = "ellipse";
+                            } else if(field === "text") {
+                                type = "text";
+                            }
                             const [key, value] = field.split('=');
                             if (key && value !== undefined) {
                                 if (key === "text") {
                                     styleObj.text = value;
-                                } else if (key === "html") {
-                                    styleObj.html = value;
                                 } else if (key === "align") {
                                     styleObj.align = value;
                                 } else if (key === "verticalAlign") {
                                     styleObj.verticalAlign = value;
-                                } else if (key === "whiteSpace") {
-                                    styleObj.whiteSpace = value;
                                 } else if (key === "rounded") {
                                     styleObj.rounded = value;
                                 }
@@ -98,10 +99,21 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                         const geometry = cell.mxGeometry ? cell.mxGeometry[0].$ : {};
                         const upperLeft_x = Math.ceil((parseFloat(geometry.x)) / 6);
                         const upperLeft_y = Math.ceil((parseFloat(geometry.y)) / 12);
-                        const width = Math.ceil(parseFloat(geometry.width) / 6);
-                        const height = Math.ceil(parseFloat(geometry.height) / 12);
-
-                        figures.push({ id, value, divisons, style: styleObj, upperLeft_x, upperLeft_y, width, height });
+                        let width = Math.ceil(parseFloat(geometry.width) / 6);
+                        let height = Math.ceil(parseFloat(geometry.height) / 12);      
+                        
+                        if(type === "") {
+                            type = "rectangle";
+                        } else if(type === "ellipse" && geometry.width === geometry.height) {
+                            width = 2 * height;
+                            if(height >= 14) {
+                                type = "large_circle";
+                            } else {
+                                type = "small_circle";
+                            }
+                        }
+                        
+                        figures.push({ type, id, value, divisons, style: styleObj, upperLeft_x, upperLeft_y, width, height });
                         data['numFigures'] += 1;
 
                         if (upperLeft_x && upperLeft_y && width && height) {
@@ -115,6 +127,8 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                 });
                 resolve(figures);
             }
+            bounds.y_min -= 3;
+            // bounds.x_min -= 3;
             data['limit'] = bounds;
         });
     });

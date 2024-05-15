@@ -50,9 +50,9 @@ export function putText(charArray: string[][], nodes: any, limit:any, index: num
     
     let num_tokens = tokens.length;
     let verticalShift = 0;
-    if(verticalAlign === 'middle') {
+    if(verticalAlign === "middle") {
         verticalShift = Math.floor((row_end - token_rows[num_tokens - 1] - 1) / 2);
-    } else if(verticalAlign === 'bottom') {
+    } else if(verticalAlign === "bottom") {
         verticalShift = row_end - token_rows[num_tokens - 1] - 1;
     }
 

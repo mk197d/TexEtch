@@ -72,30 +72,25 @@ export function activate(context: vscode.ExtensionContext) {
 
 		const charArray: string[][] = Array.from({ length: rows }, () => Array(cols).fill(' '));
 
-		// let rect_indices: number[] = [];
-		// let text_indices: number[] = [];
-
-		// for(let i = 0; i < nodes['numFigures']; i++) {
-		// 	if(nodes['fig'][i].value === "" && nodes['fig'][i].width !== null) {
-		// 		rect_indices.push(i);
-		// 	} else if(nodes['fig'][i].width !== null) {
-		// 		text_indices.push(i);
-		// 	}
-		// }
-
-		// for(let j = 0; j < rect_indices.length; j++) {
-		// 	drawRectangle(charArray, nodes, nodes['limit'], rect_indices[j]);
-		// }
-
-		// for(let j = 0; j < text_indices.length; j++) {
-		// 	putText(charArray, nodes, nodes['limit'], text_indices[j]);
-		// }
-		putText(charArray, nodes, nodes['limit'], 1);
-		// putText(charArray, nodes, nodes['limit'], 4);
-		// putText(charArray, nodes, nodes['limit'], 5);
-		drawRectangle(charArray, nodes, nodes['limit'], 0);
-		// drawRectangle(charArray, nodes, nodes['limit'], 2);
-		// drawRectangle(charArray, nodes, nodes['limit'], 3);
+		for(let i = 0; i < nodes['numFigures']; i++) {
+			let type = nodes['fig'][i].type;
+			switch(type) {
+				case "small_circle":
+					drawCircleSmall(charArray, nodes, nodes['limit'], i);
+					break;
+				case "large_circle":
+					drawCircleLarge(charArray, nodes, nodes['limit'], i);
+					break;
+				case "rectangle":
+					drawRectangle(charArray, nodes, nodes['limit'], i);
+					break;
+				case "text":
+					putText(charArray, nodes, nodes['limit'], i);
+					break;
+				default:
+					console.log("Unknown figure");
+			}
+		}	
 
 		const outPath = '/home/mknined/Desktop/test_ext/output.txt';
 		(async () => {
