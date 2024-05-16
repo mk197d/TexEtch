@@ -1,11 +1,13 @@
-import { StyleObject } from "./StyleObject";
+import { Text } from "./Text";
+import { Line } from "./Line";
 
 export interface Figure {
     type: string;
     id: string;
-    value: string;
-    divisons: any[];
-    style: StyleObject;
+    
+    text?: Text;
+    line?: Line;
+    
     upperLeft_x?: number;
     upperLeft_y?: number;
     width?: number;

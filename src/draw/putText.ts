@@ -5,12 +5,12 @@ export function putText(charArray: string[][], nodes: any, limit:any, index: num
     let height = nodes['fig'][index].height;
     let width = nodes['fig'][index].width;
 
-    let divisons = nodes['fig'][index].divisons;
+    let divisons = nodes['fig'][index].text.divisons;
 
     let tokens: string[] = [];
 
-    let verticalAlign = nodes['fig'][index].style.verticalAlign;
-    let align = nodes['fig'][index].style.align;
+    let verticalAlign = nodes['fig'][index].text.verticalAlign;
+    let align = nodes['fig'][index].text.align;
 
     let col_start = upperLeft_x - limit['x_min'];
     let col_end = col_start + width;

@@ -16,6 +16,8 @@ import { drawRectangle } from './draw/drawRectangle';
 import { putText } from './draw/putText';
 import { drawCircleSmall } from './draw/drawCircleSmall';
 import { drawCircleLarge } from './draw/drawCircleLarge';
+import { drawEllipse } from './draw/drawEllipse';
+import { drawStraightLine } from './draw/drawStraightLine';
 
 let data: Data = {
 	limit: {
@@ -86,6 +88,12 @@ export function activate(context: vscode.ExtensionContext) {
 					break;
 				case "text":
 					putText(charArray, nodes, nodes['limit'], i);
+					break;
+				case "ellipse":
+					drawEllipse(charArray, nodes, nodes['limit'], i);
+					break;
+				case "line":
+					drawStraightLine(charArray, nodes, nodes['limit'], i);
 					break;
 				default:
 					console.log("Unknown figure");
