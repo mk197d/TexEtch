@@ -10,13 +10,15 @@
 //          ▀▀▀▀▀▀▀▀  
 
 
-export function drawEllipse(charArray: string[][], nodes: any, limit:any, index: number): void {
-    let upperLeft_x = nodes['fig'][index].upperLeft_x;
-    let upperLeft_y = nodes['fig'][index].upperLeft_y;
+export function drawEllipse(charArray: string[][], data: any, index: number): void {
+    const limit = data['limit'];
 
-    let vertical_axis = nodes['fig'][index].height;
+    let upperLeft_x = data['fig'][index].upperLeft_x;
+    let upperLeft_y = data['fig'][index].upperLeft_y;
+
+    let vertical_axis = data['fig'][index].height;
     let height = vertical_axis - 1;
-    let width = nodes['fig'][index].width;
+    let width = data['fig'][index].width;
 
     let col_start = upperLeft_x - limit['x_min'];   
     let col_end = col_start + width;

@@ -1,16 +1,18 @@
-export function putText(charArray: string[][], nodes: any, limit:any, index: number): void {
-    let upperLeft_x = nodes['fig'][index].upperLeft_x;
-    let upperLeft_y = nodes['fig'][index].upperLeft_y;
+export function putText(charArray: string[][], data: any, index: number): void {
+    const limit = data['limit'];
 
-    let height = nodes['fig'][index].height;
-    let width = nodes['fig'][index].width;
+    let upperLeft_x = data['fig'][index].upperLeft_x;
+    let upperLeft_y = data['fig'][index].upperLeft_y;
 
-    let divisons = nodes['fig'][index].text.divisons;
+    let height = data['fig'][index].height;
+    let width = data['fig'][index].width;
+
+    let divisons = data['fig'][index].text.divisons;
 
     let tokens: string[] = [];
 
-    let verticalAlign = nodes['fig'][index].text.verticalAlign;
-    let align = nodes['fig'][index].text.align;
+    let verticalAlign = data['fig'][index].text.verticalAlign;
+    let align = data['fig'][index].text.align;
 
     let col_start = upperLeft_x - limit['x_min'];
     let col_end = col_start + width;
@@ -87,7 +89,7 @@ export function putText(charArray: string[][], nodes: any, limit:any, index: num
 
     for(let i = 0; i < num_tokens; i++) {
         for(let j = 0; j < tokens[i].length; j++) {
-            charArray[token_rows[i]][token_cols[i] + j] = tokens[i][j];
+            charArray[token_rows[i] + 1][token_cols[i] + j] = tokens[i][j];
         }
     }
 }

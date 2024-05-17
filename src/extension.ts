@@ -3,12 +3,10 @@
 import * as vscode from 'vscode';
 
 import { xmlRead } from './file_io/xml_read';
-import { jsonWrite } from './file_io/json_write';
 
 import { parseXml } from './xml_processor/xml_processor';
 
-import { writeToFile } from './interpreter/interpreter';
-import { readJsonFile } from './interpreter/interpreter';
+import { writeToFile } from './file_io/writeToFile';
 
 import { Data } from './interfaces/Data';
 
@@ -34,84 +32,80 @@ let data: Data = {
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "codevisuafy" is now active!');
-
-
-	const inputFilePath = '/home/mknined/Desktop/test_ext/demo2.xml';
-	const outputFilePath = '/home/mknined/Desktop/test_ext/figures.json';
+	// let outPath = '';
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('codevisuafy.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		
-		vscode.window.showInformationMessage('Hello VS Code from CodeVisuafy!');
-		xmlRead(inputFilePath)
-		.then((xmlData) => parseXml(xmlData, data))
-		.then((figures) => {
+	let disposable = vscode.commands.registerCommand('texetch.convert', () => {
+		let charArray: string[][] = [];
 
-			data['fig'] = figures;
-			jsonWrite(outputFilePath, data);
-		})
-		.then(() => {        
-			vscode.window.showInformationMessage(`Output written to ${outputFilePath}`);
-		})
-		.catch((error) => {
-			console.error(error);
+		vscode.window.showInformationMessage("Please select the .xml file as input from the open dialog box to proceed.");
+
+		(vscode.window.showOpenDialog())
+		.then((inputFile) => {
+			if(inputFile) {
+				// outPath = inputFile[0].fsPath;
+				xmlRead(inputFile[0].fsPath)
+				.then((xmlData) => parseXml(xmlData, data))
+				.then((figures) => {
+
+					data['fig'] = figures;
+				})
+				.then(() => {
+					let rows = data['limit'].y_max - data['limit'].y_min + 1;
+					let cols = data['limit'].x_max - data['limit'].x_min + 1;
+
+					charArray = Array.from({ length: rows }, () => Array(cols).fill(' '));
+
+					for(let i = 0; i < data['numFigures']; i++) {
+						let type = data['fig'][i].type;
+						switch(type) {
+							case "small_circle":
+								drawCircleSmall(charArray, data, i);
+								break;
+							case "large_circle":
+								drawCircleLarge(charArray, data, i);
+								break;
+							case "rectangle":
+								drawRectangle(charArray, data, i);
+								break;
+							case "text":
+								putText(charArray, data, i);
+								break;
+							case "ellipse":
+								drawEllipse(charArray, data, i);
+								break;
+							case "line":
+								drawStraightLine(charArray, data, i);
+								break;
+							default:
+								vscode.window.showWarningMessage("Unknown Figure Detected!!");
+						}
+					}	
+				})
+				.then(() => {  
+					const outChannel = vscode.window.createOutputChannel("TexEtch_out");
+					// outPath = outPath.replace(/\/[^\/]+$/g, "/dr_to_txt");
+					
+					// console.log(outPath);
+					(async () => {
+						try {
+							for (let i = 0; i < charArray.length; i++) {
+								outChannel.appendLine(charArray[i].join(''));	
+								// const rowData = charArray[i].join('');
+								// await writeToFile(outPath, rowData + '\n');
+							}
+							outChannel.show(true);
+							vscode.window.showInformationMessage(`Output written to output channel in the bottom pannel.`);
+						} catch (err) {
+							vscode.window.showWarningMessage("File write failed!!");
+						}
+					})();
+				});		
+			}
 		});
-
-		const nodes: Data = readJsonFile(outputFilePath);
-
-		let rows = nodes['limit'].y_max - nodes['limit'].y_min + 1;
-		let cols = nodes['limit'].x_max - nodes['limit'].x_min + 1;
-
-		console.log('rows: ', rows, '| cols: ', cols);
-
-		const charArray: string[][] = Array.from({ length: rows }, () => Array(cols).fill(' '));
-
-		for(let i = 0; i < nodes['numFigures']; i++) {
-			let type = nodes['fig'][i].type;
-			switch(type) {
-				case "small_circle":
-					drawCircleSmall(charArray, nodes, nodes['limit'], i);
-					break;
-				case "large_circle":
-					drawCircleLarge(charArray, nodes, nodes['limit'], i);
-					break;
-				case "rectangle":
-					drawRectangle(charArray, nodes, nodes['limit'], i);
-					break;
-				case "text":
-					putText(charArray, nodes, nodes['limit'], i);
-					break;
-				case "ellipse":
-					drawEllipse(charArray, nodes, nodes['limit'], i);
-					break;
-				case "line":
-					drawStraightLine(charArray, nodes, nodes['limit'], i);
-					break;
-				default:
-					console.log("Unknown figure");
-			}
-		}	
-
-		const outPath = '/home/mknined/Desktop/test_ext/output.txt';
-		(async () => {
-			try {
-				for (let i = 0; i < rows; i++) {
-					const rowData = charArray[i].join('');
-					await writeToFile(outPath, rowData + '\n');
-				}
-				console.log('File write completed.');
-			} catch (err) {
-				console.error('Error writing to file:', err);
-			}
-		})();
+		
 	});
 
 	context.subscriptions.push(disposable);

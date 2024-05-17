@@ -1,6 +1,6 @@
 {
-  "name": "codevisuafy",
-  "displayName": "CodeVisuafy",
+  "name": "texetch",
+  "displayName": "TexEtch",
   "description": "",
   "version": "0.0.1",
   "engines": {
@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "codevisuafy.helloWorld",
-        "title": "Hello World"
+        "command": "texetch.convert",
+        "title": "TexEtch"
       }
     ]
   },

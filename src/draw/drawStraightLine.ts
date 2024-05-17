@@ -1,13 +1,15 @@
-export function drawStraightLine(charArray: string[][], nodes: any, limit:any, index: number): void {
-    let points = nodes['fig'][index].line.path;
+export function drawStraightLine(charArray: string[][], data: any, index: number): void {
+    const limit = data['limit'];
+
+    let points = data['fig'][index].line.path;
     let hz_segs: [[number, number], [number, number]][] = [];
     let vc_segs: [[number, number], [number, number]][] = [];
 
     let connectors: [string, [number, number]][] = [];
     let orientation: string[] = [];
 
-    let startArrow = nodes['fig'][index].line.startArrow;
-    let endArrow = nodes['fig'][index].line.endArrow;
+    let startArrow = data['fig'][index].line.startArrow;
+    let endArrow = data['fig'][index].line.endArrow;
 
     for(let i = 0; i < points.length; i++) {
         points[i][0] -= limit.x_min;
@@ -17,13 +19,13 @@ export function drawStraightLine(charArray: string[][], nodes: any, limit:any, i
     let hz_char = "─";
     let vc_char = "│";
 
-    if(nodes['fig'][index].line.dashPattern === "flexArrow") {
+    if(data['fig'][index].line.dashPattern === "flexArrow") {
         hz_char = "═";
         vc_char = "║";
-    } else if(nodes['fig'][index].line.dashPattern === "1 3") {
+    } else if(data['fig'][index].line.dashPattern === "1 3") {
         hz_char = "-";
         vc_char = "┊";
-    } else if(nodes['fig'][index].line.dashed) {
+    } else if(data['fig'][index].line.dashed) {
         hz_char = "┈";
         vc_char = ":";
     }
