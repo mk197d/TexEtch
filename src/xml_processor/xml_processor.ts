@@ -9,6 +9,8 @@ import { Line } from '../interfaces/Line';
 export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
     return new Promise((resolve, reject) => {
         const bounds: Boundary = data['limit'];
+        const scale_x = 5;
+        const scale_y = 10;
 
         const parser = new xml2js.Parser();
         parser.parseString(xmlData, (err, result) => {
@@ -54,6 +56,8 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                                     line_int.dashPattern = value;
                                 } else if (key === "dashed" && value === "1") {
                                     line_int.dashed = true;
+                                } else if (key === "shape") {
+                                    line_int.dashPattern = value;
                                 }
                             }
                         });
@@ -95,10 +99,10 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
 
                         /////////////////////////////////////////////////////////////////////////////////                        
                         const geometry = cell.mxGeometry ? cell.mxGeometry[0].$ : {};
-                        const upperLeft_x = Math.ceil((parseFloat(geometry.x)) / 6);
-                        const upperLeft_y = Math.ceil((parseFloat(geometry.y)) / 12);
-                        let width = Math.ceil(parseFloat(geometry.width) / 6);
-                        let height = Math.ceil(parseFloat(geometry.height) / 12);      
+                        const upperLeft_x = Math.floor((parseFloat(geometry.x)) / scale_x);
+                        const upperLeft_y = Math.floor((parseFloat(geometry.y)) / scale_y);
+                        let width = Math.ceil(parseFloat(geometry.width) / scale_x);
+                        let height = Math.ceil(parseFloat(geometry.height) / scale_y);      
                         /////////////////////////////////////////////////////////////////////////////////
                         
                         /////////////////////////////////////////////////////////////////////////////////
@@ -107,8 +111,8 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                         if(cell.mxGeometry[0].mxPoint) {
                             type = "line";
                             cell.mxGeometry[0].mxPoint.forEach((point: any) => {
-                                const px = Math.ceil((parseFloat(point.$.x)) / 6);
-                                const py = Math.ceil((parseFloat(point.$.y)) / 12);
+                                const px = Math.floor((parseFloat(point.$.x)) / scale_x);
+                                const py = Math.floor((parseFloat(point.$.y)) / scale_y);
 
                                 linePath.push([px, py]);
 
@@ -122,8 +126,8 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                         if (cell.mxGeometry[0].Array) {
                             if(cell.mxGeometry[0].Array[0].mxPoint) {
                                 cell.mxGeometry[0].Array[0].mxPoint.forEach((point: any) => {
-                                    const px = Math.ceil((parseFloat(point.$.x)) / 6);
-                                    const py = Math.ceil((parseFloat(point.$.y)) / 12);
+                                    const px = Math.floor((parseFloat(point.$.x)) / scale_x);
+                                    const py = Math.floor((parseFloat(point.$.y)) / scale_y);
 
                                     linePath.push([px, py]);
 

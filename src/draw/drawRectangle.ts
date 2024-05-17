@@ -25,12 +25,12 @@ export function drawRectangle(charArray: string[][], nodes: any, limit:any, inde
     charArray[row_end][col_start] = '╚';
 
     for(let i = row_start + 1; i < row_end; i++) {
-        charArray[i][col_start] = '┊';
-        charArray[i][col_end] = '┊';
+        charArray[i][col_start] = '║';
+        charArray[i][col_end] = '║';
     }
     
     for(let i = col_start + 1; i < col_end; i++) {
-        charArray[row_start][i] = '┈';
-        charArray[row_end][i] = '┈';    
+        charArray[row_start][i] = '═';
+        charArray[row_end][i] = '═';    
     }
 }
