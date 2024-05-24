@@ -2,10 +2,12 @@
   "name": "texetch",
   "displayName": "TexEtch",
   "description": "TexEtch is a Visual Studio Code extension designed to convert diagrams drawn in draw.io into text format.",
-  "icon":"images/TexEtch.png",
-  "repository": {"url": "https://github.com/mk197d/TexEtch"},
+  "icon": "images/TexEtch.png",
+  "repository": {
+    "url": "https://github.com/mk197d/TexEtch"
+  },
   "publisher": "mayank8197d",
-  "version": "0.0.61",
+  "version": "0.0.62",
   "engines": {
     "vscode": "^1.87.0"
   },
