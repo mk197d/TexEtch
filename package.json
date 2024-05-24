@@ -1,7 +1,7 @@
 {
   "name": "texetch",
   "displayName": "TexEtch",
-  "description": "Put beautiful and sophisticated diagrams with your code.",
+  "description": "Add beautiful diagrams to your code",
   "icon": "images/TexEtch2.png",
   "repository": {
     "url": "https://github.com/mk197d/TexEtch"
