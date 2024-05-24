@@ -41,7 +41,7 @@ The extension can be installed from Visual Studio Code Marketplace.
 ## Supported Figures
 
 - **Horizontal and Vertical lines**: Line, Dashed Line, Dotted Line, Directional and Bidirectional Connector and Arrow.
-![Lines](Lines2.png)
+![Lines](Lines3.png)
 
 - **Circle and Ellipse**
 <div style="display: flex; align-items: center;">
