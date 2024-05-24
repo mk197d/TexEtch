@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 
 import { xmlRead } from './file_io/xml_read';
 import { parseXml } from './process/xml_processor';
-import { writeOutput_channel } from './file_io/writeOutput_channel';
 import { produceOutput } from './process/produce_output';
 import { placeBlock } from './draw/place_block';
 
