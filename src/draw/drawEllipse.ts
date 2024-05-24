@@ -10,7 +10,7 @@
 //          ▀▀▀▀▀▀▀▀  
 
 
-export function drawEllipse(charArray: string[][], data: any, index: number): void {
+export function drawEllipse(data: any, index: number): void {
     const limit = data['limit'];
 
     let upperLeft_x = data['fig'][index].upperLeft_x;
@@ -60,10 +60,10 @@ export function drawEllipse(charArray: string[][], data: any, index: number): vo
         lower_curr_row = row_end - 2;
 
         for(i = 0; i < len_m1; i++) {
-            charArray[upper_curr_row][left_curr_col + i] = "▀";
-            charArray[upper_curr_row][right_curr_col - i] = "▀";
-            charArray[lower_curr_row][left_curr_col + i] = "▄";
-            charArray[lower_curr_row][right_curr_col - i] = "▄";
+            data['charMat'][upper_curr_row][left_curr_col + i] = "▀";
+            data['charMat'][upper_curr_row][right_curr_col - i] = "▀";
+            data['charMat'][lower_curr_row][left_curr_col + i] = "▄";
+            data['charMat'][lower_curr_row][right_curr_col - i] = "▄";
         }
 
         upper_curr_row -= 1;
@@ -72,17 +72,17 @@ export function drawEllipse(charArray: string[][], data: any, index: number): vo
         right_curr_col -= len_m1;
 
         for(i = 0; i < len_m2; i++) {
-            charArray[upper_curr_row][left_curr_col + i] = "▄";
-            charArray[upper_curr_row][right_curr_col - i] = "▄";
-            charArray[lower_curr_row][left_curr_col + i] = "▀";
-            charArray[lower_curr_row][right_curr_col - i] = "▀";
+            data['charMat'][upper_curr_row][left_curr_col + i] = "▄";
+            data['charMat'][upper_curr_row][right_curr_col - i] = "▄";
+            data['charMat'][lower_curr_row][left_curr_col + i] = "▀";
+            data['charMat'][lower_curr_row][right_curr_col - i] = "▀";
         }
 
         left_curr_col += len_m2;
 
         for(i = 0; i < len_m; i++) {
-            charArray[upper_curr_row][left_curr_col + i] = "▀";
-            charArray[lower_curr_row][left_curr_col + i] = "▄";
+            data['charMat'][upper_curr_row][left_curr_col + i] = "▀";
+            data['charMat'][lower_curr_row][left_curr_col + i] = "▄";
         }
 
         left_curr_col = num_1x1 + num_main_blocks + col_start;
@@ -94,10 +94,10 @@ export function drawEllipse(charArray: string[][], data: any, index: number): vo
         let odd_block: Boolean = true;
         for(i = 0; i < num_1x1; i++) {
             if(odd_block) {
-                charArray[upper_curr_row][left_curr_col] = "▄";
-                charArray[upper_curr_row][right_curr_col] = "▄";
-                charArray[lower_curr_row][left_curr_col] = "▀";
-                charArray[lower_curr_row][right_curr_col] = "▀";
+                data['charMat'][upper_curr_row][left_curr_col] = "▄";
+                data['charMat'][upper_curr_row][right_curr_col] = "▄";
+                data['charMat'][lower_curr_row][left_curr_col] = "▀";
+                data['charMat'][lower_curr_row][right_curr_col] = "▀";
 
                 upper_curr_row += 1;
                 lower_curr_row -= 1;
@@ -106,10 +106,10 @@ export function drawEllipse(charArray: string[][], data: any, index: number): vo
 
                 odd_block = false;
             } else {
-                charArray[upper_curr_row][left_curr_col] = "▀";
-                charArray[upper_curr_row][right_curr_col] = "▀";
-                charArray[lower_curr_row][left_curr_col] = "▄";
-                charArray[lower_curr_row][right_curr_col] = "▄";
+                data['charMat'][upper_curr_row][left_curr_col] = "▀";
+                data['charMat'][upper_curr_row][right_curr_col] = "▀";
+                data['charMat'][lower_curr_row][left_curr_col] = "▄";
+                data['charMat'][lower_curr_row][right_curr_col] = "▄";
 
                 left_curr_col -= 1;
                 right_curr_col += 1;
@@ -120,18 +120,18 @@ export function drawEllipse(charArray: string[][], data: any, index: number): vo
 
         let middle_block_row = Math.floor(num_main_blocks + (2 + num_1x1 + 1) / 2 + row_start); 
         for(i = 1; i <= num_main_blocks; i++) {
-            charArray[middle_block_row - i][col_start + i] = "█";
-            charArray[middle_block_row - i][col_end - 1 - i] = "█";
-            charArray[middle_block_row + i][col_start + i] = "█";
-            charArray[middle_block_row + i][col_end - 1 - i] = "█";
+            data['charMat'][middle_block_row - i][col_start + i] = "█";
+            data['charMat'][middle_block_row - i][col_end - 1 - i] = "█";
+            data['charMat'][middle_block_row + i][col_start + i] = "█";
+            data['charMat'][middle_block_row + i][col_end - 1 - i] = "█";
         }
 
         if(vertical_axis < 14) {
-            charArray[middle_block_row][col_start] = "█";
-            charArray[middle_block_row][col_end - 1] = "█";
+            data['charMat'][middle_block_row][col_start] = "█";
+            data['charMat'][middle_block_row][col_end - 1] = "█";
         } else {
-            charArray[middle_block_row][col_start + 1] = "█";
-            charArray[middle_block_row][col_end - 2] = "█";
+            data['charMat'][middle_block_row][col_start + 1] = "█";
+            data['charMat'][middle_block_row][col_end - 2] = "█";
         }
 
         
@@ -146,20 +146,20 @@ export function drawEllipse(charArray: string[][], data: any, index: number): vo
         lower_curr_row = row_end - 2;
 
         for(i = 0; i < len_m1; i++) {
-            charArray[upper_curr_row][left_curr_col + i] = "▄";
-            charArray[upper_curr_row][right_curr_col - i] = "▄";
-            charArray[lower_curr_row][left_curr_col + i] = "▀";
-            charArray[lower_curr_row][right_curr_col - i] = "▀";
+            data['charMat'][upper_curr_row][left_curr_col + i] = "▄";
+            data['charMat'][upper_curr_row][right_curr_col - i] = "▄";
+            data['charMat'][lower_curr_row][left_curr_col + i] = "▀";
+            data['charMat'][lower_curr_row][right_curr_col - i] = "▀";
         }
 
         left_curr_col += len_m1;
         right_curr_col -= len_m1;
 
         for(i = 0; i < len_m2; i++) {
-            charArray[upper_curr_row][left_curr_col + i] = "▀";
-            charArray[upper_curr_row][right_curr_col - i] = "▀";
-            charArray[lower_curr_row][left_curr_col + i] = "▄";
-            charArray[lower_curr_row][right_curr_col - i] = "▄";
+            data['charMat'][upper_curr_row][left_curr_col + i] = "▀";
+            data['charMat'][upper_curr_row][right_curr_col - i] = "▀";
+            data['charMat'][lower_curr_row][left_curr_col + i] = "▄";
+            data['charMat'][lower_curr_row][right_curr_col - i] = "▄";
         }
 
         upper_curr_row -= 1;
@@ -167,8 +167,8 @@ export function drawEllipse(charArray: string[][], data: any, index: number): vo
         left_curr_col += len_m2;
 
         for(i = 0; i < len_m; i++) {
-            charArray[upper_curr_row][left_curr_col + i] = "▄";
-            charArray[lower_curr_row][left_curr_col + i] = "▀";
+            data['charMat'][upper_curr_row][left_curr_col + i] = "▄";
+            data['charMat'][lower_curr_row][left_curr_col + i] = "▀";
         }
 
         left_curr_col = num_1x1 + num_main_blocks + col_start;
@@ -180,10 +180,10 @@ export function drawEllipse(charArray: string[][], data: any, index: number): vo
         let even_block: boolean = false;
         for(i = 0; i < num_1x1; i++) {
             if(even_block) {
-                charArray[upper_curr_row][left_curr_col] = "▄";
-                charArray[upper_curr_row][right_curr_col] = "▄";
-                charArray[lower_curr_row][left_curr_col] = "▀";
-                charArray[lower_curr_row][right_curr_col] = "▀";
+                data['charMat'][upper_curr_row][left_curr_col] = "▄";
+                data['charMat'][upper_curr_row][right_curr_col] = "▄";
+                data['charMat'][lower_curr_row][left_curr_col] = "▀";
+                data['charMat'][lower_curr_row][right_curr_col] = "▀";
 
                                left_curr_col -= 1;
                 right_curr_col += 1;
@@ -192,10 +192,10 @@ export function drawEllipse(charArray: string[][], data: any, index: number): vo
 
                 even_block = false;
             } else {
-                charArray[upper_curr_row][left_curr_col] = "▀";
-                charArray[upper_curr_row][right_curr_col] = "▀";
-                charArray[lower_curr_row][left_curr_col] = "▄";
-                charArray[lower_curr_row][right_curr_col] = "▄";
+                data['charMat'][upper_curr_row][left_curr_col] = "▀";
+                data['charMat'][upper_curr_row][right_curr_col] = "▀";
+                data['charMat'][lower_curr_row][left_curr_col] = "▄";
+                data['charMat'][lower_curr_row][right_curr_col] = "▄";
 
                 left_curr_col -= 1;
                 right_curr_col += 1;
@@ -207,18 +207,18 @@ export function drawEllipse(charArray: string[][], data: any, index: number): vo
 
         let middle_block_row = Math.floor(num_main_blocks + (2 + num_1x1) / 2 + row_start); 
         for(i = 1; i <= num_main_blocks; i++) {
-            charArray[middle_block_row - i][col_start + i] = "█";
-            charArray[middle_block_row - i][col_end - 1 - i] = "█";
-            charArray[middle_block_row + i][col_start + i] = "█";
-            charArray[middle_block_row + i][col_end - 1 - i] = "█";
+            data['charMat'][middle_block_row - i][col_start + i] = "█";
+            data['charMat'][middle_block_row - i][col_end - 1 - i] = "█";
+            data['charMat'][middle_block_row + i][col_start + i] = "█";
+            data['charMat'][middle_block_row + i][col_end - 1 - i] = "█";
         }
 
         if(vertical_axis < 14) {
-            charArray[middle_block_row][col_start] = "█";
-            charArray[middle_block_row][col_end - 1] = "█";
+            data['charMat'][middle_block_row][col_start] = "█";
+            data['charMat'][middle_block_row][col_end - 1] = "█";
         } else {
-            charArray[middle_block_row][col_start + 1] = "█";
-            charArray[middle_block_row][col_end - 2] = "█";
+            data['charMat'][middle_block_row][col_start + 1] = "█";
+            data['charMat'][middle_block_row][col_end - 2] = "█";
         }
 
     }

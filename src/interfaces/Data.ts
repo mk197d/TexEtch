@@ -5,4 +5,5 @@ export interface Data {
     limit: Boundary;
     fig: Figure[];
     numFigures: number;
+    charMat: string[][];
 }

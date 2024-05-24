@@ -5,6 +5,7 @@ import { Boundary } from '../interfaces/Boundary';
 import { Figure } from '../interfaces/Figure';
 import { Text } from '../interfaces/Text';
 import { Line } from '../interfaces/Line';
+// import { Connector } from '../interfaces/Connector';
 
 export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
     return new Promise((resolve, reject) => {
@@ -28,10 +29,19 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                         const value = cell.$.value || '';
                         let type: string = "";
                         const styleAttr = cell.$.style || '';
+
                         const text_int: Text = {};
+                        text_int.value = value;
 
                         const line_int: Line = {};
                         line_int.dashed = false;
+
+                        // const connector_int: Connector = {};
+                        // connector_int.source = cell.$.source || '';
+                        // connector_int.target = cell.$.target || '';
+                        // if(connector_int.source !== '' || connector_int.target !== '') {
+                        //     type = "connector";
+                        // }
 
                         const fields = styleAttr.split(';');
                         fields.forEach((field: any) => {
@@ -40,24 +50,55 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                             } else if(field === "text") {
                                 type = "text";
                             }
-                            const [key, value] = field.split('=');
-                            if (key && value !== undefined) {
-                                if (key === "text") {
-                                    text_int.value = value;
-                                } else if (key === "align") {
-                                    text_int.align = value;
-                                } else if (key === "verticalAlign") {
-                                    text_int.verticalAlign = value;
-                                } else if (key === "startArrow") {
-                                    line_int.startArrow = value;
-                                } else if (key === "endArrow") {
-                                    line_int.endArrow = value;
-                                } else if (key === "dashPattern") {
-                                    line_int.dashPattern = value;
-                                } else if (key === "dashed" && value === "1") {
-                                    line_int.dashed = true;
-                                } else if (key === "shape") {
-                                    line_int.dashPattern = value;
+                            const [key, val] = field.split('=');
+                            if (key && val !== undefined) {
+                                switch(key){
+                                    case "align":
+                                        text_int.align = val;
+                                        break;
+
+                                    case "verticalAlign":
+                                        text_int.verticalAlign = val;
+                                        break;
+
+                                    case "startArrow":
+                                        line_int.startArrow = val;
+                                        break;
+
+                                    case "endArrow":
+                                        line_int.endArrow = val;
+                                        break;
+
+                                    case "dashPattern":
+                                        line_int.dashPattern = val;
+                                        break;
+
+                                    case ("dashed" && val === "1"):
+                                        line_int.dashed = true;
+                                        break;
+
+                                    case "shape":
+                                        line_int.dashPattern = val;
+                                        break;
+
+                                    // case "exitX":
+                                    //     connector_int.exitX = val;
+                                    //     break;
+                                    
+                                    // case "exitY":
+                                    //     connector_int.exitY = val;
+                                    //     break;
+
+                                    // case "entryX":
+                                    //     connector_int.entryX = val;
+                                    //     break;
+
+                                    // case "entryY":
+                                    //     connector_int.entryY = val;
+                                    //     break;
+
+                                    default:
+                                        break;
                                 }
                             }
                         });
@@ -83,7 +124,6 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                         const divisons: any[] = [];
                         for(let i = 0; i < blocks.length; i++) {
                             if(blocks[i].length === 1 && blocks[i] === "\t") {
-                                console.log("here");
                                 prev_tab = true;
                             } else {
                                 divisons.push(blocks[i].split(' '));
@@ -99,20 +139,21 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
 
                         /////////////////////////////////////////////////////////////////////////////////                        
                         const geometry = cell.mxGeometry ? cell.mxGeometry[0].$ : {};
-                        const upperLeft_x = Math.floor((parseFloat(geometry.x)) / scale_x);
-                        const upperLeft_y = Math.floor((parseFloat(geometry.y)) / scale_y);
-                        let width = Math.ceil(parseFloat(geometry.width) / scale_x);
-                        let height = Math.ceil(parseFloat(geometry.height) / scale_y);      
+                        const upperLeft_x = Math.round((parseFloat(geometry.x)) / scale_x);
+                        const upperLeft_y = Math.round((parseFloat(geometry.y)) / scale_y);
+                        let width = Math.round(parseFloat(geometry.width) / scale_x);
+                        let height = Math.round(parseFloat(geometry.height) / scale_y);      
                         /////////////////////////////////////////////////////////////////////////////////
                         
                         /////////////////////////////////////////////////////////////////////////////////
                         const linePath: [number, number][] = [];
-                        // console.log(cell.mxGeometry[0].mxPoint);
                         if(cell.mxGeometry[0].mxPoint) {
-                            type = "line";
+                            // if(type !== '') {
+                                type = "line";
+                            // }
                             cell.mxGeometry[0].mxPoint.forEach((point: any) => {
-                                const px = Math.floor((parseFloat(point.$.x)) / scale_x);
-                                const py = Math.floor((parseFloat(point.$.y)) / scale_y);
+                                const px = Math.round((parseFloat(point.$.x)) / scale_x);
+                                const py = Math.round((parseFloat(point.$.y)) / scale_y);
 
                                 linePath.push([px, py]);
 
@@ -126,8 +167,8 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                         if (cell.mxGeometry[0].Array) {
                             if(cell.mxGeometry[0].Array[0].mxPoint) {
                                 cell.mxGeometry[0].Array[0].mxPoint.forEach((point: any) => {
-                                    const px = Math.floor((parseFloat(point.$.x)) / scale_x);
-                                    const py = Math.floor((parseFloat(point.$.y)) / scale_y);
+                                    const px = Math.round((parseFloat(point.$.x)) / scale_x);
+                                    const py = Math.round((parseFloat(point.$.y)) / scale_y);
 
                                     linePath.push([px, py]);
 
@@ -180,10 +221,10 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                 });
                 resolve(figures);
             }
-            bounds.y_min -= 3;
-            bounds.x_min -= 5;
-            bounds.y_max += 3;
-            bounds.x_max += 5;
+            bounds.y_min -= 2;
+            bounds.x_min -= 2;
+            bounds.y_max += 2;
+            bounds.x_max += 2;
             data['limit'] = bounds;
         });
     });

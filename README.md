@@ -7,9 +7,8 @@ TexEtch is a Visual Studio Code extension designed to convert diagrams drawn in 
 ## Features
 
 - **Diagram to Text Conversion**: Convert complex diagrams from draw.io into readable text format.
-- **Seamless Integration**: Easily integrate the converted text into your codebase to enhance documentation.
+- **Seamless Integration**: Easily integrate the converted text into your codebase to enhance documentation. Option to put the produced output at the top of the code block or alongside the code block.
 - **Support for Multiple Diagram Types**: Handles a variety of diagram types and structures.
-- **User-friendly Interface**: Simple and intuitive interface for easy conversion.
 
 ## Installation
 
@@ -21,19 +20,28 @@ The extension can be installed from Visual Studio Code Marketplace.
 ![Step 1](Step1.png)
 3. In Visual Studio Code, open the command palette by pressing Ctrl+Shift+P (Windows/Linux) or Cmd+Shift+P (macOS).
 4. Type TexEtch and select the corresponding command.
-![Step 2](Step2.png)
 5. An Open Dialog box will appear, prompting you to select the required .xml file.
-![Step 3](Step3.png)
-6. After selecting the file, the output will be displayed in an output channel named TexEtch_out.
-![Step 4](Step4.png)
-7. To view the output in the editor as a file, go to the output channel and use the "Views and More Actions..." option.
-![Step 5](Step5.png)
+6. After selecting the file, a text input box will appear to take in the comment characters used for the language in use or any string of your choice. Leave empty for no extra characters.
+![Walkthrough 1](walkthrough1.gif)
+7.  - To put the generated text at top of a code snippet -> put the cursor on the line just above the block.
+    *Before*
+    ![Above_b](above_b.png)
+    *After*
+    ![Above_a](above_a.png)
+    
+    - To put the generated text alongside the code -> select the code block.
+
+    *Before*
+    ![Along_b](along_b.png)
+    *After*
+    ![Along_a](along_a.png)
+ 
+
 
 ## Supported Figures
 
 - **Horizontal and Vertical lines**: Line, Dashed Line, Dotted Line, Directional and Bidirectional Connector and Arrow.
 ![Lines](Lines2.png)
-    Support for slanted lines coming soon!
 
 - **Circle and Ellipse**
 <div style="display: flex; align-items: center;">
@@ -44,5 +52,32 @@ The extension can be installed from Visual Studio Code Marketplace.
 - **Text**
     - Use text size as **11** in the draw.io editor to match the exact ratio of figures and text in the final output.
     - Avoid copying text from sources with colorful text to prevent disperancies in the output.
+    - Leave enough space on the boundaries of text box, so that text can appear in same format.
 
 - **Rectangle** 
+
+**Caution**
+Please don't use arrows which originate directly from figures like shown below:<br>
+![notArrow](notArrow.png)
+
+**Support for slanted lines, curves and other figures coming soon in future versions**
+
+## Examples
+
+- Drawing stacks in architecture code.<br>
+  **BEFORE**<br>
+  ![ex2b](ex2b.png) 
+  **AFTER**<br>
+  ![ex2a](ex2a.png) 
+
+- Initializing classes with many fields.<br>
+  **BEFORE**<br>
+  ![ex3b](ex3b.png) 
+  **AFTER**<br>
+  ![ex3a](ex3a.png)
+
+- Algorithm on arrays<br>
+  ![ex1](ex1.png)
+
+- Just for fun..<br>
+  ![ex5](ex5.png)

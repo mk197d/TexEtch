@@ -13,7 +13,7 @@
 //       ▀▀▄▄▄▄▀▀
 
 
-export function drawCircleLarge(charArray: string[][], data: any, index: number): void {
+export function drawCircleLarge(data: any, index: number): void {
     const limit = data['limit'];
 
     let upperLeft_x = data['fig'][index].upperLeft_x;
@@ -55,20 +55,20 @@ export function drawCircleLarge(charArray: string[][], data: any, index: number)
             for(i = 0; i < num_main_blocks; i++) {
                 if(even_block === 0) {
                     for(j = 0; j < 2; j++) {
-                        charArray[upper_curr_row][left_curr_col + j] = "▄";
-                        charArray[upper_curr_row][right_curr_col - j] = "▄";
-                        charArray[lower_curr_row][left_curr_col + j] = "▀";
-                        charArray[lower_curr_row][right_curr_col - j] = "▀"; 
+                        data['charMat'][upper_curr_row][left_curr_col + j] = "▄";
+                        data['charMat'][upper_curr_row][right_curr_col - j] = "▄";
+                        data['charMat'][lower_curr_row][left_curr_col + j] = "▀";
+                        data['charMat'][lower_curr_row][right_curr_col - j] = "▀"; 
                     }
                     left_curr_col += 2;
                     right_curr_col -= 2;
                     even_block = 1;
                 } else {
                     for(j = 0; j < 2; j++) {
-                        charArray[upper_curr_row][left_curr_col + j] = "▀";
-                        charArray[upper_curr_row][right_curr_col - j] = "▀";
-                        charArray[lower_curr_row][left_curr_col + j] = "▄";
-                        charArray[lower_curr_row][right_curr_col - j] = "▄"; 
+                        data['charMat'][upper_curr_row][left_curr_col + j] = "▀";
+                        data['charMat'][upper_curr_row][right_curr_col - j] = "▀";
+                        data['charMat'][lower_curr_row][left_curr_col + j] = "▄";
+                        data['charMat'][lower_curr_row][right_curr_col - j] = "▄"; 
                     }
                     left_curr_col += 2;
                     right_curr_col -= 2;
@@ -84,10 +84,10 @@ export function drawCircleLarge(charArray: string[][], data: any, index: number)
             for(i = 0; i < num_main_blocks; i++) {
                 if(even_block === 0) {
                     for(j = 0; j < 2; j++) {
-                        charArray[upper_curr_row][left_curr_col + j] = "▀";
-                        charArray[upper_curr_row][right_curr_col - j] = "▀";
-                        charArray[lower_curr_row][left_curr_col + j] = "▄";
-                        charArray[lower_curr_row][right_curr_col - j] = "▄"; 
+                        data['charMat'][upper_curr_row][left_curr_col + j] = "▀";
+                        data['charMat'][upper_curr_row][right_curr_col - j] = "▀";
+                        data['charMat'][lower_curr_row][left_curr_col + j] = "▄";
+                        data['charMat'][lower_curr_row][right_curr_col - j] = "▄"; 
                     }
                     left_curr_col += 2;
                     right_curr_col -= 2;
@@ -96,10 +96,10 @@ export function drawCircleLarge(charArray: string[][], data: any, index: number)
                     even_block = 1;
                 } else {
                     for(j = 0; j < 2; j++) {
-                        charArray[upper_curr_row][left_curr_col + j] = "▄";
-                        charArray[upper_curr_row][right_curr_col - j] = "▄";
-                        charArray[lower_curr_row][left_curr_col + j] = "▀";
-                        charArray[lower_curr_row][right_curr_col - j] = "▀"; 
+                        data['charMat'][upper_curr_row][left_curr_col + j] = "▄";
+                        data['charMat'][upper_curr_row][right_curr_col - j] = "▄";
+                        data['charMat'][lower_curr_row][left_curr_col + j] = "▀";
+                        data['charMat'][lower_curr_row][right_curr_col - j] = "▀"; 
                     }
                     left_curr_col += 2;
                     right_curr_col -= 2;
@@ -109,8 +109,8 @@ export function drawCircleLarge(charArray: string[][], data: any, index: number)
         }
 
         for(i = 0; i < 4; i++) {
-            charArray[upper_curr_row][left_curr_col + i] = "▄";
-            charArray[lower_curr_row][left_curr_col + i] = "▀";
+            data['charMat'][upper_curr_row][left_curr_col + i] = "▄";
+            data['charMat'][lower_curr_row][left_curr_col + i] = "▀";
         }
 
         upper_curr_row = row_start + (num_main_blocks + num_1x1 + 1) / 2 - 1;
@@ -120,19 +120,19 @@ export function drawCircleLarge(charArray: string[][], data: any, index: number)
         even_block = 0;
         for(i = 0; i < num_1x1; i++) {
             if(even_block === 0) {
-                charArray[upper_curr_row][left_curr_col] = "▄";
-                charArray[upper_curr_row][right_curr_col] = "▄";
-                charArray[lower_curr_row][left_curr_col] = "▀";
-                charArray[lower_curr_row][right_curr_col] = "▀"; 
+                data['charMat'][upper_curr_row][left_curr_col] = "▄";
+                data['charMat'][upper_curr_row][right_curr_col] = "▄";
+                data['charMat'][lower_curr_row][left_curr_col] = "▀";
+                data['charMat'][lower_curr_row][right_curr_col] = "▀"; 
                 
                 left_curr_col += 1;
                 right_curr_col -= 1;
                 even_block = 1;
             } else {
-                charArray[upper_curr_row][left_curr_col] = "▀";
-                charArray[upper_curr_row][right_curr_col] = "▀";
-                charArray[lower_curr_row][left_curr_col] = "▄";
-                charArray[lower_curr_row][right_curr_col] = "▄"; 
+                data['charMat'][upper_curr_row][left_curr_col] = "▀";
+                data['charMat'][upper_curr_row][right_curr_col] = "▀";
+                data['charMat'][lower_curr_row][left_curr_col] = "▄";
+                data['charMat'][lower_curr_row][right_curr_col] = "▄"; 
 
                 left_curr_col += 1;
                 right_curr_col -= 1;
@@ -145,14 +145,14 @@ export function drawCircleLarge(charArray: string[][], data: any, index: number)
 
         let middle_block_row = num_main_blocks + (num_main_blocks + num_1x1 + 1) / 2 + row_start; 
         for(i = 1; i <= num_main_blocks; i++) {
-            charArray[middle_block_row - i][col_start + i] = "█";
-            charArray[middle_block_row - i][col_end - 1 - i] = "█";
-            charArray[middle_block_row + i][col_start + i] = "█";
-            charArray[middle_block_row + i][col_end - 1 - i] = "█";
+            data['charMat'][middle_block_row - i][col_start + i] = "█";
+            data['charMat'][middle_block_row - i][col_end - 1 - i] = "█";
+            data['charMat'][middle_block_row + i][col_start + i] = "█";
+            data['charMat'][middle_block_row + i][col_end - 1 - i] = "█";
         }
 
-        charArray[middle_block_row][col_start + 1] = "█";
-        charArray[middle_block_row][col_end - 2] = "█";
+        data['charMat'][middle_block_row][col_start + 1] = "█";
+        data['charMat'][middle_block_row][col_end - 2] = "█";
 
         
     } else {
@@ -170,20 +170,20 @@ export function drawCircleLarge(charArray: string[][], data: any, index: number)
             for(i = 0; i < num_main_blocks; i++) {
                 if(even_block === 0) {
                     for(j = 0; j < 2; j++) {
-                        charArray[upper_curr_row][left_curr_col + j] = "▄";
-                        charArray[upper_curr_row][right_curr_col - j] = "▄";
-                        charArray[lower_curr_row][left_curr_col + j] = "▀";
-                        charArray[lower_curr_row][right_curr_col - j] = "▀"; 
+                        data['charMat'][upper_curr_row][left_curr_col + j] = "▄";
+                        data['charMat'][upper_curr_row][right_curr_col - j] = "▄";
+                        data['charMat'][lower_curr_row][left_curr_col + j] = "▀";
+                        data['charMat'][lower_curr_row][right_curr_col - j] = "▀"; 
                     }
                     left_curr_col += 2;
                     right_curr_col -= 2;
                     even_block = 1;
                 } else {
                     for(j = 0; j < 2; j++) {
-                        charArray[upper_curr_row][left_curr_col + j] = "▀";
-                        charArray[upper_curr_row][right_curr_col - j] = "▀";
-                        charArray[lower_curr_row][left_curr_col + j] = "▄";
-                        charArray[lower_curr_row][right_curr_col - j] = "▄"; 
+                        data['charMat'][upper_curr_row][left_curr_col + j] = "▀";
+                        data['charMat'][upper_curr_row][right_curr_col - j] = "▀";
+                        data['charMat'][lower_curr_row][left_curr_col + j] = "▄";
+                        data['charMat'][lower_curr_row][right_curr_col - j] = "▄"; 
                     }
                     left_curr_col += 2;
                     right_curr_col -= 2;
@@ -199,10 +199,10 @@ export function drawCircleLarge(charArray: string[][], data: any, index: number)
             for(i = 0; i < num_main_blocks; i++) {
                 if(even_block === 0) {
                     for(j = 0; j < 2; j++) {
-                        charArray[upper_curr_row][left_curr_col + j] = "▀";
-                        charArray[upper_curr_row][right_curr_col - j] = "▀";
-                        charArray[lower_curr_row][left_curr_col + j] = "▄";
-                        charArray[lower_curr_row][right_curr_col - j] = "▄"; 
+                        data['charMat'][upper_curr_row][left_curr_col + j] = "▀";
+                        data['charMat'][upper_curr_row][right_curr_col - j] = "▀";
+                        data['charMat'][lower_curr_row][left_curr_col + j] = "▄";
+                        data['charMat'][lower_curr_row][right_curr_col - j] = "▄"; 
                     }
                     left_curr_col += 2;
                     right_curr_col -= 2;
@@ -211,10 +211,10 @@ export function drawCircleLarge(charArray: string[][], data: any, index: number)
                     even_block = 1;
                 } else {
                     for(j = 0; j < 2; j++) {
-                        charArray[upper_curr_row][left_curr_col + j] = "▄";
-                        charArray[upper_curr_row][right_curr_col - j] = "▄";
-                        charArray[lower_curr_row][left_curr_col + j] = "▀";
-                        charArray[lower_curr_row][right_curr_col - j] = "▀"; 
+                        data['charMat'][upper_curr_row][left_curr_col + j] = "▄";
+                        data['charMat'][upper_curr_row][right_curr_col - j] = "▄";
+                        data['charMat'][lower_curr_row][left_curr_col + j] = "▀";
+                        data['charMat'][lower_curr_row][right_curr_col - j] = "▀"; 
                     }
                     left_curr_col += 2;
                     right_curr_col -= 2;
@@ -224,8 +224,8 @@ export function drawCircleLarge(charArray: string[][], data: any, index: number)
         }
 
         for(i = 0; i < 4; i++) {
-            charArray[upper_curr_row + 1][left_curr_col + i] = "▀";
-            charArray[lower_curr_row - 1][left_curr_col + i] = "▄";
+            data['charMat'][upper_curr_row + 1][left_curr_col + i] = "▀";
+            data['charMat'][lower_curr_row - 1][left_curr_col + i] = "▄";
         }
 
         upper_curr_row = row_start + (num_main_blocks + num_1x1) / 2 - 1;
@@ -235,19 +235,19 @@ export function drawCircleLarge(charArray: string[][], data: any, index: number)
         even_block = 0;
         for(i = 0; i < num_1x1; i++) {
             if(even_block === 0) {
-                charArray[upper_curr_row][left_curr_col] = "▄";
-                charArray[upper_curr_row][right_curr_col] = "▄";
-                charArray[lower_curr_row][left_curr_col] = "▀";
-                charArray[lower_curr_row][right_curr_col] = "▀"; 
+                data['charMat'][upper_curr_row][left_curr_col] = "▄";
+                data['charMat'][upper_curr_row][right_curr_col] = "▄";
+                data['charMat'][lower_curr_row][left_curr_col] = "▀";
+                data['charMat'][lower_curr_row][right_curr_col] = "▀"; 
                 
                 left_curr_col += 1;
                 right_curr_col -= 1;
                 even_block = 1;
             } else {
-                charArray[upper_curr_row][left_curr_col] = "▀";
-                charArray[upper_curr_row][right_curr_col] = "▀";
-                charArray[lower_curr_row][left_curr_col] = "▄";
-                charArray[lower_curr_row][right_curr_col] = "▄"; 
+                data['charMat'][upper_curr_row][left_curr_col] = "▀";
+                data['charMat'][upper_curr_row][right_curr_col] = "▀";
+                data['charMat'][lower_curr_row][left_curr_col] = "▄";
+                data['charMat'][lower_curr_row][right_curr_col] = "▄"; 
 
                 left_curr_col += 1;
                 right_curr_col -= 1;
@@ -260,14 +260,14 @@ export function drawCircleLarge(charArray: string[][], data: any, index: number)
 
         let middle_block_row = num_main_blocks + (num_main_blocks + num_1x1) / 2 + row_start; 
         for(i = 1; i <= num_main_blocks; i++) {
-            charArray[middle_block_row - i][col_start + i] = "█";
-            charArray[middle_block_row - i][col_end - 1 - i] = "█";
-            charArray[middle_block_row + i][col_start + i] = "█";
-            charArray[middle_block_row + i][col_end - 1 - i] = "█";
+            data['charMat'][middle_block_row - i][col_start + i] = "█";
+            data['charMat'][middle_block_row - i][col_end - 1 - i] = "█";
+            data['charMat'][middle_block_row + i][col_start + i] = "█";
+            data['charMat'][middle_block_row + i][col_end - 1 - i] = "█";
         }
 
-        charArray[middle_block_row][col_start + 1] = "█";
-        charArray[middle_block_row][col_end - 2] = "█";
+        data['charMat'][middle_block_row][col_start + 1] = "█";
+        data['charMat'][middle_block_row][col_end - 2] = "█";
     }
     
 }

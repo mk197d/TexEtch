@@ -1,4 +1,4 @@
-export function drawStraightLine(charArray: string[][], data: any, index: number): void {
+export function drawStraightLine(data: any, index: number): void {
     const limit = data['limit'];
 
     let points = data['fig'][index].line.path;
@@ -24,10 +24,10 @@ export function drawStraightLine(charArray: string[][], data: any, index: number
         vc_char = "║";
     } else if(data['fig'][index].line.dashPattern === "1 3") {
         hz_char = "-";
-        vc_char = "┊";
+        vc_char = "¦";
     } else if(data['fig'][index].line.dashed) {
-        hz_char = "┈";
-        vc_char = ":";
+        hz_char = "╍";
+        vc_char = "┋";
     }
 
     for(let i = 0; i < points.length - 1; i++) {
@@ -54,33 +54,33 @@ export function drawStraightLine(charArray: string[][], data: any, index: number
         switch(orientation[i]) {
             case "D":
                 if(orientation[i + 1] === "L") {
-                    connectors.push(["┘", points[i + 1]]);
+                    connectors.push(["╯", points[i + 1]]);
                 } else if(orientation[i + 1] === "R") {
-                    connectors.push(["└", points[i + 1]]);
+                    connectors.push(["╰", points[i + 1]]);
                 }
                 break;
 
             case "U":
                 if(orientation[i + 1] === "L") {
-                    connectors.push(["┐", points[i + 1]]);
+                    connectors.push(["╮", points[i + 1]]);
                 } else if(orientation[i + 1] === "R") {
-                    connectors.push(["┌", points[i + 1]]);
+                    connectors.push(["╭", points[i + 1]]);
                 }
                 break;
 
             case "L":
                 if(orientation[i + 1] === "D") {
-                    connectors.push(["┌", points[i + 1]]);
+                    connectors.push(["╭", points[i + 1]]);
                 } else if(orientation[i + 1] === "U") {
-                    connectors.push(["└", points[i + 1]]);
+                    connectors.push(["╰", points[i + 1]]);
                 }
                 break;
                 
             case "R":
                 if(orientation[i + 1] === "D") {
-                    connectors.push(["┐", points[i + 1]]);
+                    connectors.push(["╮", points[i + 1]]);
                 } else if(orientation[i + 1] === "U") {
-                    connectors.push(["┘", points[i + 1]]);
+                    connectors.push(["╯", points[i + 1]]);
                 }
                 break;
                 
@@ -95,7 +95,7 @@ export function drawStraightLine(charArray: string[][], data: any, index: number
         let ex = Math.max(segment[0][0], segment[1][0]);
 
         for(let i = sx + 1; i < ex; i++) {
-            charArray[py][i] = hz_char;
+            data['charMat'][py][i] = hz_char;
         }
     });
 
@@ -105,12 +105,12 @@ export function drawStraightLine(charArray: string[][], data: any, index: number
         let ey = Math.max(segment[0][1], segment[1][1]);
 
         for(let i = sy + 1; i < ey; i++) {
-            charArray[i][px] = vc_char;
+            data['charMat'][i][px] = vc_char;
         }
     });
 
     connectors.forEach((entry: any) => {
-        charArray[entry[1][1]][entry[1][0]] = entry[0];
+        data['charMat'][entry[1][1]][entry[1][0]] = entry[0];
     });
 
 
@@ -121,19 +121,19 @@ export function drawStraightLine(charArray: string[][], data: any, index: number
 
         switch(orientation[end_index - 1]) {
             case "D":
-                charArray[py][px] = "▼";
+                data['charMat'][py][px] = "▼";
                 break;
 
             case "U":
-                charArray[py][px] = "▲";
+                data['charMat'][py][px] = "▲";
                 break;
 
             case "L":
-                charArray[py][px] = "<";
+                data['charMat'][py][px] = "<";
                 break;
             
             case "R":
-                charArray[py][px] = ">";
+                data['charMat'][py][px] = ">";
                 break;
 
             default:
@@ -147,19 +147,19 @@ export function drawStraightLine(charArray: string[][], data: any, index: number
 
         switch(orientation[0]) {    
             case "D":
-                charArray[py][px] = "▲";
+                data['charMat'][py][px] = "▲";
                 break;
 
             case "U":
-                charArray[py][px] = "▼";
+                data['charMat'][py][px] = "▼";
                 break;
 
             case "L":
-                charArray[py][px] = ">";
+                data['charMat'][py][px] = ">";
                 break;
             
             case "R":
-                charArray[py][px] = "<";
+                data['charMat'][py][px] = "<";
                 break;
 
             default:
