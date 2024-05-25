@@ -24,7 +24,6 @@ let data: Data = {
 export function activate(context: vscode.ExtensionContext) {
 
 	let disposable = vscode.commands.registerCommand('texetch.convert', () => {
-		// let charMat: string[][] = [];
 
 		vscode.window.showInformationMessage("Please select the .xml file as input from the open dialog box to proceed.");
 
@@ -41,7 +40,6 @@ export function activate(context: vscode.ExtensionContext) {
 						produceOutput(data);	
 					})
 					.then(() => { 						
-						// writeOutput_channel(data['charMat']);
 						placeBlock(data['charMat']);
 					});		
 				} catch(err) {

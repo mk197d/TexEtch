@@ -1,7 +1,7 @@
 {
   "name": "texetch",
   "displayName": "TexEtch",
-  "description": "Add beautiful diagrams drawn on draw.io to your code",
+  "description": "Add beautiful diagrams drawn on draw.io to your code\n Diagram to Text",
   "icon": "images/TexEtch2.png",
   "repository": {
     "url": "https://github.com/mk197d/TexEtch"
