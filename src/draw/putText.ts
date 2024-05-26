@@ -20,7 +20,6 @@ export function putText(data: any, index: number): void {
     let row_start = upperLeft_y - limit['y_min'];
     let row_end = row_start + height;
 
-    // console.log('Text dimensions: (', row_start, ', ', col_start, '), (', row_end, ', ', col_end, ')');
 
     let token_rows: number[] = [];
     let token_cols: number[] = [];

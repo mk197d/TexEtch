@@ -53,13 +53,15 @@ export function drawEllipse(data: any, index: number): void {
     // Positioning of the blocks differ when the length of vertical axis is even and odd:
     // even vertical_axis
     if(vertical_axis % 2 === 0) {
+
         let left_curr_col = num_1x1 + num_main_blocks + 1 + col_start;
         let right_curr_col = col_end - (num_1x1 + num_main_blocks + len_m1);
         
         let upper_curr_row = -1, lower_curr_row = -1;
         upper_curr_row = row_start + 1;
         lower_curr_row = row_end - 2;
-
+        
+        // Placing the first layer: m1
         for(i = 0; i < len_m1; i++) {
             data['charMat'][upper_curr_row][left_curr_col + i] = "▀";
             data['charMat'][upper_curr_row][right_curr_col - i] = "▀";
@@ -72,6 +74,7 @@ export function drawEllipse(data: any, index: number): void {
         left_curr_col += len_m1;
         right_curr_col -= len_m1;
 
+        // Placing the second layer: m2
         for(i = 0; i < len_m2; i++) {
             data['charMat'][upper_curr_row][left_curr_col + i] = "▄";
             data['charMat'][upper_curr_row][right_curr_col - i] = "▄";
@@ -81,6 +84,7 @@ export function drawEllipse(data: any, index: number): void {
 
         left_curr_col += len_m2;
 
+        // Placing the top layer: m
         for(i = 0; i < len_m; i++) {
             data['charMat'][upper_curr_row][left_curr_col + i] = "▀";
             data['charMat'][lower_curr_row][left_curr_col + i] = "▄";
@@ -92,6 +96,7 @@ export function drawEllipse(data: any, index: number): void {
         upper_curr_row = row_start + 1;
         lower_curr_row = row_end - 2;
 
+        // Placing the 1x1 blocks
         let odd_block: Boolean = true;
         for(i = 0; i < num_1x1; i++) {
             if(odd_block) {
@@ -119,6 +124,7 @@ export function drawEllipse(data: any, index: number): void {
             }
         }
 
+        // Placing the main blocks
         let middle_block_row = Math.floor(num_main_blocks + (2 + num_1x1 + 1) / 2 + row_start); 
         for(i = 1; i <= num_main_blocks; i++) {
             data['charMat'][middle_block_row - i][col_start + i] = "█";
@@ -146,6 +152,7 @@ export function drawEllipse(data: any, index: number): void {
         upper_curr_row = row_start;
         lower_curr_row = row_end - 2;
 
+        // Placing the first layer: m1
         for(i = 0; i < len_m1; i++) {
             data['charMat'][upper_curr_row][left_curr_col + i] = "▄";
             data['charMat'][upper_curr_row][right_curr_col - i] = "▄";
@@ -156,6 +163,7 @@ export function drawEllipse(data: any, index: number): void {
         left_curr_col += len_m1;
         right_curr_col -= len_m1;
 
+        // Placing the second layer: m2
         for(i = 0; i < len_m2; i++) {
             data['charMat'][upper_curr_row][left_curr_col + i] = "▀";
             data['charMat'][upper_curr_row][right_curr_col - i] = "▀";
@@ -167,6 +175,7 @@ export function drawEllipse(data: any, index: number): void {
         lower_curr_row += 1;
         left_curr_col += len_m2;
 
+        // Placing the top layer: m
         for(i = 0; i < len_m; i++) {
             data['charMat'][upper_curr_row][left_curr_col + i] = "▄";
             data['charMat'][lower_curr_row][left_curr_col + i] = "▀";
@@ -178,6 +187,7 @@ export function drawEllipse(data: any, index: number): void {
         upper_curr_row = row_start + 1;
         lower_curr_row = row_end - 3;
 
+        // Placing the 1x1 blocks
         let even_block: boolean = false;
         for(i = 0; i < num_1x1; i++) {
             if(even_block) {
@@ -205,7 +215,7 @@ export function drawEllipse(data: any, index: number): void {
             }
         }
 
-
+        // Placing the main blocks
         let middle_block_row = Math.floor(num_main_blocks + (2 + num_1x1) / 2 + row_start); 
         for(i = 1; i <= num_main_blocks; i++) {
             data['charMat'][middle_block_row - i][col_start + i] = "█";
