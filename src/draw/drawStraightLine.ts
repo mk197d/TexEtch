@@ -13,7 +13,7 @@ export function drawStraightLine(data: any, index: number): void {
 
     for(let i = 0; i < points.length; i++) {
         points[i][0] -= limit.x_min;
-        points[i][1] -= limit.y_min;
+        points[i][1] -= (limit.y_min + 1);
     }
 
     let hz_char = "─";

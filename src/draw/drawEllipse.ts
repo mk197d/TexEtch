@@ -10,7 +10,8 @@
 //          ▀▀▀▀▀▀▀▀  
 
 
-export function drawEllipse(data: any, index: number): void {
+export function drawEllipse(data: any, index: number): void {   
+  
     const limit = data['limit'];
 
     let upperLeft_x = data['fig'][index].upperLeft_x;

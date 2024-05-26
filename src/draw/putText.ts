@@ -89,7 +89,7 @@ export function putText(data: any, index: number): void {
 
     for(let i = 0; i < num_tokens; i++) {
         for(let j = 0; j < tokens[i].length; j++) {
-            data['charMat'][token_rows[i] + 1][token_cols[i] + j + 1] = tokens[i][j];
+            data['charMat'][token_rows[i]][token_cols[i] + j] = tokens[i][j];
         }
     }
 }
