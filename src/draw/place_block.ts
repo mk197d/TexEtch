@@ -16,6 +16,7 @@ export async function placeBlock(charMat: string[][]) {
     let out_text: string = '';
 
     if(selected_text?.isEmpty === true) {
+        console.log(charMat.length);
         for(let i = 0; i < charMat.length; i++) {
 
             out_text = out_text.concat(separating_str);

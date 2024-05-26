@@ -1,20 +1,8 @@
-
-//          ▄▄▄▄▄▄▄▄
-//     ▄▄▀▀▀        ▀▀▀▄▄                               
-//   ▄▀                  ▀▄  
-//  █                      █                      
-// █     I am a ellipse     █            13x9 {26 x 8}
-//  █                      █ 
-//   ▀▄                  ▄▀
-//     ▀▀▄▄▄        ▄▄▄▀▀    
-//          ▀▀▀▀▀▀▀▀  
-
-
 export function drawEllipse(data: any, index: number): void {   
   
     const limit = data['limit'];                        //                                                                                     
-                                                        //                                                                                     
-    let upperLeft_x = data['fig'][index].upperLeft_x;   //  ╔═══════¦═════════════════│════════════════════════════════Drawing═Space════╗      
+                                                        //  ╔═══════════════════════════════════════════════════════════════════════════╗      
+    let upperLeft_x = data['fig'][index].upperLeft_x;   //  ║       ¦                 │                                Drawing Space    ║      
     let upperLeft_y = data['fig'][index].upperLeft_y;   //  ║       ¦                 │                                                 ║      
                                                         //  ║       ¦                 │                                                 ║      
     let vertical_axis = data['fig'][index].height;      //  ║-------¦-------------------------------------------------------------------║      
@@ -23,48 +11,46 @@ export function drawEllipse(data: any, index: number): void {
                                                         //  ║       ¦                 │                                   │             ║      
     let col_start = upperLeft_x - limit['x_min'];       //  ║       ¦                 │ upperLeft_y                       │             ║      
     let col_end = col_start + width;                    //  ║       ¦                 ▼                                   ▼             ║      
-                                                        //  ║───────¦───────────────>                              limit['y_min]        ║      
-    let row_start = upperLeft_y - limit['y_min'];       //  ║       ¦                 ╔═══════Figure══╗       (minimum y of any fig.)   ║      
-    let row_end = row_start + height;                   //  ║       ¦   upperLeft_x   ║               ║                 /div            ║      
-                                                        //  ║       ¦                 ║               ║                                 ║      
+                                                        //  ║───────¦───────────────> ╔═══════════════╗            limit['y_min]        ║      
+    let row_start = upperLeft_y - limit['y_min'];       //  ║       ¦   upperLeft_x   ║       Figure  ║       (minimum y of any fig.)   ║      
+    let row_end = row_start + height;                   //  ║       ¦                 ║               ║                                 ║      
                                                         //  ║       ¦                 ║               ║                                 ║      
                                                         //  ║       ¦                 ║               ║                                 ║      
                                                         //  ║       ¦                 ║               ║                                 ║      
                                                         //  ║       ¦                 ║               ║                                 ║      
                                                         //  ║       ¦                 ╚═══════════════╝                                 ║      
+                                                        //  ║       ¦                                                                   ║      
                                                         //  ║       ¦                      limit['x_min]                                ║      
-                                                        //  ║       ¦  ─────────(minimum x coordinate of any figure)                    ║      
-                                                        //  ║       ¦                           /div                                    ║      
-                                                        //  ║                                                                           ║      
-                                                        //  ╚═══════════════════════════════════════════════════════════════════════════╝      
-                                                        //                                                                                     
-                                                        //                                                                                     
+                                                        //  ║       ¦  ────────>(minimum x coordinate of any figure)                    ║      
+                                                        //  ║       ¦                                                                   ║      
+                                                        //  ╚═══════════════════════════════════════════════════════════════════════════╝     
+                                                        
+                                                                                                                
+    let num_main_blocks = -1;                                                //                                                                                                           
+                                                                             //                                                                                                           
+    let num_1x1 = 2 + height % 2;                                            //                                                                                                           
+    if(height < 6) {                                                         //                ╭───── m : top block                                                                       
+        num_1x1 = 0;                                                         //                │     m1: first layer                                                                      
+        num_main_blocks = 0;                                                 //                ▼     m2: second layer                                                                     
+    } else if(height === 6) {                                                //                                                                                                       
+        num_main_blocks = 0;                                                 //         ▄▄▄▀▀▀▀▀▀▀▀▀▀▄▄▄                                                                                  
+        num_1x1 = 2;                                                         //      ▄▀▀                ▀▀▄                                                                               
+    } else if(height > 6) {                                                  //    ▄▀                      ▀▄    ▲                                                                        
+        num_main_blocks = Math.floor((height - 6) / 2);                      //   █                          █   │                                                                        
+    }                                                                        //  █          ELLIPSE           █  │ main_blocks                                                            
+                                                                             //   █                          █   │                                                                        
+    let len_m1, len_m2, len_m;                                               //    ▀▄                      ▄▀    ▼                                                                        
+    len_m1 = 2;                                                              //      ▀▄▄                ▄▄▀  ▲                                                                            
+    len_m2 = 2;                                                              //         ▀▀▀▄▄▄▄▄▄▄▄▄▄▀▀▀     │                                                                            
+    len_m = width - 2 * (1 + num_main_blocks + num_1x1 + len_m1 + len_m2);   //                              │                                                                            
+    if(len_m >= 6) {                                                         //                              ╰─── 1x1 blocks                                                              
+        len_m2 = 3;                                                          //                                                                                                           
+        len_m -= 2;                                                          //                                                                                                           
+    }                                                                        //                                                                                                           
 
-    
-    let num_main_blocks = -1;
-    
-    let num_1x1 = 2 + height % 2;
-    if(height < 6) {
-        num_1x1 = 0;
-        num_main_blocks = 0;
-    } else if(height === 6) {
-        num_main_blocks = 0;
-        num_1x1 = 2;
-    } else if(height > 6) {
-        num_main_blocks = Math.floor((height - 6) / 2);
-    }
-    
-    let len_m1, len_m2, len_m;
-    len_m1 = 2;
-    len_m2 = 2;
-    len_m = width - 2 * (1 + num_main_blocks + num_1x1 + len_m1 + len_m2);
-    if(len_m >= 6) {
-        len_m2 = 3;
-        len_m -= 2;
-    }
-        
-    let i: number, j: number;
+    let i: number;
 
+    // Positioning of the blocks differ when the length of vertical axis is even and odd:
     // even vertical_axis
     if(vertical_axis % 2 === 0) {
         let left_curr_col = num_1x1 + num_main_blocks + 1 + col_start;
