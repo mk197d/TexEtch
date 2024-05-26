@@ -12,20 +12,34 @@
 
 export function drawEllipse(data: any, index: number): void {   
   
-    const limit = data['limit'];
+    const limit = data['limit'];                        //                                                                                     
+                                                        //                                                                                     
+    let upperLeft_x = data['fig'][index].upperLeft_x;   //  ╔═══════¦═════════════════│════════════════════════════════Drawing═Space════╗      
+    let upperLeft_y = data['fig'][index].upperLeft_y;   //  ║       ¦                 │                                                 ║      
+                                                        //  ║       ¦                 │                                                 ║      
+    let vertical_axis = data['fig'][index].height;      //  ║-------¦-------------------------------------------------------------------║      
+    let height = vertical_axis - 1;                     //  ║       ¦                 │                                                 ║      
+    let width = data['fig'][index].width;               //  ║       ¦                 │                                   │             ║      
+                                                        //  ║       ¦                 │                                   │             ║      
+    let col_start = upperLeft_x - limit['x_min'];       //  ║       ¦                 │ upperLeft_y                       │             ║      
+    let col_end = col_start + width;                    //  ║       ¦                 ▼                                   ▼             ║      
+                                                        //  ║───────¦───────────────>                              limit['y_min]        ║      
+    let row_start = upperLeft_y - limit['y_min'];       //  ║       ¦                 ╔═══════Figure══╗       (minimum y of any fig.)   ║      
+    let row_end = row_start + height;                   //  ║       ¦   upperLeft_x   ║               ║                 /div            ║      
+                                                        //  ║       ¦                 ║               ║                                 ║      
+                                                        //  ║       ¦                 ║               ║                                 ║      
+                                                        //  ║       ¦                 ║               ║                                 ║      
+                                                        //  ║       ¦                 ║               ║                                 ║      
+                                                        //  ║       ¦                 ║               ║                                 ║      
+                                                        //  ║       ¦                 ╚═══════════════╝                                 ║      
+                                                        //  ║       ¦                      limit['x_min]                                ║      
+                                                        //  ║       ¦  ─────────(minimum x coordinate of any figure)                    ║      
+                                                        //  ║       ¦                           /div                                    ║      
+                                                        //  ║                                                                           ║      
+                                                        //  ╚═══════════════════════════════════════════════════════════════════════════╝      
+                                                        //                                                                                     
+                                                        //                                                                                     
 
-    let upperLeft_x = data['fig'][index].upperLeft_x;
-    let upperLeft_y = data['fig'][index].upperLeft_y;
-
-    let vertical_axis = data['fig'][index].height;
-    let height = vertical_axis - 1;
-    let width = data['fig'][index].width;
-
-    let col_start = upperLeft_x - limit['x_min'];   
-    let col_end = col_start + width;
-
-    let row_start = upperLeft_y - limit['y_min'];
-    let row_end = row_start + height;
     
     let num_main_blocks = -1;
     

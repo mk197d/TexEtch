@@ -16,7 +16,7 @@ export function drawRectangle(data: any, index: number): void {
     let col_start = upperLeft_x - limit['x_min'];
     let col_end = col_start + width;
 
-    let row_start = upperLeft_y - limit['y_min'];
+    let row_start = upperLeft_y - limit['y_min'] - 1;
     let row_end = row_start + height;
 
     console.log('Box dimensions: (', row_start, ', ', col_start, '), (', row_end, ', ', col_end, ')');
