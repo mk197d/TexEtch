@@ -53,6 +53,7 @@ export async function placeBlock(charMat: string[][]) {
                 const curr_line = ActiveEditor?.document.lineAt(i + start_line_num).text || '';
 
                 out_text = out_text.concat(curr_line);
+                out_text = out_text.concat('\n');
             }
         } else {
             for(let i = 0; i < num_lines; i++) {

@@ -11,12 +11,8 @@ export function drawRectangle(data: any, index: number): void {
     let col_end = col_start + width;                    //  ║       ¦                 │ upperLeft_y                       │             ║      
                                                         //  ║       ¦                 ▼                                   ▼             ║      
     let row_start = upperLeft_y - limit['y_min'] - 1;   //  ║───────¦───────────────> ╔═══════════════╗            limit['y_min']       ║      
-    let row_end = row_start + height;                   //  ║       ¦                 ║       Figure  ║       (minimum y of any fig.)   ║      
-                                                        //  ║       ¦   upperLeft_x   ║               ║                                 ║      
-                                                        //  ║       ¦                 ║               ║                                 ║      
-                                                        //  ║       ¦                 ║               ║                                 ║      
-                                                        //  ║       ¦                 ║               ║                                 ║      
-                                                        //  ║       ¦                 ║               ║                                 ║      
+    let row_end = row_start + height;                   //  ║       ¦   upperLeft_x   ║       Figure  ║       (minimum y of any fig.)   ║      
+                                                        //  ║       ¦                 ║               ║                                 ║          
                                                         //  ║       ¦                 ╚═══════════════╝                                 ║      
                                                         //  ║       ¦                                                                   ║      
                                                         //  ║       ¦                      limit['x_min']                               ║      

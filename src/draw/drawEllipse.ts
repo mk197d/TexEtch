@@ -13,11 +13,7 @@ export function drawEllipse(data: any, index: number): void {
     let col_end = col_start + width;                    //  ║       ¦                 ▼                                   ▼             ║      
                                                         //  ║───────¦───────────────> ╔═══════════════╗            limit['y_min]        ║      
     let row_start = upperLeft_y - limit['y_min'];       //  ║       ¦   upperLeft_x   ║       Figure  ║       (minimum y of any fig.)   ║      
-    let row_end = row_start + height;                   //  ║       ¦                 ║               ║                                 ║      
-                                                        //  ║       ¦                 ║               ║                                 ║      
-                                                        //  ║       ¦                 ║               ║                                 ║      
-                                                        //  ║       ¦                 ║               ║                                 ║      
-                                                        //  ║       ¦                 ║               ║                                 ║      
+    let row_end = row_start + height;                   //  ║       ¦                 ║               ║                                 ║         
                                                         //  ║       ¦                 ╚═══════════════╝                                 ║      
                                                         //  ║       ¦                                                                   ║      
                                                         //  ║       ¦                      limit['x_min]                                ║      

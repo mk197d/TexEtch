@@ -1,26 +1,26 @@
 export function drawStraightLine(data: any, index: number): void {
     const limit = data['limit'];
 
-    let points = data['fig'][index].line.path;
-    let hz_segs: [[number, number], [number, number]][] = [];
-    let vc_segs: [[number, number], [number, number]][] = [];
-
-    let connectors: [string, [number, number]][] = [];
-    let orientation: string[] = [];
-
-    let startArrow = data['fig'][index].line.startArrow;
-    let endArrow = data['fig'][index].line.endArrow;
-
-    for(let i = 0; i < points.length; i++) {
-        points[i][0] -= limit.x_min;
-        points[i][1] -= (limit.y_min + 1);
-    }
-
-    let hz_char = "─";
-    let vc_char = "│";
-
-    if(data['fig'][index].line.dashPattern === "flexArrow") {
-        hz_char = "═";
+    let points = data['fig'][index].line.path;                  //                                                                                           
+    let hz_segs: [[number, number], [number, number]][] = [];   //                                                                                           
+    let vc_segs: [[number, number], [number, number]][] = [];   //                                                          horizontal segment               
+                                                                //                <─────────────╮  ─────> point             orientation: Right               
+    let connectors: [string, [number, number]][] = [];          //                              │                                                            
+    let orientation: string[] = [];                             //                │             │                                    ▲                       
+                                                                //                │             │                                    │                       
+    let startArrow = data['fig'][index].line.startArrow;        //                ▼             │                                    │                       
+    let endArrow = data['fig'][index].line.endArrow;            //            startArrow        │                   ╭─────────────────────────────────────╮  
+                                                                //                              │                   │                                     │  
+    for(let i = 0; i < points.length; i++) {                    //                              │                   │                                     │  
+        points[i][0] -= limit.x_min;                            //                              │                   │                                     │  
+        points[i][1] -= (limit.y_min + 1);                      //                              │                   │        connectors                   │  
+    }                                                           //     vertical segment <─────  │                   │             ▲                       │  
+                                                                //    orientation: Down         │                   │             │                       │  
+    let hz_char = "─";                                          //                              ╰───────────────────╯  ───────────╯      endArrow  <───── ▼  
+    let vc_char = "│";                                          //                                                                                           
+                                                                //                                                                                           
+    if(data['fig'][index].line.dashPattern === "flexArrow") {   //                                                                                           
+        hz_char = "═";                                          //                                                                                           
         vc_char = "║";
     } else if(data['fig'][index].line.dashPattern === "1 3") {
         hz_char = "-";

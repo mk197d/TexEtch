@@ -1,11 +1,24 @@
 export function putText(data: any, index: number): void {
-    const limit = data['limit'];
-
-    let upperLeft_x = data['fig'][index].upperLeft_x;
-    let upperLeft_y = data['fig'][index].upperLeft_y;
-
-    let height = data['fig'][index].height;
-    let width = data['fig'][index].width;
+    const limit = data['limit'];                        //                                                                                     
+                                                        //  ╔═══════════════════════════════════════════════════════════════════════════╗      
+    let upperLeft_x = data['fig'][index].upperLeft_x;   //  ║       ¦                 │                                Drawing Space    ║      
+    let upperLeft_y = data['fig'][index].upperLeft_y;   //  ║       ¦                 │                                                 ║      
+                                                        //  ║       ¦                 │                                                 ║      
+    let height = data['fig'][index].height;             //  ║-------¦-------------------------------------------------------------------║      
+    let width = data['fig'][index].width;               //  ║       ¦                 │                                                 ║      
+                                                        //  ║       ¦                 │                                   │             ║      
+                                                        //  ║       ¦                 │                                   │             ║      
+                                                        //  ║       ¦                 │ upperLeft_y                       │             ║      
+                                                        //  ║       ¦                 ▼                                   ▼             ║      
+                                                        //  ║───────¦───────────────> ╔═══════════════╗            limit['y_min']       ║      
+                                                        //  ║       ¦   upperLeft_x   ║       Figure  ║       (minimum y of any fig.)   ║      
+                                                        //  ║       ¦                 ║               ║                                 ║          
+                                                        //  ║       ¦                 ╚═══════════════╝                                 ║      
+                                                        //  ║       ¦                                                                   ║      
+                                                        //  ║       ¦                      limit['x_min']                               ║      
+                                                        //  ║       ¦  ────────>(minimum x coordinate of any figure)                    ║      
+                                                        //  ║       ¦                                                                   ║      
+                                                        //  ╚═══════════════════════════════════════════════════════════════════════════╝      
 
     let divisons = data['fig'][index].text.divisons;
 
