@@ -8,7 +8,7 @@ import { putText } from '../draw/putText';
 import { drawCircleSmall } from '../draw/drawCircleSmall';
 import { drawCircleLarge } from '../draw/drawCircleLarge';
 import { drawEllipse } from '../draw/drawEllipse';
-import { drawStraightLine } from '../draw/drawStraightLine';
+import { drawLine } from '../draw/drawLine';
 
 
 export function produceOutput(data: Data) {
@@ -39,7 +39,7 @@ export function produceOutput(data: Data) {
                     drawEllipse(data, i);
                     break;
                 case "line":
-                    drawStraightLine(data, i);
+                    drawLine(data, i);
                     break;
                 default:
                     vscode.window.showWarningMessage("Unknown Figure Detected!!");

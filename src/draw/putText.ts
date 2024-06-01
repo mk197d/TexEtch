@@ -1,43 +1,42 @@
 export function putText(data: any, index: number): void {
-    const limit = data['limit'];                        //                                                                                     
-                                                        //  ╔═══════════════════════════════════════════════════════════════════════════╗      
-    let upperLeft_x = data['fig'][index].upperLeft_x;   //  ║       ¦                 │                                Drawing Space    ║      
-    let upperLeft_y = data['fig'][index].upperLeft_y;   //  ║       ¦                 │                                                 ║      
-                                                        //  ║       ¦                 │                                                 ║      
-    let height = data['fig'][index].height;             //  ║-------¦-------------------------------------------------------------------║      
-    let width = data['fig'][index].width;               //  ║       ¦                 │                                                 ║      
-                                                        //  ║       ¦                 │                                   │             ║      
-                                                        //  ║       ¦                 │                                   │             ║      
-                                                        //  ║       ¦                 │ upperLeft_y                       │             ║      
-                                                        //  ║       ¦                 ▼                                   ▼             ║      
-                                                        //  ║───────¦───────────────> ╔═══════════════╗            limit['y_min']       ║      
-                                                        //  ║       ¦   upperLeft_x   ║       Figure  ║       (minimum y of any fig.)   ║      
-                                                        //  ║       ¦                 ║               ║                                 ║          
-                                                        //  ║       ¦                 ╚═══════════════╝                                 ║      
-                                                        //  ║       ¦                                                                   ║      
-                                                        //  ║       ¦                      limit['x_min']                               ║      
-                                                        //  ║       ¦  ────────>(minimum x coordinate of any figure)                    ║      
-                                                        //  ║       ¦                                                                   ║      
-                                                        //  ╚═══════════════════════════════════════════════════════════════════════════╝      
+    const limit = data['limit'];                             //                                                                                     
+                                                             //  ╔═══════════════════════════════════════════════════════════════════════════╗      
+    let upperLeft_x = data['fig'][index].upperLeft_x;        //  ║       ¦                 │                                Drawing Space    ║      
+    let upperLeft_y = data['fig'][index].upperLeft_y;        //  ║       ¦                 │                                                 ║      
+                                                             //  ║       ¦                 │                                                 ║      
+    let height = data['fig'][index].height;                  //  ║-------¦-------------------------------------------------------------------║      
+    let width = data['fig'][index].width;                    //  ║       ¦                 │                                                 ║      
+                                                             //  ║       ¦                 │                                   │             ║      
+    let col_start = upperLeft_x - limit['x_min'];            //  ║       ¦                 │                                   │             ║      
+    let col_end = col_start + width;                         //  ║       ¦                 │ upperLeft_y                       │             ║      
+                                                             //  ║       ¦                 ▼                                   ▼             ║      
+    let row_start = upperLeft_y - limit['y_min'];            //  ║───────¦───────────────> ╔═══════════════╗            limit['y_min']       ║      
+    let row_end = row_start + height;                        //  ║       ¦   upperLeft_x   ║       Figure  ║       (minimum y of any fig.)   ║      
+                                                             //  ║       ¦                 ║               ║                                 ║      
+                                                             //  ║       ¦                 ╚═══════════════╝                                 ║      
+                                                             //  ║       ¦                                                                   ║      
+                                                             //  ║       ¦                      limit['x_min']                               ║      
+                                                             //  ║       ¦  ────────>(minimum x coordinate of any figure)                    ║      
+                                                             //  ╚═══════════════════════════════════════════════════════════════════════════╝      
 
+    // divisions (2D matrix of strings): partition of the text block into
+    // smaller blocks which are written contiguously (without '\n')
     let divisons = data['fig'][index].text.divisons;
 
+    // tokens (1D Array of strings): array of all the words in the text block
     let tokens: string[] = [];
 
     let verticalAlign = data['fig'][index].text.verticalAlign;
     let align = data['fig'][index].text.align;
 
-    let col_start = upperLeft_x - limit['x_min'];
-    let col_end = col_start + width;
-
-    let row_start = upperLeft_y - limit['y_min'];
-    let row_end = row_start + height;
-
-
+    // token_rows: stores the row number of each token
     let token_rows: number[] = [];
+
+    // token_cols: stores the column number of each token
     let token_cols: number[] = [];
 
-    let num_calc = 0;
+    // Assigning the row and column number to each token assuming
+    // verticalAlign === top && align === left 
     let curr_row = row_start, curr_col = col_start;
     for(let i = 0; i < divisons.length; i++) {
         for(let j = 0; j < divisons[i].length; j++) {
@@ -74,7 +73,7 @@ export function putText(data: any, index: number): void {
         token_rows[i] += verticalShift;
     }
 
-    num_calc = 0;
+    let num_calc = 0;
     let row_end_token, horizontal_shift;
     while(num_calc < num_tokens) {
         row_end_token = num_calc;
