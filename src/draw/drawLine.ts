@@ -193,7 +193,9 @@ export function drawLine(data: any, index: number): void {
                                     }
                                 }
 
-                            } else if(i === total_pieces - 1) {
+                            } 
+                            
+                            if(i === total_pieces - 1) {
                                 if(segment[3] === 1) {
                                     if(curr_x === end_point[0]) {
                                         connectors[segment[2] + 1].line_in.x = 0;
@@ -246,7 +248,9 @@ export function drawLine(data: any, index: number): void {
                                 }
                             }
 
-                        } else if(i === total_pieces - 1) {
+                        }
+                        
+                        if(i === total_pieces - 1) {
                             if(segment[3] === 1) {
                                 if(curr_x === end_point[0]) {
                                     connectors[segment[2] + 1].line_in.x = 1;
@@ -318,7 +322,9 @@ export function drawLine(data: any, index: number): void {
                                     }
                                 }
 
-                            } else if(i === total_pieces - 1) {
+                            }
+                            
+                            if(i === total_pieces - 1) {
                                 if(segment[3] === 1) {
                                     if(curr_y === end_point[1]) {
                                         connectors[segment[2] + 1].line_in.x = 0;
@@ -346,7 +352,7 @@ export function drawLine(data: any, index: number): void {
                 if(i < total_pieces) {
                     if(i !== 0) {
                         data['charMat'][curr_y][curr_x] = "╱";
-                        if(i === 1) {
+                        if(i === 1 && i) {
                             if(segment[3] === 1) {
                                 if(curr_y === start_point[1]) {
                                     connectors[segment[2]].line_out.x = 1;
@@ -370,7 +376,9 @@ export function drawLine(data: any, index: number): void {
                                 }
                             }
 
-                        } else if(i === total_pieces - 1) {
+                        }
+                        
+                        if(i === total_pieces - 1) {
                             if(segment[3] === 1) {
                                 if(curr_y === end_point[1]) {
                                     connectors[segment[2] + 1].line_in.x = 0;
@@ -384,6 +392,8 @@ export function drawLine(data: any, index: number): void {
                                 
                             } else if(segment[3] === 0) {
                                 if(curr_y === start_point[1]) {
+                                    connectors[segment[2] + 1].line_in.x = 0;
+                                    connectors[segment[2] + 1].line_in.y = 0;
                                     // connectors[segment[2]].line_out = [0, 1];
                                 } else {
                                     connectors[segment[2]].line_out.x = 0;
@@ -465,7 +475,9 @@ export function drawLine(data: any, index: number): void {
                                     }
                                 }
     
-                            } else if(i === total_pieces - 1) {
+                            } 
+                            
+                            if(i === total_pieces - 1) {
                                 if(segment[3] === 1) {
                                     if(curr_x === end_point[0]) {
                                         connectors[segment[2] + 1].line_in.x = 1;
@@ -517,7 +529,9 @@ export function drawLine(data: any, index: number): void {
                                 }
                             }
 
-                        } else if(i === total_pieces - 1) {
+                        } 
+                        
+                        if(i === total_pieces - 1) {
                             if(segment[3] === 1) {
                                 if(curr_x === end_point[0]) {
                                     connectors[segment[2] + 1].line_in.x = 0;
@@ -588,7 +602,9 @@ export function drawLine(data: any, index: number): void {
                                     }
                                 }
     
-                            } else if(i === total_pieces - 1) {
+                            } 
+                            
+                            if(i === total_pieces - 1) {
                                 if(segment[3] === 1) {
                                     if(curr_y === end_point[1]) {
                                         connectors[segment[2] + 1].line_in.x = 1;
@@ -641,7 +657,9 @@ export function drawLine(data: any, index: number): void {
                                 }
                             }
 
-                        } else if(i === total_pieces - 1) {
+                        } 
+                        
+                        if(i === total_pieces - 1) {
                             if(segment[3] === 1) {
                                 if(curr_y === end_point[1]) {
                                     // connectors[segment[2] + 1].line_in = [0, 1];

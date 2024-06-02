@@ -2,7 +2,10 @@
 
 # TexEtch
 
-TexEtch is a Visual Studio Code extension designed to convert diagrams drawn in [draw.io](https://app.diagrams.net/) into text format. This text format can be easily integrated into your code base to provide better explanations and documentation for your code.
+TexEtch is a Visual Studio Code extension designed to convert diagrams drawn in [draw.io](https://app.diagrams.net/) into text format. This text format can be easily integrated into your code base to provide better explanations and documentation for your code.<br>
+
+**Just an example**
+  ![Landscape](Landscape.png)
 
 ## Features
 
@@ -40,7 +43,7 @@ The extension can be installed from Visual Studio Code Marketplace.
 
 ## Supported Figures
 
-- **Horizontal and Vertical lines**: Line, Dashed Line, Dotted Line, Directional and Bidirectional Connector and Arrow.
+- **Lines**: Line, Dashed Line, Dotted Line, Directional and Bidirectional Connector and Arrow. With slanted lines added, you can possibly draw anything!
 ![Lines](Lines3.png)
 
 - **Circle and Ellipse**
@@ -60,7 +63,7 @@ The extension can be installed from Visual Studio Code Marketplace.
 Please don't use arrows which originate directly from figures like shown below:<br>
 ![notArrow](notArrow.png)
 
-**Support for slanted lines, curves and other figures coming soon in future versions**
+**Support for curves and other figures coming soon in future versions**
 
 ## Examples
 
@@ -78,6 +81,3 @@ Please don't use arrows which originate directly from figures like shown below:<
 
 - Algorithm on arrays<br>
   ![ex1](ex1.png)
-
-- Just for fun..<br>
-  ![ex5](ex5.png)

@@ -39,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
 					})
 					.then(() => { 						
 						placeBlock(data['charMat']);
-					});		
+						});		
 				} catch(err) {
 					vscode.window.showErrorMessage("File input and parsing failed. Please check the selected file format.");
 				}
