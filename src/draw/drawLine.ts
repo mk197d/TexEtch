@@ -1,17 +1,23 @@
+import { LineConnect } from "../interfaces/LineConnect";
+import { connectorMap } from "./connectorMap";
+
 export function drawLine(data: any, index: number): void {
     const limit = data['limit'];
 
     let points = data['fig'][index].line.path;
     let end_index = points.length - 1;
 
-    let forward_segs: [[number, number], [number, number]][] = [];
-    let backward_segs: [[number, number], [number, number]][] = [];
+    let forward_segs: [[number, number], [number, number], number, number][] = [];
+    let backward_segs: [[number, number], [number, number], number, number][] = [];
 
-    let hz_segs: [[number, number], [number, number]][] = []; 
-    let vc_segs: [[number, number], [number, number]][] = [];
-                                                   
-    let connectors: [string, [number, number]][] = []; 
-    let orientation: string[] = [];            
+    let hz_segs: [[number, number], [number, number], number][] = []; 
+    let vc_segs: [[number, number], [number, number], number][] = [];
+                                               
+    let connectors: LineConnect[] = Array.from({ length: points.length }, () => ({
+        line_in: {x: 0, y: 0},
+        line_out: {x: 0, y: 0},
+        connectChar: ''
+    }));         
                                                
     let startArrow = data['fig'][index].line.startArrow;  
     let endArrow = data['fig'][index].line.endArrow;
@@ -48,112 +54,58 @@ export function drawLine(data: any, index: number): void {
 
     for(let i = 0; i < end_index; i++) {
         if(points[i][0] === points[i + 1][0]) {
-            vc_segs.push([points[i], points[i + 1]]);
+            vc_segs.push([points[i], points[i + 1], i]);
 
             if(points[i][1] > points[i + 1][1]) {
-                orientation.push("U");
+                connectors[i].line_out.x = 0.5;
+                connectors[i].line_out.y = 0;
+
+                connectors[i + 1].line_in.x = 0.5;
+                connectors[i + 1].line_in.y = 1;
+
             } else {
-                orientation.push("D");
+                connectors[i].line_out.x = 0.5;
+                connectors[i].line_out.y = 1;
+
+                connectors[i + 1].line_in.x = 0.5;
+                connectors[i + 1].line_in.y = 0;
+
+                // connectors[i].line_out = [0.5, 1];
+                // connectors[i + 1].line_in = [0.5, 0];
             }
             
         } else if(points[i][1] === points[i + 1][1]) {
-            hz_segs.push([points[i], points[i + 1]]);
+            hz_segs.push([points[i], points[i + 1], i]);
             
             if(points[i][0] > points[i + 1][0]) {
-                orientation.push("L");
+                connectors[i].line_out.x = 0;
+                connectors[i].line_out.y = 0.5;
+
+                connectors[i + 1].line_in.x = 1;
+                connectors[i + 1].line_in.y = 0.5;
+                // connectors[i].line_out = [0, 0.5];
+                // connectors[i + 1].line_in = [1, 0.5];
             } else {
-                orientation.push("R");
+                connectors[i].line_out.x = 1;
+                connectors[i].line_out.y = 0.5;
+
+                connectors[i + 1].line_in.x = 0;
+                connectors[i + 1].line_in.y = 0.5;
+                // connectors[i].line_out = [1, 0.5];
+                // connectors[i + 1].line_in = [0, 0.5];
             }
 
         } else if(points[i][0] < points[i + 1][0] && points[i][1] > points[i + 1][1]) {
-            forward_segs.push([points[i], points[i + 1]]);
-            orientation.push("FU");
+            forward_segs.push([points[i], points[i + 1], i, 1]);
 
         } else if(points[i][0] > points[i + 1][0] && points[i][1] < points[i + 1][1]) {
-            forward_segs.push([points[i + 1], points[i]]);
-            orientation.push("FD");
+            forward_segs.push([points[i + 1], points[i], i, 0]);
 
         } else if(points[i][0] < points[i + 1][0] && points[i][1] < points[i + 1][1]) {
-            backward_segs.push([points[i], points[i + 1]]);
-            orientation.push("BD");
+            backward_segs.push([points[i], points[i + 1], i, 0]);
 
         } else if(points[i][0] > points[i + 1][0] && points[i][1] > points[i + 1][1]) {
-            backward_segs.push([points[i + 1], points[i]]);
-            orientation.push("BU");
-
-        }
-    }
-
-    // Placing the connectors at the points where line changes direction 
-    // calculated from the orientation of initial and final segments
-    for(let i = 0; i < orientation.length; i++) {
-        switch(orientation[i]) {
-            case "D":
-                if(orientation[i + 1] === "L") {
-                    connectors.push(["╯", points[i + 1]]);
-                } else if(orientation[i + 1] === "R") {
-                    connectors.push(["╰", points[i + 1]]);
-                }
-                break;
-
-            case "U":
-                if(orientation[i + 1] === "L") {
-                    connectors.push(["╮", points[i + 1]]);
-                } else if(orientation[i + 1] === "R") {
-                    connectors.push(["╭", points[i + 1]]);
-                }
-                break;
-
-            case "L":
-                if(orientation[i + 1] === "D") {
-                    connectors.push(["╭", points[i + 1]]);
-                } else if(orientation[i + 1] === "U") {
-                    connectors.push(["╰", points[i + 1]]);
-                }
-                break;
-                
-            case "R":
-                if(orientation[i + 1] === "D") {
-                    connectors.push(["╮", points[i + 1]]);
-                } else if(orientation[i + 1] === "U") {
-                    connectors.push(["╯", points[i + 1]]);
-                }
-                break;
-                
-            // case "FU":
-            //     if(orientation[i + 1] === "BD") {
-            //         connectors.push(["◠", points[i + 1]]);
-            //     } else if(orientation[i + 1] === "BU") {
-            //         connectors.push([")", points[i + 1]]);
-            //     }
-            //     break;
-
-            // case "FD":
-            //     if(orientation[i + 1] === "BD") {
-            //         connectors.push(["(", points[i + 1]]);
-            //     } else if(orientation[i + 1] === "BU") {
-            //         connectors.push(["◡", points[i + 1]]);
-            //     }
-            //     break;
-            
-            // case "BD":
-            //     if(orientation[i + 1] === "FD") {
-            //         connectors.push([")", points[i + 1]]);
-            //     } else if(orientation[i + 1] === "FU") {
-            //         connectors.push(["◡", points[i + 1]]);
-            //     }
-            //     break;
-            
-            // case "BU":
-            //     if(orientation[i + 1] === "FD") {
-            //         connectors.push(["◠", points[i + 1]]);
-            //     } else if(orientation[i + 1] === "FU") {
-            //         connectors.push(["(", points[i + 1]]);
-            //     }
-            //     break;
-
-            default:
-                break;
+            backward_segs.push([points[i + 1], points[i], i, 1]);
         }
     }
 
@@ -181,6 +133,9 @@ export function drawLine(data: any, index: number): void {
 
     //
     forward_segs.forEach((segment: any) => {
+        let start_point = points[segment[2]];
+        let end_point = points[segment[2] + 1];
+        
         let sx = Math.min(segment[0][0], segment[1][0]);
         let ex = Math.max(segment[0][0], segment[1][0]);
         let sy = Math.max(segment[0][1], segment[1][1]);
@@ -214,15 +169,107 @@ export function drawLine(data: any, index: number): void {
                     if(i < total_pieces) {
                         if(i !== 0) {
                             data['charMat'][curr_y][curr_x] = "▏";
+                            if(i === 1) {
+                                if(segment[3] === 1) {
+                                    if(curr_x === start_point[0]) {
+                                        connectors[segment[2]].line_out.x = 0;
+                                        connectors[segment[2]].line_out.y = 0;
+                                        // connectors[segment[2]].line_out = [0, 0];
+                                    } else {
+                                        connectors[segment[2]].line_out.x = 1;
+                                        connectors[segment[2]].line_out.y = 0;
+                                        // connectors[segment[2]].line_out = [1, 0];
+                                    }
+                                    
+                                } else if(segment[3] === 0) {
+                                    if(curr_x === end_point[0]) {
+                                        connectors[segment[2] + 1].line_in.x = 0;
+                                        connectors[segment[2] + 1].line_in.y = 0;
+                                        // connectors[segment[2] + 1].line_in = [0, 0];
+                                    } else {
+                                        connectors[segment[2] + 1].line_in.x = 1;
+                                        connectors[segment[2] + 1].line_in.y = 0;
+                                        // connectors[segment[2] + 1].line_in = [1, 0];
+                                    }
+                                }
+
+                            } else if(i === total_pieces - 1) {
+                                if(segment[3] === 1) {
+                                    if(curr_x === end_point[0]) {
+                                        connectors[segment[2] + 1].line_in.x = 0;
+                                        connectors[segment[2] + 1].line_in.y = 1;
+                                        // connectors[segment[2] + 1].line_in = [0, 1];
+                                    } else {
+                                        // connectors[segment[2] + 1].line_in = [-1, 1];
+                                    }
+                                    
+                                } else if(segment[3] === 0) {
+                                    if(curr_x === start_point[0]) {
+                                        connectors[segment[2]].line_out.x = 0;
+                                        connectors[segment[2]].line_out.y = 1;
+                                        // connectors[segment[2]].line_out = [0, 1];
+                                    } else {
+                                        // connectors[segment[2]].line_out = [-1, 1];
+                                    }
+                                }
+                            }
                         }
                         curr_y -= 1;
-                        // curr_x += 1;
                         i += 1;
                     }
                 }
+
                 if(i < total_pieces) {
                     if(i !== 0) {
                         data['charMat'][curr_y][curr_x] = "╱";
+                        if(i === 1) {
+                            if(segment[3] === 1) {
+                                if(curr_x === start_point[0]) {
+                                    connectors[segment[2]].line_out.x =0;
+                                    connectors[segment[2]].line_out.y = 0;
+                                    // connectors[segment[2]].line_out = [0, 0];
+                                } else {
+                                    connectors[segment[2]].line_out.x = 1;
+                                    connectors[segment[2]].line_out.y = 0;
+                                    // connectors[segment[2]].line_out = [1, 0];
+                                }
+                                
+                            } else if(segment[3] === 0) {
+                                if(curr_x === end_point[0]) {
+                                    connectors[segment[2] + 1].line_in.x = 0;
+                                    connectors[segment[2] + 1].line_in.y = 0;
+                                    // connectors[segment[2] + 1].line_in = [0, 0];
+                                } else {
+                                    connectors[segment[2] + 1].line_in.x = 1;
+                                    connectors[segment[2] + 1].line_in.y = 0;
+                                    // connectors[segment[2] + 1].line_in = [1, 0];
+                                }
+                            }
+
+                        } else if(i === total_pieces - 1) {
+                            if(segment[3] === 1) {
+                                if(curr_x === end_point[0]) {
+                                    connectors[segment[2] + 1].line_in.x = 1;
+                                    connectors[segment[2] + 1].line_in.y = 1;
+                                    // connectors[segment[2] + 1].line_in = [1, 1];
+                                } else {
+                                    connectors[segment[2] + 1].line_in.x = 0;
+                                    connectors[segment[2] + 1].line_in.y = 1;
+                                    // connectors[segment[2] + 1].line_in = [0, 1];
+                                }
+                                
+                            } else if(segment[3] === 0) {
+                                if(curr_x === start_point[0]) {
+                                    connectors[segment[2]].line_out.x = 1;
+                                    connectors[segment[2]].line_out.y = 1;
+                                    // connectors[segment[2]].line_out = [1, 1];
+                                } else {
+                                    connectors[segment[2]].line_out.x = 0;
+                                    connectors[segment[2]].line_out.y = 1;
+                                    // connectors[segment[2]].line_out = [0, 1];
+                                }
+                            }
+                        }
                     }
                     i += 1;
                     curr_y -= 1;
@@ -247,6 +294,50 @@ export function drawLine(data: any, index: number): void {
                     if(i < total_pieces) {
                         if(i !== 0) {
                             data['charMat'][curr_y][curr_x] = "_";
+                            if(i === 1) {
+                                if(segment[3] === 1) {
+                                    if(curr_y === start_point[1]) {
+                                        connectors[segment[2]].line_out.x = 1;
+                                        connectors[segment[2]].line_out.y = 1;
+                                        // connectors[segment[2]].line_out = [1, 1];
+                                    } else {
+                                        connectors[segment[2]].line_out.x = 1;
+                                        connectors[segment[2]].line_out.y = 0;
+                                        // connectors[segment[2]].line_out = [1, 0];
+                                    }
+                                    
+                                } else if(segment[3] === 0){
+                                    if(curr_y === end_point[1]) {
+                                        connectors[segment[2] + 1].line_in.x = 1;
+                                        connectors[segment[2] + 1].line_in.y = 1;
+                                        // connectors[segment[2] + 1].line_in = [1, 1];
+                                    } else {
+                                        connectors[segment[2] + 1].line_in.x = 1;
+                                        connectors[segment[2] + 1].line_in.y = 0;
+                                        // connectors[segment[2] + 1].line_in = [1, 0];
+                                    }
+                                }
+
+                            } else if(i === total_pieces - 1) {
+                                if(segment[3] === 1) {
+                                    if(curr_y === end_point[1]) {
+                                        connectors[segment[2] + 1].line_in.x = 0;
+                                        connectors[segment[2] + 1].line_in.y = 1;
+                                        // connectors[segment[2] + 1].line_in = [0, 1];
+                                    } else {
+                                        // connectors[segment[2] + 1].line_in = [0, 0];
+                                    }
+                                    
+                                } else if(segment[3] === 0) {
+                                    if(curr_y === start_point[1]) {
+                                        connectors[segment[2]].line_out.x = 0;
+                                        connectors[segment[2]].line_out.y = 1;
+                                        // connectors[segment[2]].line_out = [0, 1];
+                                    } else {
+                                        // connectors[segment[2]].line_out = [1, 0];
+                                    }
+                                }
+                            }
                         }
                         curr_x += 1;
                         i += 1;
@@ -255,6 +346,52 @@ export function drawLine(data: any, index: number): void {
                 if(i < total_pieces) {
                     if(i !== 0) {
                         data['charMat'][curr_y][curr_x] = "╱";
+                        if(i === 1) {
+                            if(segment[3] === 1) {
+                                if(curr_y === start_point[1]) {
+                                    connectors[segment[2]].line_out.x = 1;
+                                    connectors[segment[2]].line_out.y = 1;
+                                    // connectors[segment[2]].line_out = [1, 1];
+                                } else {
+                                    connectors[segment[2]].line_out.x = 1;
+                                    connectors[segment[2]].line_out.y = 0;
+                                    // connectors[segment[2]].line_out = [1, 0];
+                                }
+                                
+                            } else if(segment[3] === 0) {
+                                if(curr_y === end_point[1]) {
+                                    connectors[segment[2] + 1].line_in.x = 1;
+                                    connectors[segment[2] + 1].line_in.y = 1;
+                                    // connectors[segment[2] + 1].line_in = [1, 1];
+                                } else {
+                                    connectors[segment[2] + 1].line_in.x = 1;
+                                    connectors[segment[2] + 1].line_in.y = 0;
+                                    // connectors[segment[2] + 1].line_in = [1, 0];
+                                }
+                            }
+
+                        } else if(i === total_pieces - 1) {
+                            if(segment[3] === 1) {
+                                if(curr_y === end_point[1]) {
+                                    connectors[segment[2] + 1].line_in.x = 0;
+                                    connectors[segment[2] + 1].line_in.y = 0;
+                                    // connectors[segment[2] + 1].line_in = [0, 1];
+                                } else {
+                                    connectors[segment[2] + 1].line_in.x = 0;
+                                    connectors[segment[2] + 1].line_in.y = 1;
+                                    // connectors[segment[2] + 1].line_in = [0, 1];
+                                }
+                                
+                            } else if(segment[3] === 0) {
+                                if(curr_y === start_point[1]) {
+                                    // connectors[segment[2]].line_out = [0, 1];
+                                } else {
+                                    connectors[segment[2]].line_out.x = 0;
+                                    connectors[segment[2]].line_out.y = 1;
+                                    // connectors[segment[2]].line_out = [0, 1];
+                                }
+                            }
+                        }
                     }
                     i += 1;
                     curr_y -= 1;
@@ -268,6 +405,9 @@ export function drawLine(data: any, index: number): void {
 
     //
     backward_segs.forEach((segment: any) => {
+        let start_point = points[segment[2]];
+        let end_point = points[segment[2] + 1];
+
         let sx = Math.min(segment[0][0], segment[1][0]);
         let ex = Math.max(segment[0][0], segment[1][0]);
         let sy = Math.min(segment[0][1], segment[1][1]);
@@ -301,15 +441,106 @@ export function drawLine(data: any, index: number): void {
                     if(i < total_pieces) {
                         if(i !== 0) {
                             data['charMat'][curr_y][curr_x] = "▕";
+                            if(i === 1) {
+                                if(segment[3] === 1) {
+                                    if(curr_x === start_point[0]) {
+                                        connectors[segment[2]].line_out.x = 1;
+                                        connectors[segment[2]].line_out.y = 0;
+                                        // connectors[segment[2]].line_out = [1, 0];
+                                    } else {
+                                        connectors[segment[2]].line_out.x = 0;
+                                        connectors[segment[2]].line_out.y = 0;
+                                        // connectors[segment[2]].line_out = [0, 0];
+                                    }
+                                    
+                                } else if(segment[3] === 0) {
+                                    if(curr_x === end_point[0]) {
+                                        connectors[segment[2] + 1].line_in.x = 1;
+                                        connectors[segment[2] + 1].line_in.y = 0;
+                                        // connectors[segment[2] + 1].line_in = [1, 0];
+                                    } else {
+                                        connectors[segment[2] + 1].line_in.x = 0;
+                                        connectors[segment[2] + 1].line_in.y = 0;
+                                        // connectors[segment[2] + 1].line_in = [0, 0];
+                                    }
+                                }
+    
+                            } else if(i === total_pieces - 1) {
+                                if(segment[3] === 1) {
+                                    if(curr_x === end_point[0]) {
+                                        connectors[segment[2] + 1].line_in.x = 1;
+                                        connectors[segment[2] + 1].line_in.y = 1;
+                                        // connectors[segment[2] + 1].line_in = [1, 1];
+                                    } else {
+                                        // connectors[segment[2] + 1].line_in = [2, 1];
+                                    }
+                                    
+                                } else if(segment[3] === 0) {
+                                    if(curr_x === start_point[0]) {
+                                        connectors[segment[2]].line_out.x = 1;
+                                        connectors[segment[2]].line_out.y = 1;
+                                        // connectors[segment[2]].line_out = [1, 1];
+                                    } else {
+                                        // connectors[segment[2]].line_out = [2, 1];
+                                    }
+                                }
+                            }
                         }
                         curr_y -= 1;
-                        // curr_x -= 1;
                         i += 1;
                     }
                 }
                 if(i < total_pieces) {
                     if(i !== 0) {
                         data['charMat'][curr_y][curr_x] = "╲";
+                        if(i === 1) {
+                            if(segment[3] === 1) {
+                                if(curr_x === start_point[0]) {
+                                    connectors[segment[2]].line_out.x = 1;
+                                    connectors[segment[2]].line_out.y = 0;
+                                    // connectors[segment[2]].line_out = [1, 0];
+                                } else {
+                                    connectors[segment[2]].line_out.x = 0;
+                                    connectors[segment[2]].line_out.y = 0;
+                                    // connectors[segment[2]].line_out = [0, 0];
+                                }
+                                
+                            } else if(segment[3] === 0) {
+                                if(curr_x === end_point[0]) {
+                                    connectors[segment[2] + 1].line_in.x = 1;
+                                    connectors[segment[2] + 1].line_in.y = 0;
+                                    // connectors[segment[2] + 1].line_in = [1, 0];
+                                } else {
+                                    connectors[segment[2] + 1].line_in.x = 0;
+                                    connectors[segment[2] + 1].line_in.y = 0;
+                                    // connectors[segment[2] + 1].line_in = [0, 0];
+                                }
+                            }
+
+                        } else if(i === total_pieces - 1) {
+                            if(segment[3] === 1) {
+                                if(curr_x === end_point[0]) {
+                                    connectors[segment[2] + 1].line_in.x = 0;
+                                    connectors[segment[2] + 1].line_in.y = 1;
+                                    // connectors[segment[2] + 1].line_in = [0, 1];
+                                } else {
+                                    connectors[segment[2] + 1].line_in.x = 1;
+                                    connectors[segment[2] + 1].line_in.y = 1;
+                                    // connectors[segment[2] + 1].line_in = [1, 1];
+                                }
+                                
+                            } else if(segment[3] === 0) {
+                                if(curr_x === start_point[0]) {
+                                    connectors[segment[2]].line_out.x = 0;
+                                    connectors[segment[2]].line_out.y = 1;
+                                    // connectors[segment[2]].line_out = [0, 1];
+                                } else {
+                                    connectors[segment[2]].line_out.x = 1;
+                                    connectors[segment[2]].line_out.y = 1;
+                                    // connectors[segment[2]].line_out = [1, 1];
+                                }
+                            }
+                        }
                     }
                     i += 1;
                     curr_y -= 1;
@@ -333,6 +564,50 @@ export function drawLine(data: any, index: number): void {
                     if(i < total_pieces) {
                         if(i !== 0) {
                             data['charMat'][curr_y][curr_x] = "_";
+                            if(i === 1) {
+                                if(segment[3] === 1) {
+                                    if(curr_y === start_point[1]) {
+                                        connectors[segment[2]].line_out.x = 0;
+                                        connectors[segment[2]].line_out.y = 1;
+                                        // connectors[segment[2]].line_out = [0, 1];
+                                    } else {
+                                        connectors[segment[2]].line_out.x = 0;
+                                        connectors[segment[2]].line_out.y = 0;
+                                        // connectors[segment[2]].line_out = [0, 0];
+                                    }
+                                    
+                                } else if(segment[3] === 0) {
+                                    if(curr_y === end_point[1]) {
+                                        connectors[segment[2] + 1].line_in.x = 0;
+                                        connectors[segment[2] + 1].line_in.y = 1;
+                                        // connectors[segment[2] + 1].line_in = [0, 1];
+                                    } else {
+                                        connectors[segment[2] + 1].line_in.x = 0;
+                                        connectors[segment[2] + 1].line_in.y = 0;
+                                        // connectors[segment[2] + 1].line_in = [0, 0];
+                                    }
+                                }
+    
+                            } else if(i === total_pieces - 1) {
+                                if(segment[3] === 1) {
+                                    if(curr_y === end_point[1]) {
+                                        connectors[segment[2] + 1].line_in.x = 1;
+                                        connectors[segment[2] + 1].line_in.y = 1;
+                                        // connectors[segment[2] + 1].line_in = [1, 1];
+                                    } else {
+                                        // connectors[segment[2] + 1].line_in = [0, 0];
+                                    }
+                                    
+                                } else if(segment[3] === 0) {
+                                    if(curr_y === start_point[1]) {
+                                        connectors[segment[2]].line_out.x = 1;
+                                        connectors[segment[2]].line_out.y = 1;
+                                        // connectors[segment[2]].line_out = [1, 1];
+                                    } else {
+                                        // connectors[segment[2]].line_out = [0, 0];
+                                    }
+                                }
+                            }
                         }
                         curr_x -= 1;
                         i += 1;
@@ -342,6 +617,53 @@ export function drawLine(data: any, index: number): void {
                 if(i < total_pieces) {
                     if(i !== 0) {
                         data['charMat'][curr_y][curr_x] = "╲";
+                        if(i === 1) {
+                            if(segment[3] === 1) {
+                                if(curr_y === start_point[1]) {
+                                    connectors[segment[2]].line_out.x = 0;
+                                    connectors[segment[2]].line_out.y = 1;
+                                    // connectors[segment[2]].line_out = [0, 1];
+                                } else {
+                                    connectors[segment[2]].line_out.x = 0;
+                                    connectors[segment[2]].line_out.y = 0;
+                                    // connectors[segment[2]].line_out = [0, 0];
+                                }
+                                
+                            } else if(segment[3] === 0) {
+                                if(curr_y === end_point[1]) {
+                                    connectors[segment[2] + 1].line_in.x = 0;
+                                    connectors[segment[2] + 1].line_in.y = 1;
+                                    // connectors[segment[2] + 1].line_in = [0, 1];
+                                } else {
+                                    connectors[segment[2] + 1].line_in.x = 0;
+                                    connectors[segment[2] + 1].line_in.y = 0;
+                                    // connectors[segment[2] + 1].line_in = [0, 0];
+                                }
+                            }
+
+                        } else if(i === total_pieces - 1) {
+                            if(segment[3] === 1) {
+                                if(curr_y === end_point[1]) {
+                                    // connectors[segment[2] + 1].line_in = [0, 1];
+                                } else {
+                                    connectors[segment[2] + 1].line_in.x = 1;
+                                    connectors[segment[2] + 1].line_in.y = 1;
+                                    // connectors[segment[2] + 1].line_in = [1, 1];
+                                }
+                                
+                            } else if(segment[3] === 0) {
+                                if(curr_y === start_point[1]) {
+                                    connectors[segment[2]].line_out.x = 1;
+                                    connectors[segment[2]].line_out.y = 0;
+                                    // connectors[segment[2]].line_out = [0, 1];
+                                } else {
+                                    connectors[segment[2]].line_out.x = 1;
+                                    connectors[segment[2]].line_out.y = 1;
+
+                                    // connectors[segment[2]].line_out = [1, 1];
+                                }
+                            }
+                        }
                     }
                     i += 1;
                     curr_y -= 1;
@@ -354,17 +676,21 @@ export function drawLine(data: any, index: number): void {
 
     });
 
-    // Placing the connectors
-    connectors.forEach((entry: any) => {
-        data['charMat'][entry[1][1]][entry[1][0]] = entry[0];
-    });
-
-    for(let i = 0; i < points.length; i++) {
+    
+    for(let i = 1; i < points.length - 1; i++) {
         let px = points[i][0];
         let py = points[i][1];
-        // connector.connectChar = "+";
-        if(data['charMat'][py][px] === " ") {
-            data['charMat'][py][px] = "+";
+
+        let inx = connectors[i].line_in.x.toPrecision(1).toString();
+        let iny = connectors[i].line_in.y.toPrecision(1).toString();
+        let outx = connectors[i].line_out.x.toPrecision(1).toString();
+        let outy = connectors[i].line_out.y.toPrecision(1).toString();
+
+        let connectString = inx + "_" + iny + "_" + outx + "_" + outy;
+        connectors[i].connectChar = connectorMap.get(connectString);
+
+        if(connectors[i].connectChar) {
+            data['charMat'][py][px] = connectors[i].connectChar;
         }
     }
 
@@ -373,20 +699,22 @@ export function drawLine(data: any, index: number): void {
         let px = points[end_index][0];
         let py = points[end_index][1];
 
-        switch(orientation[end_index - 1]) {
-            case "D":
+        const inPoint = connectors[end_index].line_in;
+        const in_string = inPoint.x.toPrecision(1).toString() + "_" + inPoint.y.toPrecision(1).toString();
+        switch(in_string.valueOf()) {
+            case "0.5_0":
                 data['charMat'][py][px] = "▼";
                 break;
 
-            case "U":
+            case "0.5_1":
                 data['charMat'][py][px] = "▲";
                 break;
 
-            case "L":
+            case "1_0.5":
                 data['charMat'][py][px] = "<";
                 break;
             
-            case "R":
+            case "0_0.5":
                 data['charMat'][py][px] = ">";
                 break;
 
@@ -400,21 +728,23 @@ export function drawLine(data: any, index: number): void {
         let px = points[0][0];
         let py = points[0][1];
 
-        switch(orientation[0]) {    
-            case "D":
-                data['charMat'][py][px] = "▲";
-                break;
-
-            case "U":
+        const outPoint = connectors[0].line_out;
+        const out_string = outPoint.x.toPrecision(1).toString() + "_" + outPoint.y.toPrecision(1).toString();
+        switch(out_string.valueOf()) {
+            case "0.5_0":
                 data['charMat'][py][px] = "▼";
                 break;
 
-            case "L":
-                data['charMat'][py][px] = ">";
+            case "0.5_1":
+                data['charMat'][py][px] = "▲";
+                break;
+
+            case "1_0.5":
+                data['charMat'][py][px] = "<";
                 break;
             
-            case "R":
-                data['charMat'][py][px] = "<";
+            case "0_0.5":
+                data['charMat'][py][px] = ">";
                 break;
 
             default:
@@ -426,13 +756,23 @@ export function drawLine(data: any, index: number): void {
         let px = points[0][0];
         let py = points[0][1];
 
-        switch(orientation[0]) {    
-            case ("D" || "U"):
-                data['charMat'][py][px] = vc_char;
+        const outPoint = connectors[0].line_out;
+        const out_string = outPoint.x.toPrecision(1).toString() + "_" + outPoint.y.toPrecision(1).toString();
+        switch(out_string.valueOf()) {
+            case "0.5_0" || "0.5_1":
+                data['charMat'][py][px] = "│";
                 break;
 
-            case ("L" || "R"):
-                data['charMat'][py][px] = hz_char;
+            case "1_0.5" || "0_0.5":
+                data['charMat'][py][px] = "─";
+                break;
+
+            case "0_0" || "1_1":
+                data['charMat'][py][px] = "╲";
+                break;
+            
+            case "1_0" || "0_1":
+                data['charMat'][py][px] = "╱";
                 break;
 
             default:
@@ -444,13 +784,23 @@ export function drawLine(data: any, index: number): void {
         let px = points[end_index][0];
         let py = points[end_index][1];
 
-        switch(orientation[end_index - 1]) {    
-            case ("D" || "U"):
-                data['charMat'][py][px] = vc_char;
+        const inPoint = connectors[end_index].line_in;
+        const in_string = inPoint.x.toPrecision(1).toString() + "_" + inPoint.y.toPrecision(1).toString();
+        switch(in_string.valueOf()) {
+            case "0.5_0" || "0.5_1":
+                data['charMat'][py][px] = "│";
                 break;
 
-            case ("L" || "R"):
-                data['charMat'][py][px] = hz_char;
+            case "1_0.5" || "0_0.5":
+                data['charMat'][py][px] = "─";
+                break;
+
+            case "0_0" || "1_1":
+                data['charMat'][py][px] = "╲";
+                break;
+            
+            case "1_0" || "0_1":
+                data['charMat'][py][px] = "╱";
                 break;
 
             default:
