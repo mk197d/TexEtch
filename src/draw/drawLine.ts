@@ -168,7 +168,7 @@ export function drawLine(data: any, index: number): void {
                 for(let j = 0; j < curr_stride; j++) {
                     if(i < total_pieces) {
                         if(i !== 0) {
-                            data['charMat'][curr_y][curr_x] = "▏";
+                            data['charMat'][curr_y][curr_x] = "|";
                             if(i === 1) {
                                 if(segment[3] === 1) {
                                     if(curr_x === start_point[0]) {
@@ -450,7 +450,7 @@ export function drawLine(data: any, index: number): void {
                 for(let j = 0; j < curr_stride; j++) {
                     if(i < total_pieces) {
                         if(i !== 0) {
-                            data['charMat'][curr_y][curr_x] = "▕";
+                            data['charMat'][curr_y][curr_x] = "|";
                             if(i === 1) {
                                 if(segment[3] === 1) {
                                     if(curr_x === start_point[0]) {
