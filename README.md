@@ -5,7 +5,9 @@
 TexEtch is a Visual Studio Code extension designed to convert diagrams drawn in [draw.io](https://app.diagrams.net/) into text format. This text format can be easily integrated into your code base to provide better explanations and documentation for your code.<br>
 
 **Just an example**
-  ![Doraemon](Doraemon.png)
+  <div style="display: flex; align-items: center;">
+    <img src="Doraemon.png" alt="Doraemon" width="60%">
+  </div>
 
 ## Features
 
