@@ -1,4 +1,5 @@
 import { LineConnect } from "../interfaces/LineConnect";
+import characters from "./characters";
 import { connectorMap } from "./connectorMap";
 
 export function drawLine(data: any, index: number): void {
@@ -152,7 +153,7 @@ export function drawLine(data: any, index: number): void {
         let curr_y = sy;
         let curr_x = sx;
 
-        // | ╱
+        // | /
         if(v_change >= h_change) {
             let num_vc_lines = v_change - h_change;
             stride = num_vc_lines / h_change;
@@ -168,7 +169,7 @@ export function drawLine(data: any, index: number): void {
                 for(let j = 0; j < curr_stride; j++) {
                     if(i < total_pieces) {
                         if(i !== 0) {
-                            data['charMat'][curr_y][curr_x] = "|";
+                            data['charMat'][curr_y][curr_x] = characters.LEFT_BAR;
                             if(i === 1) {
                                 if(segment[3] === 1) {
                                     if(curr_x === start_point[0]) {
@@ -223,7 +224,7 @@ export function drawLine(data: any, index: number): void {
 
                 if(i < total_pieces) {
                     if(i !== 0) {
-                        data['charMat'][curr_y][curr_x] = "╱";
+                        data['charMat'][curr_y][curr_x] = "/";
                         if(i === 1) {
                             if(segment[3] === 1) {
                                 if(curr_x === start_point[0]) {
@@ -351,7 +352,7 @@ export function drawLine(data: any, index: number): void {
                 }
                 if(i < total_pieces) {
                     if(i !== 0) {
-                        data['charMat'][curr_y][curr_x] = "╱";
+                        data['charMat'][curr_y][curr_x] = "/";
                         if(i === 1 && i) {
                             if(segment[3] === 1) {
                                 if(curr_y === start_point[1]) {
@@ -434,7 +435,7 @@ export function drawLine(data: any, index: number): void {
         let curr_x = ex;
         let curr_y = ey;
 
-        // ╲ |
+        // \\ |
         if(v_change >= h_change) {
             let num_vc_lines = v_change - h_change;
             stride = num_vc_lines / h_change;
@@ -450,7 +451,7 @@ export function drawLine(data: any, index: number): void {
                 for(let j = 0; j < curr_stride; j++) {
                     if(i < total_pieces) {
                         if(i !== 0) {
-                            data['charMat'][curr_y][curr_x] = "|";
+                            data['charMat'][curr_y][curr_x] = characters.RIGHT_BAR;
                             if(i === 1) {
                                 if(segment[3] === 1) {
                                     if(curr_x === start_point[0]) {
@@ -504,7 +505,7 @@ export function drawLine(data: any, index: number): void {
                 }
                 if(i < total_pieces) {
                     if(i !== 0) {
-                        data['charMat'][curr_y][curr_x] = "╲";
+                        data['charMat'][curr_y][curr_x] = "\\";
                         if(i === 1) {
                             if(segment[3] === 1) {
                                 if(curr_x === start_point[0]) {
@@ -632,7 +633,7 @@ export function drawLine(data: any, index: number): void {
 
                 if(i < total_pieces) {
                     if(i !== 0) {
-                        data['charMat'][curr_y][curr_x] = "╲";
+                        data['charMat'][curr_y][curr_x] = "\\";
                         if(i === 1) {
                             if(segment[3] === 1) {
                                 if(curr_y === start_point[1]) {
@@ -786,11 +787,11 @@ export function drawLine(data: any, index: number): void {
                 break;
 
             case "0_0" || "1_1":
-                data['charMat'][py][px] = "╲";
+                data['charMat'][py][px] = "\\";
                 break;
             
             case "1_0" || "0_1":
-                data['charMat'][py][px] = "╱";
+                data['charMat'][py][px] = "/";
                 break;
 
             default:
@@ -814,11 +815,11 @@ export function drawLine(data: any, index: number): void {
                 break;
 
             case "0_0" || "1_1":
-                data['charMat'][py][px] = "╲";
+                data['charMat'][py][px] = "\\";
                 break;
             
             case "1_0" || "0_1":
-                data['charMat'][py][px] = "╱";
+                data['charMat'][py][px] = "/";
                 break;
 
             default:
