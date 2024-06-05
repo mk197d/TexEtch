@@ -12,6 +12,7 @@ export default {
     LEFT_BAR: "|",
     RIGHT_BAR: "|",
 
-    
+    BIG_F_SLASH: "/",
+    BIG_B_SLASH: "\\"
     
 };

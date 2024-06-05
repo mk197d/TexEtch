@@ -224,7 +224,7 @@ export function drawLine(data: any, index: number): void {
 
                 if(i < total_pieces) {
                     if(i !== 0) {
-                        data['charMat'][curr_y][curr_x] = "/";
+                        data['charMat'][curr_y][curr_x] = characters.BIG_F_SLASH;
                         if(i === 1) {
                             if(segment[3] === 1) {
                                 if(curr_x === start_point[0]) {
@@ -352,7 +352,7 @@ export function drawLine(data: any, index: number): void {
                 }
                 if(i < total_pieces) {
                     if(i !== 0) {
-                        data['charMat'][curr_y][curr_x] = "/";
+                        data['charMat'][curr_y][curr_x] = characters.BIG_F_SLASH;
                         if(i === 1 && i) {
                             if(segment[3] === 1) {
                                 if(curr_y === start_point[1]) {
@@ -505,7 +505,7 @@ export function drawLine(data: any, index: number): void {
                 }
                 if(i < total_pieces) {
                     if(i !== 0) {
-                        data['charMat'][curr_y][curr_x] = "\\";
+                        data['charMat'][curr_y][curr_x] = characters.BIG_B_SLASH;
                         if(i === 1) {
                             if(segment[3] === 1) {
                                 if(curr_x === start_point[0]) {
@@ -633,7 +633,7 @@ export function drawLine(data: any, index: number): void {
 
                 if(i < total_pieces) {
                     if(i !== 0) {
-                        data['charMat'][curr_y][curr_x] = "\\";
+                        data['charMat'][curr_y][curr_x] = characters.BIG_B_SLASH;
                         if(i === 1) {
                             if(segment[3] === 1) {
                                 if(curr_y === start_point[1]) {
@@ -787,7 +787,7 @@ export function drawLine(data: any, index: number): void {
                 break;
 
             case "0_0" || "1_1":
-                data['charMat'][py][px] = "\\";
+                data['charMat'][py][px] = characters.BIG_B_SLASH;
                 break;
             
             case "1_0" || "0_1":
@@ -815,11 +815,11 @@ export function drawLine(data: any, index: number): void {
                 break;
 
             case "0_0" || "1_1":
-                data['charMat'][py][px] = "\\";
+                data['charMat'][py][px] = characters.BIG_B_SLASH;
                 break;
             
             case "1_0" || "0_1":
-                data['charMat'][py][px] = "/";
+                data['charMat'][py][px] = characters.BIG_F_SLASH;
                 break;
 
             default:
