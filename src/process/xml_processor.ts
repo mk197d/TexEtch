@@ -5,6 +5,7 @@ import { Boundary } from '../interfaces/Boundary';
 import { Figure } from '../interfaces/Figure';
 import { Text } from '../interfaces/Text';
 import { Line } from '../interfaces/Line';
+import { Point } from '../interfaces/Point';
 // import { Connector } from '../interfaces/Connector';
 
 export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
@@ -146,7 +147,7 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                         /////////////////////////////////////////////////////////////////////////////////
                         
                         /////////////////////////////////////////////////////////////////////////////////
-                        const linePath: [number, number][] = [];
+                        const linePath: Point[] = [];
                         if(cell.mxGeometry[0].mxPoint) {
                             // if(type !== '') {
                                 type = "line";
@@ -155,7 +156,7 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                                 const px = Math.round((parseFloat(point.$.x)) / scale_x);
                                 const py = Math.round((parseFloat(point.$.y)) / scale_y);
 
-                                linePath.push([px, py]);
+                                linePath.push({x: px, y: py});
 
                                 bounds.x_max = Math.max(bounds.x_max, px);
                                 bounds.x_min = Math.min(bounds.x_min, px);
@@ -170,7 +171,7 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                                     const px = Math.round((parseFloat(point.$.x)) / scale_x);
                                     const py = Math.round((parseFloat(point.$.y)) / scale_y);
 
-                                    linePath.push([px, py]);
+                                    linePath.push({x: px, y: py});
 
                                     bounds.x_max = Math.max(bounds.x_max, px);
                                     bounds.x_min = Math.min(bounds.x_min, px);
