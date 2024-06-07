@@ -28,8 +28,8 @@ export function drawLine(data: any, index: number): void {
         points[i][1] -= (limit.y_min + 1); 
     }                                                            
 
-    let hz_char = "─";                                           
-    let vc_char = "│";                                                                                                                                      
+    let hz_char = characters.LINE_N_H;                                           
+    let vc_char = characters.LINE_N_V;                                                                                                                                      
 
     let start_shift = false;
     let end_shift = false;
@@ -42,14 +42,14 @@ export function drawLine(data: any, index: number): void {
 
     // Adjusting the line characters according to the pattern
     if(data['fig'][index].line.dashPattern === "flexArrow") {                                                                                               
-        hz_char = "═";                                                                                                                                     
-        vc_char = "║";
+        hz_char = characters.LINE_DOUBLE_H;                                                                                                                                     
+        vc_char = characters.LINE_DOUBLE_V;
     } else if(data['fig'][index].line.dashPattern === "1 3") {
-        hz_char = "-";
-        vc_char = "¦";
+        hz_char = characters.LINE_DASH_H;
+        vc_char = characters.LINE_DASH_V;
     } else if(data['fig'][index].line.dashed) {
-        hz_char = "╍";
-        vc_char = "┋";
+        hz_char = characters.LINE_DOT_H;
+        vc_char = characters.LINE_DOT_V;
     }
 
 
@@ -71,8 +71,6 @@ export function drawLine(data: any, index: number): void {
                 connectors[i + 1].line_in.x = 0.5;
                 connectors[i + 1].line_in.y = 0;
 
-                // connectors[i].line_out = [0.5, 1];
-                // connectors[i + 1].line_in = [0.5, 0];
             }
             
         } else if(points[i][1] === points[i + 1][1]) {
@@ -84,16 +82,14 @@ export function drawLine(data: any, index: number): void {
 
                 connectors[i + 1].line_in.x = 1;
                 connectors[i + 1].line_in.y = 0.5;
-                // connectors[i].line_out = [0, 0.5];
-                // connectors[i + 1].line_in = [1, 0.5];
+                
             } else {
                 connectors[i].line_out.x = 1;
                 connectors[i].line_out.y = 0.5;
 
                 connectors[i + 1].line_in.x = 0;
                 connectors[i + 1].line_in.y = 0.5;
-                // connectors[i].line_out = [1, 0.5];
-                // connectors[i + 1].line_in = [0, 0.5];
+                
             }
 
         } else if(points[i][0] < points[i + 1][0] && points[i][1] > points[i + 1][1]) {
@@ -175,22 +171,18 @@ export function drawLine(data: any, index: number): void {
                                     if(curr_x === start_point[0]) {
                                         connectors[segment[2]].line_out.x = 0;
                                         connectors[segment[2]].line_out.y = 0;
-                                        // connectors[segment[2]].line_out = [0, 0];
                                     } else {
                                         connectors[segment[2]].line_out.x = 1;
                                         connectors[segment[2]].line_out.y = 0;
-                                        // connectors[segment[2]].line_out = [1, 0];
                                     }
                                     
                                 } else if(segment[3] === 0) {
                                     if(curr_x === end_point[0]) {
                                         connectors[segment[2] + 1].line_in.x = 0;
                                         connectors[segment[2] + 1].line_in.y = 0;
-                                        // connectors[segment[2] + 1].line_in = [0, 0];
                                     } else {
                                         connectors[segment[2] + 1].line_in.x = 1;
                                         connectors[segment[2] + 1].line_in.y = 0;
-                                        // connectors[segment[2] + 1].line_in = [1, 0];
                                     }
                                 }
 
@@ -201,18 +193,16 @@ export function drawLine(data: any, index: number): void {
                                     if(curr_x === end_point[0]) {
                                         connectors[segment[2] + 1].line_in.x = 0;
                                         connectors[segment[2] + 1].line_in.y = 1;
-                                        // connectors[segment[2] + 1].line_in = [0, 1];
                                     } else {
-                                        // connectors[segment[2] + 1].line_in = [-1, 1];
+
                                     }
                                     
                                 } else if(segment[3] === 0) {
                                     if(curr_x === start_point[0]) {
                                         connectors[segment[2]].line_out.x = 0;
                                         connectors[segment[2]].line_out.y = 1;
-                                        // connectors[segment[2]].line_out = [0, 1];
                                     } else {
-                                        // connectors[segment[2]].line_out = [-1, 1];
+
                                     }
                                 }
                             }
@@ -230,22 +220,18 @@ export function drawLine(data: any, index: number): void {
                                 if(curr_x === start_point[0]) {
                                     connectors[segment[2]].line_out.x =0;
                                     connectors[segment[2]].line_out.y = 0;
-                                    // connectors[segment[2]].line_out = [0, 0];
                                 } else {
                                     connectors[segment[2]].line_out.x = 1;
                                     connectors[segment[2]].line_out.y = 0;
-                                    // connectors[segment[2]].line_out = [1, 0];
                                 }
                                 
                             } else if(segment[3] === 0) {
                                 if(curr_x === end_point[0]) {
                                     connectors[segment[2] + 1].line_in.x = 0;
                                     connectors[segment[2] + 1].line_in.y = 0;
-                                    // connectors[segment[2] + 1].line_in = [0, 0];
                                 } else {
                                     connectors[segment[2] + 1].line_in.x = 1;
                                     connectors[segment[2] + 1].line_in.y = 0;
-                                    // connectors[segment[2] + 1].line_in = [1, 0];
                                 }
                             }
 
@@ -256,22 +242,18 @@ export function drawLine(data: any, index: number): void {
                                 if(curr_x === end_point[0]) {
                                     connectors[segment[2] + 1].line_in.x = 1;
                                     connectors[segment[2] + 1].line_in.y = 1;
-                                    // connectors[segment[2] + 1].line_in = [1, 1];
                                 } else {
                                     connectors[segment[2] + 1].line_in.x = 0;
                                     connectors[segment[2] + 1].line_in.y = 1;
-                                    // connectors[segment[2] + 1].line_in = [0, 1];
                                 }
                                 
                             } else if(segment[3] === 0) {
                                 if(curr_x === start_point[0]) {
                                     connectors[segment[2]].line_out.x = 1;
                                     connectors[segment[2]].line_out.y = 1;
-                                    // connectors[segment[2]].line_out = [1, 1];
                                 } else {
                                     connectors[segment[2]].line_out.x = 0;
                                     connectors[segment[2]].line_out.y = 1;
-                                    // connectors[segment[2]].line_out = [0, 1];
                                 }
                             }
                         }
@@ -304,23 +286,19 @@ export function drawLine(data: any, index: number): void {
                                     if(curr_y === start_point[1]) {
                                         connectors[segment[2]].line_out.x = 1;
                                         connectors[segment[2]].line_out.y = 1;
-                                        // connectors[segment[2]].line_out = [1, 1];
                                     } else {
                                         connectors[segment[2]].line_out.x = 1;
                                         connectors[segment[2]].line_out.y = 0;
-                                        // connectors[segment[2]].line_out = [1, 0];
                                     }
                                     
                                 } else if(segment[3] === 0){
                                     if(curr_y === end_point[1]) {
                                         connectors[segment[2] + 1].line_in.x = 1;
                                         connectors[segment[2] + 1].line_in.y = 1;
-                                        // connectors[segment[2] + 1].line_in = [1, 1];
                                     } else {
                                         connectors[segment[2] + 1].line_in.x = 1;
                                         connectors[segment[2] + 1].line_in.y = 0;
-                                        // connectors[segment[2] + 1].line_in = [1, 0];
-                                    }
+=                                    }
                                 }
 
                             }
@@ -330,18 +308,14 @@ export function drawLine(data: any, index: number): void {
                                     if(curr_y === end_point[1]) {
                                         connectors[segment[2] + 1].line_in.x = 0;
                                         connectors[segment[2] + 1].line_in.y = 1;
-                                        // connectors[segment[2] + 1].line_in = [0, 1];
                                     } else {
-                                        // connectors[segment[2] + 1].line_in = [0, 0];
                                     }
                                     
                                 } else if(segment[3] === 0) {
                                     if(curr_y === start_point[1]) {
                                         connectors[segment[2]].line_out.x = 0;
                                         connectors[segment[2]].line_out.y = 1;
-                                        // connectors[segment[2]].line_out = [0, 1];
                                     } else {
-                                        // connectors[segment[2]].line_out = [1, 0];
                                     }
                                 }
                             }
@@ -358,22 +332,18 @@ export function drawLine(data: any, index: number): void {
                                 if(curr_y === start_point[1]) {
                                     connectors[segment[2]].line_out.x = 1;
                                     connectors[segment[2]].line_out.y = 1;
-                                    // connectors[segment[2]].line_out = [1, 1];
                                 } else {
                                     connectors[segment[2]].line_out.x = 1;
                                     connectors[segment[2]].line_out.y = 0;
-                                    // connectors[segment[2]].line_out = [1, 0];
                                 }
                                 
                             } else if(segment[3] === 0) {
                                 if(curr_y === end_point[1]) {
                                     connectors[segment[2] + 1].line_in.x = 1;
                                     connectors[segment[2] + 1].line_in.y = 1;
-                                    // connectors[segment[2] + 1].line_in = [1, 1];
                                 } else {
                                     connectors[segment[2] + 1].line_in.x = 1;
                                     connectors[segment[2] + 1].line_in.y = 0;
-                                    // connectors[segment[2] + 1].line_in = [1, 0];
                                 }
                             }
 
@@ -384,22 +354,18 @@ export function drawLine(data: any, index: number): void {
                                 if(curr_y === end_point[1]) {
                                     connectors[segment[2] + 1].line_in.x = 0;
                                     connectors[segment[2] + 1].line_in.y = 0;
-                                    // connectors[segment[2] + 1].line_in = [0, 1];
                                 } else {
                                     connectors[segment[2] + 1].line_in.x = 0;
                                     connectors[segment[2] + 1].line_in.y = 1;
-                                    // connectors[segment[2] + 1].line_in = [0, 1];
                                 }
                                 
                             } else if(segment[3] === 0) {
                                 if(curr_y === start_point[1]) {
                                     connectors[segment[2] + 1].line_in.x = 0;
                                     connectors[segment[2] + 1].line_in.y = 0;
-                                    // connectors[segment[2]].line_out = [0, 1];
                                 } else {
                                     connectors[segment[2]].line_out.x = 0;
                                     connectors[segment[2]].line_out.y = 1;
-                                    // connectors[segment[2]].line_out = [0, 1];
                                 }
                             }
                         }
@@ -457,22 +423,18 @@ export function drawLine(data: any, index: number): void {
                                     if(curr_x === start_point[0]) {
                                         connectors[segment[2]].line_out.x = 1;
                                         connectors[segment[2]].line_out.y = 0;
-                                        // connectors[segment[2]].line_out = [1, 0];
                                     } else {
                                         connectors[segment[2]].line_out.x = 0;
                                         connectors[segment[2]].line_out.y = 0;
-                                        // connectors[segment[2]].line_out = [0, 0];
                                     }
                                     
                                 } else if(segment[3] === 0) {
                                     if(curr_x === end_point[0]) {
                                         connectors[segment[2] + 1].line_in.x = 1;
                                         connectors[segment[2] + 1].line_in.y = 0;
-                                        // connectors[segment[2] + 1].line_in = [1, 0];
                                     } else {
                                         connectors[segment[2] + 1].line_in.x = 0;
                                         connectors[segment[2] + 1].line_in.y = 0;
-                                        // connectors[segment[2] + 1].line_in = [0, 0];
                                     }
                                 }
     
@@ -483,18 +445,16 @@ export function drawLine(data: any, index: number): void {
                                     if(curr_x === end_point[0]) {
                                         connectors[segment[2] + 1].line_in.x = 1;
                                         connectors[segment[2] + 1].line_in.y = 1;
-                                        // connectors[segment[2] + 1].line_in = [1, 1];
                                     } else {
-                                        // connectors[segment[2] + 1].line_in = [2, 1];
+
                                     }
                                     
                                 } else if(segment[3] === 0) {
                                     if(curr_x === start_point[0]) {
                                         connectors[segment[2]].line_out.x = 1;
                                         connectors[segment[2]].line_out.y = 1;
-                                        // connectors[segment[2]].line_out = [1, 1];
                                     } else {
-                                        // connectors[segment[2]].line_out = [2, 1];
+
                                     }
                                 }
                             }
@@ -511,22 +471,18 @@ export function drawLine(data: any, index: number): void {
                                 if(curr_x === start_point[0]) {
                                     connectors[segment[2]].line_out.x = 1;
                                     connectors[segment[2]].line_out.y = 0;
-                                    // connectors[segment[2]].line_out = [1, 0];
                                 } else {
                                     connectors[segment[2]].line_out.x = 0;
                                     connectors[segment[2]].line_out.y = 0;
-                                    // connectors[segment[2]].line_out = [0, 0];
                                 }
                                 
                             } else if(segment[3] === 0) {
                                 if(curr_x === end_point[0]) {
                                     connectors[segment[2] + 1].line_in.x = 1;
                                     connectors[segment[2] + 1].line_in.y = 0;
-                                    // connectors[segment[2] + 1].line_in = [1, 0];
                                 } else {
                                     connectors[segment[2] + 1].line_in.x = 0;
                                     connectors[segment[2] + 1].line_in.y = 0;
-                                    // connectors[segment[2] + 1].line_in = [0, 0];
                                 }
                             }
 
@@ -537,22 +493,18 @@ export function drawLine(data: any, index: number): void {
                                 if(curr_x === end_point[0]) {
                                     connectors[segment[2] + 1].line_in.x = 0;
                                     connectors[segment[2] + 1].line_in.y = 1;
-                                    // connectors[segment[2] + 1].line_in = [0, 1];
                                 } else {
                                     connectors[segment[2] + 1].line_in.x = 1;
                                     connectors[segment[2] + 1].line_in.y = 1;
-                                    // connectors[segment[2] + 1].line_in = [1, 1];
                                 }
                                 
                             } else if(segment[3] === 0) {
                                 if(curr_x === start_point[0]) {
                                     connectors[segment[2]].line_out.x = 0;
                                     connectors[segment[2]].line_out.y = 1;
-                                    // connectors[segment[2]].line_out = [0, 1];
-                                } else {
+\                                } else {
                                     connectors[segment[2]].line_out.x = 1;
                                     connectors[segment[2]].line_out.y = 1;
-                                    // connectors[segment[2]].line_out = [1, 1];
                                 }
                             }
                         }
@@ -584,22 +536,18 @@ export function drawLine(data: any, index: number): void {
                                     if(curr_y === start_point[1]) {
                                         connectors[segment[2]].line_out.x = 0;
                                         connectors[segment[2]].line_out.y = 1;
-                                        // connectors[segment[2]].line_out = [0, 1];
                                     } else {
                                         connectors[segment[2]].line_out.x = 0;
                                         connectors[segment[2]].line_out.y = 0;
-                                        // connectors[segment[2]].line_out = [0, 0];
                                     }
                                     
                                 } else if(segment[3] === 0) {
                                     if(curr_y === end_point[1]) {
                                         connectors[segment[2] + 1].line_in.x = 0;
                                         connectors[segment[2] + 1].line_in.y = 1;
-                                        // connectors[segment[2] + 1].line_in = [0, 1];
                                     } else {
                                         connectors[segment[2] + 1].line_in.x = 0;
                                         connectors[segment[2] + 1].line_in.y = 0;
-                                        // connectors[segment[2] + 1].line_in = [0, 0];
                                     }
                                 }
     
@@ -610,18 +558,16 @@ export function drawLine(data: any, index: number): void {
                                     if(curr_y === end_point[1]) {
                                         connectors[segment[2] + 1].line_in.x = 1;
                                         connectors[segment[2] + 1].line_in.y = 1;
-                                        // connectors[segment[2] + 1].line_in = [1, 1];
                                     } else {
-                                        // connectors[segment[2] + 1].line_in = [0, 0];
+
                                     }
                                     
                                 } else if(segment[3] === 0) {
                                     if(curr_y === start_point[1]) {
                                         connectors[segment[2]].line_out.x = 1;
                                         connectors[segment[2]].line_out.y = 1;
-                                        // connectors[segment[2]].line_out = [1, 1];
                                     } else {
-                                        // connectors[segment[2]].line_out = [0, 0];
+
                                     }
                                 }
                             }
@@ -639,22 +585,18 @@ export function drawLine(data: any, index: number): void {
                                 if(curr_y === start_point[1]) {
                                     connectors[segment[2]].line_out.x = 0;
                                     connectors[segment[2]].line_out.y = 1;
-                                    // connectors[segment[2]].line_out = [0, 1];
                                 } else {
                                     connectors[segment[2]].line_out.x = 0;
                                     connectors[segment[2]].line_out.y = 0;
-                                    // connectors[segment[2]].line_out = [0, 0];
                                 }
                                 
                             } else if(segment[3] === 0) {
                                 if(curr_y === end_point[1]) {
                                     connectors[segment[2] + 1].line_in.x = 0;
                                     connectors[segment[2] + 1].line_in.y = 1;
-                                    // connectors[segment[2] + 1].line_in = [0, 1];
                                 } else {
                                     connectors[segment[2] + 1].line_in.x = 0;
                                     connectors[segment[2] + 1].line_in.y = 0;
-                                    // connectors[segment[2] + 1].line_in = [0, 0];
                                 }
                             }
 
@@ -663,23 +605,19 @@ export function drawLine(data: any, index: number): void {
                         if(i === total_pieces - 1) {
                             if(segment[3] === 1) {
                                 if(curr_y === end_point[1]) {
-                                    // connectors[segment[2] + 1].line_in = [0, 1];
                                 } else {
                                     connectors[segment[2] + 1].line_in.x = 1;
                                     connectors[segment[2] + 1].line_in.y = 1;
-                                    // connectors[segment[2] + 1].line_in = [1, 1];
                                 }
                                 
                             } else if(segment[3] === 0) {
                                 if(curr_y === start_point[1]) {
                                     connectors[segment[2]].line_out.x = 1;
                                     connectors[segment[2]].line_out.y = 0;
-                                    // connectors[segment[2]].line_out = [0, 1];
                                 } else {
                                     connectors[segment[2]].line_out.x = 1;
                                     connectors[segment[2]].line_out.y = 1;
 
-                                    // connectors[segment[2]].line_out = [1, 1];
                                 }
                             }
                         }
@@ -722,19 +660,19 @@ export function drawLine(data: any, index: number): void {
         const in_string = inPoint.x.toPrecision(1).toString() + "_" + inPoint.y.toPrecision(1).toString();
         switch(in_string.valueOf()) {
             case "0.5_0":
-                data['charMat'][py][px] = "▼";
+                data['charMat'][py][px] = characters.DOWN_ARROW;
                 break;
 
             case "0.5_1":
-                data['charMat'][py][px] = "▲";
+                data['charMat'][py][px] = characters.UP_ARROW;
                 break;
 
             case "1_0.5":
-                data['charMat'][py][px] = "<";
+                data['charMat'][py][px] = characters.LEFT_ARROW;
                 break;
             
             case "0_0.5":
-                data['charMat'][py][px] = ">";
+                data['charMat'][py][px] = characters.RIGHT_ARROW;
                 break;
 
             default:
@@ -751,19 +689,19 @@ export function drawLine(data: any, index: number): void {
         const out_string = outPoint.x.toPrecision(1).toString() + "_" + outPoint.y.toPrecision(1).toString();
         switch(out_string.valueOf()) {
             case "0.5_0":
-                data['charMat'][py][px] = "▼";
+                data['charMat'][py][px] = characters.DOWN_ARROW;
                 break;
 
             case "0.5_1":
-                data['charMat'][py][px] = "▲";
+                data['charMat'][py][px] = characters.UP_ARROW;
                 break;
 
             case "1_0.5":
-                data['charMat'][py][px] = "<";
+                data['charMat'][py][px] = characters.LEFT_ARROW;
                 break;
             
             case "0_0.5":
-                data['charMat'][py][px] = ">";
+                data['charMat'][py][px] = characters.RIGHT_ARROW;
                 break;
 
             default:
@@ -779,11 +717,11 @@ export function drawLine(data: any, index: number): void {
         const out_string = outPoint.x.toPrecision(1).toString() + "_" + outPoint.y.toPrecision(1).toString();
         switch(out_string.valueOf()) {
             case "0.5_0" || "0.5_1":
-                data['charMat'][py][px] = "│";
+                data['charMat'][py][px] = vc_char;
                 break;
 
             case "1_0.5" || "0_0.5":
-                data['charMat'][py][px] = "─";
+                data['charMat'][py][px] = hz_char;
                 break;
 
             case "0_0" || "1_1":
@@ -791,7 +729,7 @@ export function drawLine(data: any, index: number): void {
                 break;
             
             case "1_0" || "0_1":
-                data['charMat'][py][px] = "/";
+                data['charMat'][py][px] = characters.BIG_F_SLASH;
                 break;
 
             default:
@@ -807,11 +745,11 @@ export function drawLine(data: any, index: number): void {
         const in_string = inPoint.x.toPrecision(1).toString() + "_" + inPoint.y.toPrecision(1).toString();
         switch(in_string.valueOf()) {
             case "0.5_0" || "0.5_1":
-                data['charMat'][py][px] = "│";
+                data['charMat'][py][px] = vc_char;
                 break;
 
             case "1_0.5" || "0_0.5":
-                data['charMat'][py][px] = "─";
+                data['charMat'][py][px] = hz_char;
                 break;
 
             case "0_0" || "1_1":

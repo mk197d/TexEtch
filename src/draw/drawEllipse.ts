@@ -1,3 +1,5 @@
+import characters from "./characters";
+
 export function drawEllipse(data: any, index: number): void {   
   
     const limit = data['limit'];                        //                                                                                     
@@ -59,10 +61,10 @@ export function drawEllipse(data: any, index: number): void {
         
         // Placing the first layer: m1
         for(i = 0; i < len_m1; i++) {
-            data['charMat'][upper_curr_row][left_curr_col + i] = "▀";
-            data['charMat'][upper_curr_row][right_curr_col - i] = "▀";
-            data['charMat'][lower_curr_row][left_curr_col + i] = "▄";
-            data['charMat'][lower_curr_row][right_curr_col - i] = "▄";
+            data['charMat'][upper_curr_row][left_curr_col + i] = characters.TOP_BLOCK;
+            data['charMat'][upper_curr_row][right_curr_col - i] = characters.TOP_BLOCK;
+            data['charMat'][lower_curr_row][left_curr_col + i] = characters.BOTTOM_BLOCK;
+            data['charMat'][lower_curr_row][right_curr_col - i] = characters.BOTTOM_BLOCK;
         }
 
         upper_curr_row -= 1;
@@ -72,18 +74,18 @@ export function drawEllipse(data: any, index: number): void {
 
         // Placing the second layer: m2
         for(i = 0; i < len_m2; i++) {
-            data['charMat'][upper_curr_row][left_curr_col + i] = "▄";
-            data['charMat'][upper_curr_row][right_curr_col - i] = "▄";
-            data['charMat'][lower_curr_row][left_curr_col + i] = "▀";
-            data['charMat'][lower_curr_row][right_curr_col - i] = "▀";
+            data['charMat'][upper_curr_row][left_curr_col + i] = characters.BOTTOM_BLOCK;
+            data['charMat'][upper_curr_row][right_curr_col - i] = characters.BOTTOM_BLOCK;
+            data['charMat'][lower_curr_row][left_curr_col + i] = characters.TOP_BLOCK;
+            data['charMat'][lower_curr_row][right_curr_col - i] = characters.TOP_BLOCK;
         }
 
         left_curr_col += len_m2;
 
         // Placing the top layer: m
         for(i = 0; i < len_m; i++) {
-            data['charMat'][upper_curr_row][left_curr_col + i] = "▀";
-            data['charMat'][lower_curr_row][left_curr_col + i] = "▄";
+            data['charMat'][upper_curr_row][left_curr_col + i] = characters.TOP_BLOCK;
+            data['charMat'][lower_curr_row][left_curr_col + i] = characters.BOTTOM_BLOCK;
         }
 
         left_curr_col = num_1x1 + num_main_blocks + col_start;
@@ -96,10 +98,10 @@ export function drawEllipse(data: any, index: number): void {
         let odd_block: Boolean = true;
         for(i = 0; i < num_1x1; i++) {
             if(odd_block) {
-                data['charMat'][upper_curr_row][left_curr_col] = "▄";
-                data['charMat'][upper_curr_row][right_curr_col] = "▄";
-                data['charMat'][lower_curr_row][left_curr_col] = "▀";
-                data['charMat'][lower_curr_row][right_curr_col] = "▀";
+                data['charMat'][upper_curr_row][left_curr_col] = characters.BOTTOM_BLOCK;
+                data['charMat'][upper_curr_row][right_curr_col] = characters.BOTTOM_BLOCK;
+                data['charMat'][lower_curr_row][left_curr_col] = characters.TOP_BLOCK;
+                data['charMat'][lower_curr_row][right_curr_col] = characters.TOP_BLOCK;
 
                 upper_curr_row += 1;
                 lower_curr_row -= 1;
@@ -108,10 +110,10 @@ export function drawEllipse(data: any, index: number): void {
 
                 odd_block = false;
             } else {
-                data['charMat'][upper_curr_row][left_curr_col] = "▀";
-                data['charMat'][upper_curr_row][right_curr_col] = "▀";
-                data['charMat'][lower_curr_row][left_curr_col] = "▄";
-                data['charMat'][lower_curr_row][right_curr_col] = "▄";
+                data['charMat'][upper_curr_row][left_curr_col] = characters.TOP_BLOCK;
+                data['charMat'][upper_curr_row][right_curr_col] = characters.TOP_BLOCK;
+                data['charMat'][lower_curr_row][left_curr_col] = characters.BOTTOM_BLOCK;
+                data['charMat'][lower_curr_row][right_curr_col] = characters.BOTTOM_BLOCK;
 
                 left_curr_col -= 1;
                 right_curr_col += 1;
@@ -123,18 +125,18 @@ export function drawEllipse(data: any, index: number): void {
         // Placing the main blocks
         let middle_block_row = Math.floor(num_main_blocks + (2 + num_1x1 + 1) / 2 + row_start); 
         for(i = 1; i <= num_main_blocks; i++) {
-            data['charMat'][middle_block_row - i][col_start + i] = "█";
-            data['charMat'][middle_block_row - i][col_end - 1 - i] = "█";
-            data['charMat'][middle_block_row + i][col_start + i] = "█";
-            data['charMat'][middle_block_row + i][col_end - 1 - i] = "█";
+            data['charMat'][middle_block_row - i][col_start + i] = characters.FULL_BLOCK;
+            data['charMat'][middle_block_row - i][col_end - 1 - i] = characters.FULL_BLOCK;
+            data['charMat'][middle_block_row + i][col_start + i] = characters.FULL_BLOCK;
+            data['charMat'][middle_block_row + i][col_end - 1 - i] = characters.FULL_BLOCK;
         }
 
         if(vertical_axis < 14) {
-            data['charMat'][middle_block_row][col_start] = "█";
-            data['charMat'][middle_block_row][col_end - 1] = "█";
+            data['charMat'][middle_block_row][col_start] = characters.FULL_BLOCK;
+            data['charMat'][middle_block_row][col_end - 1] = characters.FULL_BLOCK;
         } else {
-            data['charMat'][middle_block_row][col_start + 1] = "█";
-            data['charMat'][middle_block_row][col_end - 2] = "█";
+            data['charMat'][middle_block_row][col_start + 1] = characters.FULL_BLOCK;
+            data['charMat'][middle_block_row][col_end - 2] = characters.FULL_BLOCK;
         }
 
         
@@ -150,10 +152,10 @@ export function drawEllipse(data: any, index: number): void {
 
         // Placing the first layer: m1
         for(i = 0; i < len_m1; i++) {
-            data['charMat'][upper_curr_row][left_curr_col + i] = "▄";
-            data['charMat'][upper_curr_row][right_curr_col - i] = "▄";
-            data['charMat'][lower_curr_row][left_curr_col + i] = "▀";
-            data['charMat'][lower_curr_row][right_curr_col - i] = "▀";
+            data['charMat'][upper_curr_row][left_curr_col + i] = characters.BOTTOM_BLOCK;
+            data['charMat'][upper_curr_row][right_curr_col - i] = characters.BOTTOM_BLOCK;
+            data['charMat'][lower_curr_row][left_curr_col + i] = characters.TOP_BLOCK;
+            data['charMat'][lower_curr_row][right_curr_col - i] = characters.TOP_BLOCK;
         }
 
         left_curr_col += len_m1;
@@ -161,10 +163,10 @@ export function drawEllipse(data: any, index: number): void {
 
         // Placing the second layer: m2
         for(i = 0; i < len_m2; i++) {
-            data['charMat'][upper_curr_row][left_curr_col + i] = "▀";
-            data['charMat'][upper_curr_row][right_curr_col - i] = "▀";
-            data['charMat'][lower_curr_row][left_curr_col + i] = "▄";
-            data['charMat'][lower_curr_row][right_curr_col - i] = "▄";
+            data['charMat'][upper_curr_row][left_curr_col + i] = characters.TOP_BLOCK;
+            data['charMat'][upper_curr_row][right_curr_col - i] = characters.TOP_BLOCK;
+            data['charMat'][lower_curr_row][left_curr_col + i] = characters.BOTTOM_BLOCK;
+            data['charMat'][lower_curr_row][right_curr_col - i] = characters.BOTTOM_BLOCK;
         }
 
         upper_curr_row -= 1;
@@ -173,8 +175,8 @@ export function drawEllipse(data: any, index: number): void {
 
         // Placing the top layer: m
         for(i = 0; i < len_m; i++) {
-            data['charMat'][upper_curr_row][left_curr_col + i] = "▄";
-            data['charMat'][lower_curr_row][left_curr_col + i] = "▀";
+            data['charMat'][upper_curr_row][left_curr_col + i] = characters.BOTTOM_BLOCK;
+            data['charMat'][lower_curr_row][left_curr_col + i] = characters.TOP_BLOCK;
         }
 
         left_curr_col = num_1x1 + num_main_blocks + col_start;
@@ -187,10 +189,10 @@ export function drawEllipse(data: any, index: number): void {
         let even_block: boolean = false;
         for(i = 0; i < num_1x1; i++) {
             if(even_block) {
-                data['charMat'][upper_curr_row][left_curr_col] = "▄";
-                data['charMat'][upper_curr_row][right_curr_col] = "▄";
-                data['charMat'][lower_curr_row][left_curr_col] = "▀";
-                data['charMat'][lower_curr_row][right_curr_col] = "▀";
+                data['charMat'][upper_curr_row][left_curr_col] = characters.BOTTOM_BLOCK;
+                data['charMat'][upper_curr_row][right_curr_col] = characters.BOTTOM_BLOCK;
+                data['charMat'][lower_curr_row][left_curr_col] = characters.TOP_BLOCK;
+                data['charMat'][lower_curr_row][right_curr_col] = characters.TOP_BLOCK;
 
                                left_curr_col -= 1;
                 right_curr_col += 1;
@@ -199,10 +201,10 @@ export function drawEllipse(data: any, index: number): void {
 
                 even_block = false;
             } else {
-                data['charMat'][upper_curr_row][left_curr_col] = "▀";
-                data['charMat'][upper_curr_row][right_curr_col] = "▀";
-                data['charMat'][lower_curr_row][left_curr_col] = "▄";
-                data['charMat'][lower_curr_row][right_curr_col] = "▄";
+                data['charMat'][upper_curr_row][left_curr_col] = characters.TOP_BLOCK;
+                data['charMat'][upper_curr_row][right_curr_col] = characters.TOP_BLOCK;
+                data['charMat'][lower_curr_row][left_curr_col] = characters.BOTTOM_BLOCK;
+                data['charMat'][lower_curr_row][right_curr_col] = characters.BOTTOM_BLOCK;
 
                 left_curr_col -= 1;
                 right_curr_col += 1;
@@ -214,18 +216,18 @@ export function drawEllipse(data: any, index: number): void {
         // Placing the main blocks
         let middle_block_row = Math.floor(num_main_blocks + (2 + num_1x1) / 2 + row_start); 
         for(i = 1; i <= num_main_blocks; i++) {
-            data['charMat'][middle_block_row - i][col_start + i] = "█";
-            data['charMat'][middle_block_row - i][col_end - 1 - i] = "█";
-            data['charMat'][middle_block_row + i][col_start + i] = "█";
-            data['charMat'][middle_block_row + i][col_end - 1 - i] = "█";
+            data['charMat'][middle_block_row - i][col_start + i] = characters.FULL_BLOCK;
+            data['charMat'][middle_block_row - i][col_end - 1 - i] = characters.FULL_BLOCK;
+            data['charMat'][middle_block_row + i][col_start + i] = characters.FULL_BLOCK;
+            data['charMat'][middle_block_row + i][col_end - 1 - i] = characters.FULL_BLOCK;
         }
 
         if(vertical_axis < 14) {
-            data['charMat'][middle_block_row][col_start] = "█";
-            data['charMat'][middle_block_row][col_end - 1] = "█";
+            data['charMat'][middle_block_row][col_start] = characters.FULL_BLOCK;
+            data['charMat'][middle_block_row][col_end - 1] = characters.FULL_BLOCK;
         } else {
-            data['charMat'][middle_block_row][col_start + 1] = "█";
-            data['charMat'][middle_block_row][col_end - 2] = "█";
+            data['charMat'][middle_block_row][col_start + 1] = characters.FULL_BLOCK;
+            data['charMat'][middle_block_row][col_end - 2] = characters.FULL_BLOCK;
         }
 
     }
