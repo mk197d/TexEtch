@@ -105,7 +105,6 @@ export function drawLine(data: any, index: number): void {
 
         } else if(points[i].x > points[i + 1].x && points[i].y > points[i + 1].y) {
             backward_segs.push({source:points[i + 1], target: points[i], source_index: i, direction: "U"});
-            // backward_segs.push([points[i + 1], points[i], i, 1]);
         }
     }
 
