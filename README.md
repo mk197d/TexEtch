@@ -1,4 +1,7 @@
-![GitHub](https://img.shields.io/badge/GitHub-Profile-black): [mk197d](https://github.com/mk197d)
+[
+  ![Donate with PayPal]
+  (https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png)]
+([https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QT54MSJR6QU7Y](https://www.paypal.com/paypalme/mayank8197d))
 
 # TexEtch
 
