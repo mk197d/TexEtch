@@ -14,56 +14,31 @@ export function drawLine(data: any, index: number): void {
     let backward_segs: LineSegment[] = [];
 
     let hz_segs: LineSegment[] = [];
-    let vc_segs: LineSegment[] = [];
-//                                                                                     
-//                                                                                     
-//          <─────────────╮ ──────>connector                                           
-//                        │                                                            
-//          │             │                                                            
-//          │             │                                                            
-//          ▼             │                                                            
-//      startArrow        │                                                  ______/|  
-//                        |__                                        _______/       │  
-//                           \__                             _______/               │  
-//                              \__                  _______/                       │  
-//                                 \__         _____/point on path                  │  
-//                                    \__     │             ▲                       │  
-//                                       \__  │             │                       │  
-//                                          \_| ────────────╯      endArrow  <───── ▼  
-//          ──────────────────────────                                                 
-//                   dashed                                                            
-//          ─-------------------------                                                 
-//                    dotted                                                           
-//                                                                                     
-//          <═════════════════════════>                                                
-//                                                                                     
-//                 flexArrow                                                           
-//                                                                                     
-//                                                                                     
-//                                                                                     
+    let vc_segs: LineSegment[] = [];                                                                                     
                                                
     let connectors: LineConnect[] = Array.from({ length: points.length }, () => ({
         line_in: {x: 0, y: 0},
         line_out: {x: 0, y: 0},
         connectChar: ''
     }));         
-                                               
-    let startArrow = data['fig'][index].line.startArrow;  
-    let endArrow = data['fig'][index].line.endArrow;
-                                           
-    for(let i = 0; i < points.length; i++) { 
-        points[i].x -= limit.x_min; 
-        points[i].y -= (limit.y_min + 1); 
-    }                                                            
-
-    let start_shift = false;
-    let end_shift = false;
-    if(startArrow === "classic") {
-        start_shift = true;
-    }
-    if(endArrow === "classic") {
-        end_shift = true;
-    }
+                                                                    //                                                                                             
+    let startArrow = data['fig'][index].line.startArrow;            //                                                                                             
+    let endArrow = data['fig'][index].line.endArrow;                //          <─────────────╮ ──────>connector                                                   
+                                                                    //                        │                                       ╭───────────────────────     
+    for(let i = 0; i < points.length; i++) {                        //          │             │             endArrow  <─────  ▲       │      dashed                
+        points[i].x -= limit.x_min;                                 //          │             │                               │       │                            
+        points[i].y -= (limit.y_min + 1);                           //          ▼             │                               │                                    
+    }                                                               //      startArrow        │                               │       ─-------------------------   
+                                                                    //                        |                    ___________|                 dotted             
+    let start_shift = false;                                        //                         \        __________/                                                
+    let end_shift = false;                                          //                          \       |                             <═════════════════════════>  
+    if(startArrow === "classic") {                                  //                           \     /   point on path                                           
+        start_shift = true;                                         //                            \   /           ▲                          flexArrow             
+    }                                                               //                             \ /            │                                                
+    if(endArrow === "classic") {                                    //                              ⎺ ────────────╯                                                
+        end_shift = true;                                           //                                                                                             
+    }                                                               //                                                                                             
+                                                                    //                                                                                             
 
     // Selecting the line characters according to the pattern
     let hz_char = characters.LINE_N_H;                                           
@@ -74,7 +49,7 @@ export function drawLine(data: any, index: number): void {
     } else if(data['fig'][index].line.dashPattern === "1 3") {
         hz_char = characters.LINE_DOT_H;
         vc_char = characters.LINE_DOT_V;
-    } else if(data['fig'][index].line.dashPattern === "dotted" && data['fig'][index].line.dashed) {
+    } else if(data['fig'][index].line.dashPattern === "dotted") {
         hz_char = characters.LINE_DASH_H;
         vc_char = characters.LINE_DASH_V;
     }
