@@ -9,8 +9,6 @@ import { drawCircleSmall } from '../draw/drawCircleSmall';
 import { drawCircleLarge } from '../draw/drawCircleLarge';
 import { drawEllipse } from '../draw/drawEllipse';
 import { drawLine } from '../draw/drawLine';
-// import { drawLine2 } from '../draw/drawLine2';
-
 
 export function produceOutput(data: Data) {
     let rows = data['limit'].y_max - data['limit'].y_min + 1;
@@ -47,6 +45,7 @@ export function produceOutput(data: Data) {
                     break;
             }
 
+            // if the figure contains text also
             if(!text_done && data['fig'][i].text.value !== '') {
                 data['fig'][i].text.align = "center";
                 data['fig'][i].text.verticalAlign = "middle";

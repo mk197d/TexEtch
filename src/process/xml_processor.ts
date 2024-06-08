@@ -8,11 +8,15 @@ import { Line } from '../interfaces/Line';
 import { Point } from '../interfaces/Point';
 // import { Connector } from '../interfaces/Connector';
 
-export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
+
+/*  ╔═════════════════════════════════════════════════════╗  
+    ║Parse the selected .xml file into the required form. ║  
+    ╚═════════════════════════════════════════════════════╝   */
+export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
     return new Promise((resolve, reject) => {
-        const bounds: Boundary = data['limit'];
-        const scale_x = 5;
-        const scale_y = 10;
+        const bounds: Boundary = data['limit'];       // stores the region of interest (ROI) in the drawing
+        const scale_x = 5;                            // dimensions are scaled down by this factor
+        const scale_y = 10;                           // x -> horizontal && y -> vertical
 
         const parser = new xml2js.Parser();
         parser.parseString(xmlData, (err, result) => {
@@ -74,8 +78,11 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                                         line_int.dashPattern = val;
                                         break;
 
-                                    case ("dashed" && val === "1"):
-                                        line_int.dashed = true;
+                                    case "dashed":
+                                        if(val === "1") {
+                                            line_int.dashed = true;
+                                            line_int.dashPattern = "dotted";
+                                        }
                                         break;
 
                                     case "shape":
@@ -106,29 +113,28 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                         /////////////////////////////////////////////////////////////////////////////////
                         
                         /////////////////////////////////////////////////////////////////////////////////
-                        let bare_value = value;
-                        bare_value = bare_value.replace(/&[a-z]+;/g, ' ');
-                        const regex = /(<[^>]*>.*?<\/[^>]*>)|([^<>]+)/g;
-                        const regex_html_tags = /<[^>]+>/g;
-                        
-                        let match;
-                        const blocks: string[] = [];
-                        while ((match = regex.exec(bare_value)) !== null) {
-                            if (match[1]) {
-                                blocks.push(match[1].replace(regex_html_tags, ''));
-                            } else if (match[2]) {
-                                blocks.push(match[2]);
-                            }
-                        }
-                        
-                        let prev_tab: Boolean = false;
-                        const divisons: any[] = [];
-                        for(let i = 0; i < blocks.length; i++) {
-                            if(blocks[i].length === 1 && blocks[i] === "\t") {
-                                prev_tab = true;
-                            } else {
-                                divisons.push(blocks[i].split(' '));
-                                if(prev_tab) {
+                        let bare_value = value.replace(/&[a-z]+;/g, ' ');             //                                                             
+                        const regex = /(<[^>]*>.*?<\/[^>]*>)|([^<>]+)/g;              //                                                             
+                        const regex_html_tags = /<[^>]+>/g;                           //   Text with HTML tags                                       
+                                                                                      //       in .xml file                                          
+                        let match;                                                    //                                                             
+                        const blocks: string[] = [];                                  //            │ bare_value: text without character             
+                        while ((match = regex.exec(bare_value)) !== null) {           //            │ entities                                       
+                            if (match[1]) {                                           //            │                                                
+                                blocks.push(match[1].replace(regex_html_tags, ''));   //            │ regex: extracts the text present between       
+                            } else if (match[2]) {                                    //            │ opening and closing tags + text present        
+                                blocks.push(match[2]);                                //            │ without any tags                               
+                            }                                                         //            │                                                
+                        }                                                             //            │ regex _html_tags: removes any leftover         
+                                                                                      //            │ tags                                           
+                        let prev_tab: Boolean = false;                                //            │                                            
+                        const divisons: any[] = [];                                   //            │                                                
+                        for(let i = 0; i < blocks.length; i++) {                      //            │                                                
+                            if(blocks[i].length === 1 && blocks[i] === "\t") {        //            ▼                                                
+                                prev_tab = true;                                      //   Extracted characters                                      
+                            } else {                                                  //                                                             
+                                divisons.push(blocks[i].split(' '));                  //                                                             
+                                if(prev_tab) {                                        //                                                             
                                     divisons[divisons.length - 1].unshift('\t');
                                     prev_tab = false;
                                 }
@@ -136,6 +142,7 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                         }
                         
                         text_int.divisons = divisons;
+
                         /////////////////////////////////////////////////////////////////////////////////
 
                         /////////////////////////////////////////////////////////////////////////////////                        
@@ -222,8 +229,8 @@ export function parseXml(xmlData: string, data: Data): Promise<Figure[]> {
                 });
                 resolve(figures);
             }
-            bounds.y_min -= 2;
-            bounds.x_min -= 2;
+            bounds.y_min -= 2;          // Extra space has been reserved as 
+            bounds.x_min -= 2;          // a precautionary measure
             bounds.y_max += 2;
             bounds.x_max += 2;
             data['limit'] = bounds;

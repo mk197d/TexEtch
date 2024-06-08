@@ -15,6 +15,32 @@ export function drawLine(data: any, index: number): void {
 
     let hz_segs: LineSegment[] = [];
     let vc_segs: LineSegment[] = [];
+//                                                                                     
+//                                                                                     
+//          <─────────────╮ ──────>connector                                           
+//                        │                                                            
+//          │             │                                                            
+//          │             │                                                            
+//          ▼             │                                                            
+//      startArrow        │                                                  ______/|  
+//                        |__                                        _______/       │  
+//                           \__                             _______/               │  
+//                              \__                  _______/                       │  
+//                                 \__         _____/point on path                  │  
+//                                    \__     │             ▲                       │  
+//                                       \__  │             │                       │  
+//                                          \_| ────────────╯      endArrow  <───── ▼  
+//          ──────────────────────────                                                 
+//                   dashed                                                            
+//          ─-------------------------                                                 
+//                    dotted                                                           
+//                                                                                     
+//          <═════════════════════════>                                                
+//                                                                                     
+//                 flexArrow                                                           
+//                                                                                     
+//                                                                                     
+//                                                                                     
                                                
     let connectors: LineConnect[] = Array.from({ length: points.length }, () => ({
         line_in: {x: 0, y: 0},
@@ -30,9 +56,6 @@ export function drawLine(data: any, index: number): void {
         points[i].y -= (limit.y_min + 1); 
     }                                                            
 
-    let hz_char = characters.LINE_N_H;                                           
-    let vc_char = characters.LINE_N_V;                                                                                                                                      
-
     let start_shift = false;
     let end_shift = false;
     if(startArrow === "classic") {
@@ -42,16 +65,18 @@ export function drawLine(data: any, index: number): void {
         end_shift = true;
     }
 
-    // Adjusting the line characters according to the pattern
-    if(data['fig'][index].line.dashPattern === "flexArrow") {                                                                                               
-        hz_char = characters.LINE_DOUBLE_H;                                                                                                                                     
+    // Selecting the line characters according to the pattern
+    let hz_char = characters.LINE_N_H;                                           
+    let vc_char = characters.LINE_N_V; 
+    if(data['fig'][index].line.dashPattern === "flexArrow") {
+        hz_char = characters.LINE_DOUBLE_H;
         vc_char = characters.LINE_DOUBLE_V;
     } else if(data['fig'][index].line.dashPattern === "1 3") {
-        hz_char = characters.LINE_DASH_H;
-        vc_char = characters.LINE_DASH_V;
-    } else if(data['fig'][index].line.dashed) {
         hz_char = characters.LINE_DOT_H;
         vc_char = characters.LINE_DOT_V;
+    } else if(data['fig'][index].line.dashPattern === "dotted" && data['fig'][index].line.dashed) {
+        hz_char = characters.LINE_DASH_H;
+        vc_char = characters.LINE_DASH_V;
     }
 
 
@@ -282,7 +307,7 @@ export function drawLine(data: any, index: number): void {
                 for(let j = 0; j < curr_stride; j++) {
                     if(i < total_pieces) {
                         if(i !== 0) {
-                            data['charMat'][curr_y][curr_x] = "_";
+                            data['charMat'][curr_y][curr_x] = characters.N_HB_WALL;
                             if(i === 1) {
                                 if(segment.direction === "U") {
                                     if(curr_y === start_point.y) {
@@ -532,7 +557,7 @@ export function drawLine(data: any, index: number): void {
                 for(let j = 0; j < curr_stride; j++) {
                     if(i < total_pieces) {
                         if(i !== 0) {
-                            data['charMat'][curr_y][curr_x] = "_";
+                            data['charMat'][curr_y][curr_x] = characters.N_HB_WALL;
                             if(i === 1) {
                                 if(segment.direction === "U") {
                                     if(curr_y === start_point.y) {
@@ -645,7 +670,7 @@ export function drawLine(data: any, index: number): void {
         let outx = connectors[i].line_out.x.toPrecision(1).toString();
         let outy = connectors[i].line_out.y.toPrecision(1).toString();
 
-        let connectString = inx + "_" + iny + "_" + outx + "_" + outy;
+        let connectString = inx + characters.N_HB_WALL + iny + characters.N_HB_WALL + outx + characters.N_HB_WALL + outy;
         connectors[i].connectChar = connectorMap.get(connectString);
 
         if(connectors[i].connectChar) {
@@ -659,7 +684,7 @@ export function drawLine(data: any, index: number): void {
         let py = points[end_index].y;
 
         const inPoint = connectors[end_index].line_in;
-        const in_string = inPoint.x.toPrecision(1).toString() + "_" + inPoint.y.toPrecision(1).toString();
+        const in_string = inPoint.x.toPrecision(1).toString() + characters.N_HB_WALL + inPoint.y.toPrecision(1).toString();
         switch(in_string.valueOf()) {
             case "0.5_0":
                 data['charMat'][py][px] = characters.DOWN_ARROW;
@@ -688,7 +713,7 @@ export function drawLine(data: any, index: number): void {
         let py = points[0].y;
 
         const outPoint = connectors[0].line_out;
-        const out_string = outPoint.x.toPrecision(1).toString() + "_" + outPoint.y.toPrecision(1).toString();
+        const out_string = outPoint.x.toPrecision(1).toString() + characters.N_HB_WALL + outPoint.y.toPrecision(1).toString();
         switch(out_string.valueOf()) {
             case "0.5_0":
                 data['charMat'][py][px] = characters.DOWN_ARROW;
@@ -716,7 +741,7 @@ export function drawLine(data: any, index: number): void {
         let py = points[0].y;
 
         const outPoint = connectors[0].line_out;
-        const out_string = outPoint.x.toPrecision(1).toString() + "_" + outPoint.y.toPrecision(1).toString();
+        const out_string = outPoint.x.toPrecision(1).toString() + characters.N_HB_WALL + outPoint.y.toPrecision(1).toString();
         switch(out_string.valueOf()) {
             case "0.5_0" || "0.5_1":
                 data['charMat'][py][px] = vc_char;
@@ -744,7 +769,7 @@ export function drawLine(data: any, index: number): void {
         let py = points[end_index].y;
 
         const inPoint = connectors[end_index].line_in;
-        const in_string = inPoint.x.toPrecision(1).toString() + "_" + inPoint.y.toPrecision(1).toString();
+        const in_string = inPoint.x.toPrecision(1).toString() + characters.N_HB_WALL + inPoint.y.toPrecision(1).toString();
         switch(in_string.valueOf()) {
             case "0.5_0" || "0.5_1":
                 data['charMat'][py][px] = vc_char;

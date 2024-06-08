@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
 import { xmlRead } from './file_io/xml_read';
-import { parseXml } from './process/xml_processor';
+import { xmlProcessor } from './process/xml_processor';
 import { produceOutput } from './process/produce_output';
 import { placeBlock } from './draw/place_block';
 
@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
 			if(inputFile) {
 				try {				
 					xmlRead(inputFile[0].fsPath)
-					.then((xmlData) => parseXml(xmlData, data))
+					.then((xmlData) => xmlProcessor(xmlData, data))
 					.then((figures) => {
 						data['fig'] = figures;
 					})

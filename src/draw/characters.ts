@@ -33,6 +33,13 @@ export default {
     LEFT_ARROW:         "<",
     RIGHT_ARROW:        ">",
     UP_ARROW:           "▲",
-    DOWN_ARROW:         "▼"
+    DOWN_ARROW:         "▼",
+
+    N_C_TL:             "╭",
+    N_C_TR:             "╮",
+    N_C_BL:             "╰",
+    N_C_BR:             "╯",
+    N_HT_WALL:          "⎺",
+    N_HB_WALL:          "_"
     
 };
