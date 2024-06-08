@@ -1,4 +1,4 @@
-[![Support via PayPal](https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg)](https://www.paypal.me/mayank8197d/)
+[![Support via PayPal]([https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg](https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png))](https://www.paypal.me/mayank8197d/)
 # TexEtch
 
 TexEtch is a Visual Studio Code extension designed to convert diagrams drawn in [draw.io](https://app.diagrams.net/) into text format. This text format can be easily integrated into your code base to provide better explanations and documentation for your code.<br>
