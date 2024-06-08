@@ -6,7 +6,7 @@ TexEtch is a Visual Studio Code extension designed to convert diagrams drawn in 
 
 **Just an example**
   <div style="display: flex; align-items: center;">
-    <img src="images/Doraemon.png" alt="Doraemon" width="60%">
+    <img src="/images/Doraemon.png" alt="Doraemon" width="60%">
   </div>
 
 ## Features
@@ -22,36 +22,36 @@ The extension can be installed from Visual Studio Code Marketplace.
 ## Usage
 1. Open the draw.io website or application and create a file containing your desired diagram.
 2. Navigate to File -> Export as -> XML and download the file.
-![Step 1](images/Step1.png)
+![Step 1](/images/Step1.png)
 3. In Visual Studio Code, open the command palette by pressing Ctrl+Shift+P (Windows/Linux) or Cmd+Shift+P (macOS).
 4. Type TexEtch and select the corresponding command.
 5. An Open Dialog box will appear, prompting you to select the required .xml file.
 6. After selecting the file, a text input box will appear to take in the comment characters used for the language in use or any string of your choice. Leave empty for no extra characters.
-![Walkthrough 1](images/walkthrough1.gif)
+![Walkthrough 1](/images/walkthrough1.gif)
 7.  - To put the generated text at top of a code snippet -> put the cursor on the line just above the block.
     *Before*
-    ![Above_b](images/above_b.png)
+    ![Above_b](/images/above_b.png)
     *After*
-    ![Above_a](images/above_a.png)
+    ![Above_a](/images/above_a.png)
     
     - To put the generated text alongside the code -> select the code block.
 
     *Before*
-    ![Along_b](images/along_b.png)
+    ![Along_b](/images/along_b.png)
     *After*
-    ![Along_a](images/along_a.png)
+    ![Along_a](/images/along_a.png)
  
 
 
 ## Supported Figures
 
 - **Lines**: Line, Dashed Line, Dotted Line, Directional and Bidirectional Connector and Arrow. With slanted lines added, you can possibly draw anything!
-![Lines](images/Lines3.png)
+![Lines](/images/Lines3.png)
 
 - **Circle and Ellipse**
 <div style="display: flex; align-items: center;">
-  <img src="images/Circle.png" alt="Circle" width="25%">
-  <img src="images/Ellipse.png" alt="Ellipse" width="50%">
+  <img src="/images/Circle.png" alt="Circle" width="25%">
+  <img src="/images/Ellipse.png" alt="Ellipse" width="50%">
 </div>
 
 - **Text**
@@ -63,7 +63,7 @@ The extension can be installed from Visual Studio Code Marketplace.
 
 **Caution**
 Please don't use arrows which originate directly from figures like shown below:<br>
-![notArrow](images/notArrow.png)
+![notArrow](/images/notArrow.png)
 
 **Support for curves and other figures coming soon in future versions**
 
@@ -71,15 +71,15 @@ Please don't use arrows which originate directly from figures like shown below:<
 
 - Drawing stacks in architecture code.<br>
   **BEFORE**<br>
-  ![ex2b](images/ex2b.png) 
+  ![ex2b](/images/ex2b.png) 
   **AFTER**<br>
-  ![ex2a](images/ex2a.png) 
+  ![ex2a](/images/ex2a.png) 
 
 - Initializing classes with many fields.<br>
   **BEFORE**<br>
-  ![ex3b](images/ex3b.png) 
+  ![ex3b](/images/ex3b.png) 
   **AFTER**<br>
-  ![ex3a](images/ex3a.png)
+  ![ex3a](/images/ex3a.png)
 
 - Algorithm on arrays<br>
-  ![ex1](images/ex1.png)
+  ![ex1](/images/ex1.png)
