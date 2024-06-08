@@ -21,24 +21,23 @@ export function drawLine(data: any, index: number): void {
         line_out: {x: 0, y: 0},
         connectChar: ''
     }));         
-                                                                    //                                                                                             
-    let startArrow = data['fig'][index].line.startArrow;            //                                                                                             
-    let endArrow = data['fig'][index].line.endArrow;                //          <─────────────╮ ──────>connector                                                   
-                                                                    //                        │                                       ╭───────────────────────     
-    for(let i = 0; i < points.length; i++) {                        //          │             │             endArrow  <─────  ▲       │      dashed                
-        points[i].x -= limit.x_min;                                 //          │             │                               │       │                            
-        points[i].y -= (limit.y_min + 1);                           //          ▼             │                               │                                    
-    }                                                               //      startArrow        │                               │       ─-------------------------   
-                                                                    //                        |                    ___________|                 dotted             
-    let start_shift = false;                                        //                         \        __________/                                                
-    let end_shift = false;                                          //                          \       |                             <═════════════════════════>  
-    if(startArrow === "classic") {                                  //                           \     /   point on path                                           
-        start_shift = true;                                         //                            \   /           ▲                          flexArrow             
-    }                                                               //                             \ /            │                                                
-    if(endArrow === "classic") {                                    //                              ⎺ ────────────╯                                                
-        end_shift = true;                                           //                                                                                             
-    }                                                               //                                                                                             
-                                                                    //                                                                                             
+                                               
+    let startArrow = data['fig'][index].line.startArrow;     //                                                                                             
+    let endArrow = data['fig'][index].line.endArrow;         //                                                                                             
+                                                             //          <─────────────╮ ──────>connector                                                   
+    for(let i = 0; i < points.length; i++) {                 //                        │                                       ╭-----------------------     
+        points[i].x -= limit.x_min;                          //          │             │             endArrow  <─────  ▲       ¦      dashed                
+        points[i].y -= (limit.y_min + 1);                    //          │             │                               │       ¦                            
+    }                                                        //          ▼             │                               │                                    
+                                                             //      startArrow        │                               │       ╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍   
+    let start_shift = false;                                 //                        |                    ___________|                 dotted             
+    let end_shift = false;                                   //                         \        __________/                                                
+    if(startArrow === "classic") {                           //                          \       |                             <═════════════════════════>  
+        start_shift = true;                                  //                           \     /   point on path                                           
+    }                                                        //                            \   /           ▲                          flexArrow             
+    if(endArrow === "classic") {                             //                             \ /            │                                                
+        end_shift = true;                                    //                              ⎺ ────────────╯                                                
+    }                                                        //                                                                                             
 
     // Selecting the line characters according to the pattern
     let hz_char = characters.LINE_N_H;                                           
@@ -49,33 +48,33 @@ export function drawLine(data: any, index: number): void {
     } else if(data['fig'][index].line.dashPattern === "1 3") {
         hz_char = characters.LINE_DOT_H;
         vc_char = characters.LINE_DOT_V;
-    } else if(data['fig'][index].line.dashPattern === "dotted") {
+    } else if(data['fig'][index].line.dashPattern === "dotted" && data['fig'][index].line.dashed) {
         hz_char = characters.LINE_DASH_H;
         vc_char = characters.LINE_DASH_V;
     }
 
-
-    for(let i = 0; i < end_index; i++) {
-        if(points[i].x === points[i + 1].x) {
-            vc_segs.push({source: points[i], target: points[i + 1], source_index: i});
-
-            if(points[i].y > points[i + 1].y) {
-                connectors[i].line_out.x = 0.5;
-                connectors[i].line_out.y = 0;
-
-                connectors[i + 1].line_in.x = 0.5;
-                connectors[i + 1].line_in.y = 1;
-
-            } else {
-                connectors[i].line_out.x = 0.5;
-                connectors[i].line_out.y = 1;
-
-                connectors[i + 1].line_in.x = 0.5;
-                connectors[i + 1].line_in.y = 0;
-
-            }
-            
-        } else if(points[i].y === points[i + 1].y) {
+    // Separating the segments 
+    for(let i = 0; i < end_index; i++) {                                                                                                              
+        if(points[i].x === points[i + 1].x) {                                                                                                             
+            vc_segs.push({source: points[i], target: points[i + 1], source_index: i});   //                 ▄▄▄▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▄▄▄                          
+                                                                                         //                █  Types of Segments   █                       
+            if(points[i].y > points[i + 1].y) {                                          //                 ▀▀▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀▀▀                          
+                connectors[i].line_out.x = 0.5;                                          //                                                         _       
+                connectors[i].line_out.y = 0;                                            //                                                        /        
+                                                                                         //                                                       /         
+                connectors[i + 1].line_in.x = 0.5;                                       //        Horizontal                                   _/          
+                connectors[i + 1].line_in.y = 1;                                         //  ╭-----------------------/\                        /            
+                                                                                         //  ¦                         \_                     /             
+            } else {                                                                     //  ¦                           \_                 _/Forward       
+                connectors[i].line_out.x = 0.5;                                          //  ¦                             \_              /  Slanting      
+                connectors[i].line_out.y = 1;                                            //  ¦                               \_           /                 
+                                                                                         //  ¦                      Backward   \_       _/                  
+                connectors[i + 1].line_in.x = 0.5;                                       //  ¦ Vertical             Slanting     \_    /                    
+                connectors[i + 1].line_in.y = 0;                                         //  ¦                                     \__/                     
+                                                                                         //  ¦                                                             
+            }                                                                                                                                             
+                                                                                                                                                          
+        } else if(points[i].y === points[i + 1].y) {                                                                                                      
             hz_segs.push({source: points[i], target: points[i + 1], source_index: i});
             
             if(points[i].x > points[i + 1].x) {
@@ -93,6 +92,7 @@ export function drawLine(data: any, index: number): void {
                 connectors[i + 1].line_in.y = 0.5;
                 
             }
+
 
         } else if(points[i].x < points[i + 1].x && points[i].y > points[i + 1].y) {
             forward_segs.push({source:points[i], target: points[i + 1], source_index: i, direction: "U"});
@@ -130,7 +130,7 @@ export function drawLine(data: any, index: number): void {
         }
     });
 
-    //
+    // Placing the forward segments and setting the connecting points
     forward_segs.forEach((segment: LineSegment) => {
         let start_point = points[segment.source_index];
         let end_point = points[segment.source_index + 1];
@@ -382,7 +382,7 @@ export function drawLine(data: any, index: number): void {
 
     });
 
-    //
+    // Placing the backward segments and setting the connecting points
     backward_segs.forEach((segment: LineSegment) => {
         let start_point = points[segment.source_index];
         let end_point = points[segment.source_index + 1];
@@ -403,7 +403,6 @@ export function drawLine(data: any, index: number): void {
         let curr_x = ex;
         let curr_y = ey;
 
-        // \\ |
         if(v_change >= h_change) {
             let num_vc_lines = v_change - h_change;
             stride = num_vc_lines / h_change;
@@ -635,7 +634,7 @@ export function drawLine(data: any, index: number): void {
 
     });
 
-    
+    // Placing the connectors
     for(let i = 1; i < points.length - 1; i++) {
         let px = points[i].x;
         let py = points[i].y;
@@ -711,6 +710,7 @@ export function drawLine(data: any, index: number): void {
         }
     }
 
+    // Placing the start character
     if(!start_shift && data['charMat'][points[0].y][points[0].x] === " ") {
         let px = points[0].x;
         let py = points[0].y;
@@ -739,6 +739,7 @@ export function drawLine(data: any, index: number): void {
         }
     }
 
+    // Placing the end character
     if(!end_shift && data['charMat'][points[end_index].y][points[end_index].x] === " ") {
         let px = points[end_index].x;
         let py = points[end_index].y;

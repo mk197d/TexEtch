@@ -1,7 +1,28 @@
 import characters from "./characters";
 const connectorMap: Map<string, string> = new Map<string, string>();
 
-
+                                           
+/*                                            
+             0.5    1                       
+      0 ────────────> x                   
+      │ ╔═════▲═════╗                     
+      │ ║     │     ║                      
+      │ ║     ╰─────────── character       
+      │ ║     │     ║    ending points     
+      │ ║     │     ║                      
+  0.5 │ ║<────╯     ║                      
+      │ ║           ║                      
+      │ ║           ║                      
+      │ ║           ║                      
+      │ ║           ║                      
+   1  ▼ ╚═══════════╝                      
+      y                                     
+                  ╔═════════════════════╗  
+                  ║    ONE KEYBOARD     ║  
+                  ║     CHARACTER       ║  
+                  ╚═════════════════════╝  
+                                            */
+                                           
 connectorMap.set("0.5_0_1_0.5", characters.N_C_BL);
 connectorMap.set("1_0.5_0.5_0", characters.N_C_BL);
 

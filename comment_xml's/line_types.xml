@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2024-06-08T14:32:59.281Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="NODbBK1uiXERo5D8QnrP" version="24.5.2" type="device">
+  <diagram name="Page-1" id="eDBHMNIQk2QCg9BU0ms2">
+    <mxGraphModel dx="600" dy="351" grid="1" gridSize="10" guides="0" tooltips="1" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Ru_THKLLBW7PBxm7fs9L-58" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="240" as="sourcePoint" />
+            <mxPoint x="360" y="120" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="80" y="160" />
+              <mxPoint x="200" y="160" />
+              <mxPoint x="280" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ru_THKLLBW7PBxm7fs9L-60" value="&lt;span style=&quot;font-size: 11px;&quot;&gt;Vertical&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="90" y="210" width="40" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="Ru_THKLLBW7PBxm7fs9L-61" value="&lt;span style=&quot;font-size: 11px;&quot;&gt;Horizontal&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="100" y="140" width="70" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="Ru_THKLLBW7PBxm7fs9L-62" value="&lt;span style=&quot;font-size: 11px;&quot;&gt;Forward Slanting&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="310" y="170" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Ru_THKLLBW7PBxm7fs9L-63" value="&lt;span style=&quot;font-size: 11px;&quot;&gt;Backward Slanting&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="180" y="200" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Ru_THKLLBW7PBxm7fs9L-66" value="Types of Segments" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="80" width="140" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
