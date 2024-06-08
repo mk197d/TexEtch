@@ -8,6 +8,7 @@
   },
   "publisher": "mayank8197d",
   "version": "0.2.12",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.87.0"
   },
