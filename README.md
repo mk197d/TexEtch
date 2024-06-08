@@ -1,8 +1,3 @@
-[
-  ![Donate with PayPal]
-  (https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png)
-]
-(https://www.paypal.com/paypalme/mayank8197d)
 
 # TexEtch
 
