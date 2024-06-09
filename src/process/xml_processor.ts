@@ -6,6 +6,7 @@ import { Figure } from '../interfaces/Figure';
 import { Text } from '../interfaces/Text';
 import { Line } from '../interfaces/Line';
 import { Point } from '../interfaces/Point';
+import characters from '../draw/characters';
 // import { Connector } from '../interfaces/Connector';
 
 
@@ -135,7 +136,7 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                             } else {                                                  //                                                             
                                 divisons.push(blocks[i].split(' '));                  //                                                             
                                 if(prev_tab) {                                        //                                                             
-                                    divisons[divisons.length - 1].unshift('\t');
+                                    divisons[divisons.length - 1].unshift(' ');
                                     prev_tab = false;
                                 }
                             }

@@ -40,6 +40,6 @@ export default {
     N_C_BL:             "╰",
     N_C_BR:             "╯",
     N_HT_WALL:          "⎺",
-    N_HB_WALL:          "_"
+    N_HB_WALL:          "_",
     
 };

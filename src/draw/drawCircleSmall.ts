@@ -19,11 +19,16 @@ export function drawCircleSmall(data: any, index: number): void {
     let num_main_blocks = Math.floor((height - 3) / 3);
     let num_1x1 = -1;
 
-    let modulo = (diameter) % 3;
-    if(modulo === 0) {
-        num_1x1 = 3;
+    if(diameter <= 3) {
+        num_1x1 = 0;
+        num_main_blocks = 0;
     } else {
-        num_1x1 = modulo;
+        let modulo = (diameter) % 3;
+        if(modulo === 0) {
+            num_1x1 = 3;
+        } else {
+            num_1x1 = modulo;
+        }
     }
     
     let i: number, j: number;
