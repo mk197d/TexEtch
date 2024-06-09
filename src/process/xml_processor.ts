@@ -13,6 +13,7 @@ import characters from '../draw/characters';
 /*  ╔═════════════════════════════════════════════════════╗  
     ║Parse the selected .xml file into the required form. ║  
     ╚═════════════════════════════════════════════════════╝   */
+    
 export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
     return new Promise((resolve, reject) => {
         const bounds: Boundary = data['limit'];       // stores the region of interest (ROI) in the drawing
