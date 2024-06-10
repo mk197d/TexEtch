@@ -44,11 +44,11 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                         line_int.dashed = false;
 
                         // const connector_int: Connector = {};
-                        // connector_int.source = cell.$.source || '';
-                        // connector_int.target = cell.$.target || '';
-                        // if(connector_int.source !== '' || connector_int.target !== '') {
-                        //     type = "connector";
-                        // }
+                        line_int.source = cell.$.source || '';
+                        line_int.target = cell.$.target || '';
+                        if(line_int.source !== '' || line_int.target !== '') {
+                            type = "line";
+                        }
 
                         const fields = styleAttr.split(';');
                         fields.forEach((field: any) => {
@@ -91,21 +91,21 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                                         line_int.dashPattern = val;
                                         break;
 
-                                    // case "exitX":
-                                    //     connector_int.exitX = val;
-                                    //     break;
+                                    case "exitX":
+                                        line_int.exitX = val;
+                                        break;
                                     
-                                    // case "exitY":
-                                    //     connector_int.exitY = val;
-                                    //     break;
+                                    case "exitY":
+                                        line_int.exitY = val;
+                                        break;
 
-                                    // case "entryX":
-                                    //     connector_int.entryX = val;
-                                    //     break;
+                                    case "entryX":
+                                        line_int.entryX = val;
+                                        break;
 
-                                    // case "entryY":
-                                    //     connector_int.entryY = val;
-                                    //     break;
+                                    case "entryY":
+                                        line_int.entryY = val;
+                                        break;
 
                                     default:
                                         break;

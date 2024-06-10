@@ -39,6 +39,38 @@ export function drawLine(data: any, index: number): void {
         end_shift = true;                                    //                              ⎺ ────────────╯                                                
     }                                                        //                                                                                             
 
+    let source = data['fig'][index].line.source;
+    if(source !== '') {
+        let exitX = data['fig'][index].line.exitX;
+        let exitY = data['fig'][index].line.exitY;
+        for(let i = 0; i < data['numFigures']; i++) {
+            if(data['fig'][i].id === source) {
+                let relX = data['fig'][i].upperLeft_x + Math.round(exitX * data['fig'][i].width) - limit.x_min;
+                let relY = data['fig'][i].upperLeft_y + Math.round(exitY * data['fig'][i].height) - limit.y_min - 1;
+
+                points[0].x = relX;
+                points[0].y = relY;
+                break;
+            }
+        }
+    }
+
+    let target = data['fig'][index].line.target;
+    if(target !== '') {
+        let entryX = data['fig'][index].line.entryX;
+        let entryY = data['fig'][index].line.entryY;
+        for(let i = 0; i < data['numFigures']; i++) {
+            if(data['fig'][i].id === target) {
+                let relX = data['fig'][i].upperLeft_x + Math.round(entryX * data['fig'][i].width) - limit.x_min;
+                let relY = data['fig'][i].upperLeft_y + Math.round(entryY * data['fig'][i].height) - limit.y_min - 1;
+
+                points[end_index].x = relX;
+                points[end_index].y = relY;
+                break;
+            }
+        }
+    }
+
     // Selecting the line characters according to the pattern
     let hz_char = characters.LINE_N_H;                                           
     let vc_char = characters.LINE_N_V; 
