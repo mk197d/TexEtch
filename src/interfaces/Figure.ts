@@ -1,6 +1,5 @@
 import { Text } from "./Text";
 import { Line } from "./Line";
-// import { Connector } from "./Connector";
 
 export interface Figure {
     type: string;
