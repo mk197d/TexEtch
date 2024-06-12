@@ -3,4 +3,5 @@ export interface Text {
     verticalAlign?: string;
     value?: string;
     divisons?: any[];
+
 }

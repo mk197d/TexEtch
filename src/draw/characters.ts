@@ -1,8 +1,13 @@
 
 export default {
 	MIDDLE_BAR:         "|",
+    // LEFT_BAR:           "▏",
+    // RIGHT_BAR:          "▕",
     LEFT_BAR:           "|",
     RIGHT_BAR:          "|",
+
+    // BIG_F_SLASH:        "╱",
+    // BIG_B_SLASH:        "╲",
 
     BIG_F_SLASH:        "/",
     BIG_B_SLASH:        "\\",
@@ -10,12 +15,19 @@ export default {
     F_SLASH:            "/",
     B_SLASH:            "\\",
 
-    RECT_V_WALL:        "║",
-    RECT_H_WALL:        "═",
-    RECT_C_TL:          "╔",
-    RECT_C_TR:          "╗",
-    RECT_C_BL:          "╚",
-    RECT_C_BR:          "╝",
+    // RECT_V_WALL:        "║",
+    // RECT_H_WALL:        "═",
+    // RECT_C_TL:          "╔",
+    // RECT_C_TR:          "╗",
+    // RECT_C_BL:          "╚",
+    // RECT_C_BR:          "╝",
+
+    RECT_V_WALL:        "│",
+    RECT_H_WALL:        "─",
+    RECT_C_TL:          "╭",
+    RECT_C_TR:          "╮",
+    RECT_C_BL:          "╰",
+    RECT_C_BR:          "╯",
 
     TOP_BLOCK:          "▀",
     BOTTOM_BLOCK:       "▄",

@@ -22,6 +22,12 @@ export function drawRectangle(data: any, index: number): void {
                                                         //  ║       ¦                                                                   ║      
                                                         //  ╚═══════════════════════════════════════════════════════════════════════════╝      
 
+    if(data['fig'][index].type === "swimlane") {
+        for(let i = col_start + 1; i < col_end; i++) {
+            data['charMat'][row_start + 2][i] = characters.LINE_DASH_H;
+        }
+    }
+
     // Placing the corners of rectangle
     data['charMat'][row_start][col_start] = characters.RECT_C_TL;
     data['charMat'][row_end][col_end] = characters.RECT_C_BR;

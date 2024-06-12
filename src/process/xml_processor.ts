@@ -29,6 +29,7 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
 
                 const figures: Figure[] = [];
                 const cells = result.mxfile.diagram[0].mxGraphModel[0].root[0].mxCell;
+                const parentMap: Map<string, Figure> = new Map<string, Figure>();
                 cells.forEach((cell: any) => {
                     if (cell.$.id && cell.$.id !== '0' && cell.$.id !== '1') {
                         /////////////////////////////////////////////////////////////////////////////////
@@ -37,29 +38,36 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                         let type: string = "";
                         const styleAttr = cell.$.style || '';
 
+                        const parent = cell.$.parent || '';
+
                         const text_int: Text = {};
                         text_int.value = value;
+                        // let spacingRight = 0;
+                        // let spacingLeft = 0;
 
                         const line_int: Line = {};
                         line_int.dashed = false;
 
-                        // const connector_int: Connector = {};
                         line_int.source = cell.$.source || '';
                         line_int.target = cell.$.target || '';
                         if(line_int.source !== '' || line_int.target !== '') {
                             type = "line";
                         }
 
+                        let startSize = 3;
                         const fields = styleAttr.split(';');
                         fields.forEach((field: any) => {
                             if(field === "ellipse") {
                                 type = "ellipse";
                             } else if(field === "text") {
                                 type = "text";
+                            } else if(field === "swimlane") {
+                                type = "swimlane";
                             }
                             const [key, val] = field.split('=');
                             if (key && val !== undefined) {
                                 switch(key){
+
                                     case "align":
                                         text_int.align = val;
                                         break;
@@ -149,10 +157,18 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
 
                         /////////////////////////////////////////////////////////////////////////////////                        
                         const geometry = cell.mxGeometry ? cell.mxGeometry[0].$ : {};
-                        const upperLeft_x = Math.round((parseFloat(geometry.x)) / scale_x);
-                        const upperLeft_y = Math.round((parseFloat(geometry.y)) / scale_y);
-                        let width = Math.round(parseFloat(geometry.width) / scale_x);
-                        let height = Math.round(parseFloat(geometry.height) / scale_y);      
+                        let upperLeft_x = Math.round((parseFloat(geometry.x)) / scale_x) || 0;
+                        let upperLeft_y = Math.round((parseFloat(geometry.y)) / scale_y) || 0;
+                        let width = Math.round((parseFloat(geometry.width)) / scale_x) || -1;
+                        let height = Math.round(parseFloat(geometry.height) / scale_y) || -1;    
+                        
+                        if(parent !== '' && parent !== '1') {
+                            let this_parent = parentMap.get(parent);
+                            if(this_parent?.upperLeft_x && this_parent.upperLeft_y) {
+                                upperLeft_x += this_parent.upperLeft_x;
+                                upperLeft_y += this_parent.upperLeft_y;
+                            }
+                        }
                         /////////////////////////////////////////////////////////////////////////////////
                         
                         /////////////////////////////////////////////////////////////////////////////////
@@ -224,9 +240,14 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                         /////////////////////////////////////////////////////////////////////////////////
 
                         /////////////////////////////////////////////////////////////////////////////////
-                        figures.push({ type, id, text: text_int, line: line_int, upperLeft_x, upperLeft_y, width, height });
+                        figures.push({ type, id, text: text_int, line: line_int, upperLeft_x, upperLeft_y, width, height, parent });
+
+                        parentMap.set(id, figures[data['numFigures']]);
+                        
                         data['numFigures'] += 1;
                         /////////////////////////////////////////////////////////////////////////////////
+
+                        
                     }
                 });
                 resolve(figures);

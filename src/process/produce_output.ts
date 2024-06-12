@@ -40,6 +40,10 @@ export function produceOutput(data: Data) {
                 case "line":
                     drawLine(data, i);
                     break;
+                case "swimlane":
+                    drawRectangle(data, i);
+                    // drawLine();
+                    break;
                 default:
                     vscode.window.showWarningMessage("Unknown Figure Detected!!");
                     break;
@@ -47,8 +51,18 @@ export function produceOutput(data: Data) {
 
             // if the figure contains text also
             if(!text_done && data['fig'][i].text.value !== '') {
-                data['fig'][i].text.align = "center";
-                data['fig'][i].text.verticalAlign = "middle";
+                if(!data['fig'][i].text.align) {
+                    data['fig'][i].text.align = "center";
+                }
+
+                if(!data['fig'][i].text.verticalAlign) {
+                    if(data['fig'][i].type === "swimlane") {
+                        data['fig'][i].text.verticalAlign = "top";
+                    } else {
+                        data['fig'][i].text.verticalAlign = "middle";
+                    }
+                }
+                
                 putText(data, i);
                 text_done = true;
             }

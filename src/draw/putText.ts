@@ -1,23 +1,22 @@
 export function putText(data: any, index: number): void {
-    const limit = data['limit'];                             //                                                                                     
-                                                             //  ╔═══════════════════════════════════════════════════════════════════════════╗      
-    let upperLeft_x = data['fig'][index].upperLeft_x;        //  ║       ¦                 │                                Drawing Space    ║      
-    let upperLeft_y = data['fig'][index].upperLeft_y;        //  ║       ¦                 │                                                 ║      
-                                                             //  ║       ¦                 │                                                 ║      
-    let height = data['fig'][index].height;                  //  ║-------¦-------------------------------------------------------------------║      
-    let width = data['fig'][index].width;                    //  ║       ¦                 │                                                 ║      
-                                                             //  ║       ¦                 │                                   │             ║      
-    let col_start = upperLeft_x - limit['x_min'];            //  ║       ¦                 │                                   │             ║      
-    let col_end = col_start + width;                         //  ║       ¦                 │ upperLeft_y                       │             ║      
-                                                             //  ║       ¦                 ▼                                   ▼             ║      
-    let row_start = upperLeft_y - limit['y_min'];            //  ║───────¦───────────────> ╔═══════════════╗            limit['y_min']       ║      
-    let row_end = row_start + height;                        //  ║       ¦   upperLeft_x   ║       Figure  ║       (minimum y of any fig.)   ║      
-                                                             //  ║       ¦                 ║               ║                                 ║      
-                                                             //  ║       ¦                 ╚═══════════════╝                                 ║      
-                                                             //  ║       ¦                                                                   ║      
-                                                             //  ║       ¦                      limit['x_min']                               ║      
-                                                             //  ║       ¦  ────────>(minimum x coordinate of any figure)                    ║      
-                                                             //  ╚═══════════════════════════════════════════════════════════════════════════╝      
+    const limit = data['limit'];                                                                                                          
+                                                           
+    let upperLeft_x = data['fig'][index].upperLeft_x;      
+    let upperLeft_y = data['fig'][index].upperLeft_y;      
+                                                       
+    let height = data['fig'][index].height;            
+    let width = data['fig'][index].width;              
+        
+    let parent = data['fig'][index].parent;
+    if(parent !== '' && data['fig'][index].type !== "swimlane") {
+        upperLeft_x += 2;   
+    }
+
+    let col_start = upperLeft_x - limit['x_min'];    
+    let col_end = col_start + width;                   
+                                                       
+    let row_start = upperLeft_y - limit['y_min'];     
+    let row_end = row_start + height;              
 
     // divisions (2D matrix of strings): partition of the text block into
     // smaller blocks which are written contiguously (without '\n')

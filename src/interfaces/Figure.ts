@@ -13,4 +13,7 @@ export interface Figure {
     upperLeft_y?: number;
     width?: number;
     height?: number;
+
+    parent?: string;
+    startSize?: number;
 }

@@ -75,17 +75,29 @@ connectorMap.set("0.5_1_0.5_0", characters.MIDDLE_BAR);
 connectorMap.set("0_0.5_1_0.5", characters.LINE_N_H);
 connectorMap.set("1_0.5_0_0.5", characters.LINE_N_H);
 
-connectorMap.set("0_1_0.5_0", "|");
-connectorMap.set("0.5_0_0_1", "|");
+// connectorMap.set("0_1_0.5_0", "ᒧ");
+// connectorMap.set("0.5_0_0_1", "ᒧ");
 
-connectorMap.set("1_1_0.5_0", "|");
-connectorMap.set("0.5_0_1_1", "|");
+// connectorMap.set("1_1_0.5_0", "ᒪ");
+// connectorMap.set("0.5_0_1_1", "ᒪ");
 
-connectorMap.set("0_0_0.5_1", "|");
-connectorMap.set("0.5_1_0_0", "|");
+// connectorMap.set("0_0_0.5_1", "ᒣ");
+// connectorMap.set("0.5_1_0_0", "ᒣ");
 
-connectorMap.set("1_0_0.5_1", "|");
-connectorMap.set("0.5_1_1_0", "|");
+// connectorMap.set("1_0_0.5_1", "ᒥ");
+// connectorMap.set("0.5_1_1_0", "ᒥ");
+
+connectorMap.set("0_1_0.5_0", "/");
+connectorMap.set("0.5_0_0_1", "/");
+
+connectorMap.set("1_1_0.5_0", "\\");
+connectorMap.set("0.5_0_1_1", "\\");
+
+connectorMap.set("0_0_0.5_1", "\\");
+connectorMap.set("0.5_1_0_0", "\\");
+
+connectorMap.set("1_0_0.5_1", "/");
+connectorMap.set("0.5_1_1_0", "/");
 
 connectorMap.set("0_1_0.5_1", characters.N_HB_WALL);
 connectorMap.set("0.5_1_0_1", characters.N_HB_WALL);
