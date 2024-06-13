@@ -243,6 +243,7 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                         figures.push({ type, id, text: text_int, line: line_int, upperLeft_x, upperLeft_y, width, height, parent });
 
                         parentMap.set(id, figures[data['numFigures']]);
+                        data['idMap'].set(id, data['numFigures']);
                         
                         data['numFigures'] += 1;
                         /////////////////////////////////////////////////////////////////////////////////

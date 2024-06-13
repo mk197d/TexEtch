@@ -5,8 +5,8 @@ const connectorMap: Map<string, string> = new Map<string, string>();
 /*                                            
              0.5    1                       
       0 ────────────> x                   
-      │ ╔═════▲═════╗                     
-      │ ║     │     ║                      
+      │ ╔═══════════╗                     
+      │ ║     ▲     ║                      
       │ ║     ╰─────────── character       
       │ ║     │     ║    ending points     
       │ ║     │     ║                      
@@ -87,17 +87,17 @@ connectorMap.set("1_0.5_0_0.5", characters.LINE_N_H);
 // connectorMap.set("1_0_0.5_1", "ᒥ");
 // connectorMap.set("0.5_1_1_0", "ᒥ");
 
-connectorMap.set("0_1_0.5_0", "/");
-connectorMap.set("0.5_0_0_1", "/");
+connectorMap.set("0_1_0.5_0", characters.F_SLASH);
+connectorMap.set("0.5_0_0_1", characters.F_SLASH);
 
-connectorMap.set("1_1_0.5_0", "\\");
-connectorMap.set("0.5_0_1_1", "\\");
+connectorMap.set("1_1_0.5_0", characters.B_SLASH);
+connectorMap.set("0.5_0_1_1", characters.B_SLASH);
 
-connectorMap.set("0_0_0.5_1", "\\");
-connectorMap.set("0.5_1_0_0", "\\");
+connectorMap.set("0_0_0.5_1", characters.B_SLASH);
+connectorMap.set("0.5_1_0_0", characters.B_SLASH);
 
-connectorMap.set("1_0_0.5_1", "/");
-connectorMap.set("0.5_1_1_0", "/");
+connectorMap.set("1_0_0.5_1", characters.F_SLASH);
+connectorMap.set("0.5_1_1_0", characters.F_SLASH);
 
 connectorMap.set("0_1_0.5_1", characters.N_HB_WALL);
 connectorMap.set("0.5_1_0_1", characters.N_HB_WALL);

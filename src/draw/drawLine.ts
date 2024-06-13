@@ -43,32 +43,26 @@ export function drawLine(data: any, index: number): void {
     if(source !== '') {
         let exitX = data['fig'][index].line.exitX;
         let exitY = data['fig'][index].line.exitY;
-        for(let i = 0; i < data['numFigures']; i++) {
-            if(data['fig'][i].id === source) {
-                let relX = data['fig'][i].upperLeft_x + Math.round(exitX * data['fig'][i].width) - limit.x_min;
-                let relY = data['fig'][i].upperLeft_y + Math.round(exitY * data['fig'][i].height) - limit.y_min - 1;
+        let source_fig = data['fig'][data['idMap'].get(source)];
+        
+        let relX = source_fig.upperLeft_x + Math.round(exitX * source_fig.width) - limit.x_min;
+        let relY = source_fig.upperLeft_y + Math.round(exitY * source_fig.height) - limit.y_min - 1;
 
-                points[0].x = relX;
-                points[0].y = relY;
-                break;
-            }
-        }
+        points[0].x = relX;
+        points[0].y = relY;           
     }
 
     let target = data['fig'][index].line.target;
     if(target !== '') {
         let entryX = data['fig'][index].line.entryX;
         let entryY = data['fig'][index].line.entryY;
-        for(let i = 0; i < data['numFigures']; i++) {
-            if(data['fig'][i].id === target) {
-                let relX = data['fig'][i].upperLeft_x + Math.round(entryX * data['fig'][i].width) - limit.x_min;
-                let relY = data['fig'][i].upperLeft_y + Math.round(entryY * data['fig'][i].height) - limit.y_min - 1;
+        let target_fig = data['fig'][data['idMap'].get(target)];
 
-                points[end_index].x = relX;
-                points[end_index].y = relY;
-                break;
-            }
-        }
+        let relX = target_fig.upperLeft_x + Math.round(entryX * target_fig.width) - limit.x_min;
+        let relY = target_fig.upperLeft_y + Math.round(entryY * target_fig.height) - limit.y_min - 1;
+
+        points[end_index].x = relX;
+        points[end_index].y = relY;
     }
 
     // Selecting the line characters according to the pattern

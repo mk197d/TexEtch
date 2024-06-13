@@ -6,4 +6,6 @@ export interface Data {
     fig: Figure[];
     numFigures: number;
     charMat: string[][];
+
+    idMap: Map<string, number>;
 }

@@ -22,7 +22,9 @@ export function activate(context: vscode.ExtensionContext) {
 			},
 			fig: [],
 			numFigures: 0,
-			charMat: []
+			charMat: [],
+
+			idMap: new Map<string, number>
 		};
 		
 		(vscode.window.showOpenDialog())
