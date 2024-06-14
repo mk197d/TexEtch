@@ -7,13 +7,14 @@ export interface Line {
     dashPattern?: string;
     curved?: number;
 
-    exitX?: string;
-    exitY?: string;
-    entryX?: string;
-    entryY?: string;
+    exitX?: number;
+    exitY?: number;
+    entryX?: number;
+    entryY?: number;
 
     source?: string;
     target?: string;
 
     path?: Point[];
+    originalPath?: Point[];
 }

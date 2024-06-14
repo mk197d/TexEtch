@@ -7,6 +7,8 @@ import { Text } from '../interfaces/Text';
 import { Line } from '../interfaces/Line';
 import { Point } from '../interfaces/Point';
 import characters from '../draw/characters';
+import { addBezierPoints } from '../draw/addBezierPoints';
+import { organizePoints } from '../draw/organizePoints';
 // import { Connector } from '../interfaces/Connector';
 
 
@@ -162,10 +164,16 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
 
                         /////////////////////////////////////////////////////////////////////////////////                        
                         const geometry = cell.mxGeometry ? cell.mxGeometry[0].$ : {};
-                        let upperLeft_x = Math.round((parseFloat(geometry.x)) / scale_x) || 0;
-                        let upperLeft_y = Math.round((parseFloat(geometry.y)) / scale_y) || 0;
-                        let width = Math.round((parseFloat(geometry.width)) / scale_x) || -1;
-                        let height = Math.round(parseFloat(geometry.height) / scale_y) || -1;    
+                        let origux = parseFloat(geometry.x) || 0;
+                        let origuy = parseFloat(geometry.y) || 0;
+                        let upperLeft_x = Math.round(origux / scale_x);
+                        let upperLeft_y = Math.round(origuy / scale_y);
+
+                        let orig_width = parseFloat(geometry.width) || -1;
+                        let orig_height = parseFloat(geometry.height) || -1;
+                        let width = Math.round(orig_width / scale_x);
+                        let height = Math.round(orig_height / scale_y);    
+                        
                         
                         if(parent !== '' && parent !== '1') {
                             let this_parent = parentMap.get(parent);
@@ -177,7 +185,8 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                         /////////////////////////////////////////////////////////////////////////////////
                         
                         /////////////////////////////////////////////////////////////////////////////////
-                        const linePath: Point[] = [];
+                        let linePath: Point[] = [];
+                        let originalPath: Point[] = [];
                         if(cell.mxGeometry[0].mxPoint) {
                             if(type !== "curved") {
                                 type = "line";
@@ -186,7 +195,11 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                                 const px = Math.round((parseFloat(point.$.x)) / scale_x);
                                 const py = Math.round((parseFloat(point.$.y)) / scale_y);
 
-                                linePath.push({x: px, y: py});
+                                if(type === "curved") {
+                                    originalPath.push({x: point.$.x, y: point.$.y});
+                                } else {
+                                    linePath.push({x: px, y: py});
+                                }
 
                                 bounds.x_max = Math.max(bounds.x_max, px);
                                 bounds.x_min = Math.min(bounds.x_min, px);
@@ -201,7 +214,11 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                                     const px = Math.round((parseFloat(point.$.x)) / scale_x);
                                     const py = Math.round((parseFloat(point.$.y)) / scale_y);
 
-                                    linePath.push({x: px, y: py});
+                                    if(type === "curved") {
+                                        originalPath.push({x: parseFloat(point.$.x), y: parseFloat(point.$.y)});
+                                    } else {
+                                        linePath.push({x: px, y: py});
+                                    }
 
                                     bounds.x_max = Math.max(bounds.x_max, px);
                                     bounds.x_min = Math.min(bounds.x_min, px);
@@ -211,14 +228,69 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                                 });
                             }
                         }
+                        /////////////////////////////////////////////////////////////////////////////////
 
-                        let temp_pair = linePath[1];
-                        for(let i = 1; i < linePath.length - 1; i++) {
-                            linePath[i] = linePath[i + 1];
+                        /////////////////////////////////////////////////////////////////////////////////                        
+                        if(type === "line") {
+                            line_int.path = organizePoints(linePath);
+
+                        } else if(type === "curved") {
+                            originalPath = organizePoints(originalPath);
+                            
+                            let source_id = line_int.source || '';
+                            if(source_id !== '') {
+                                let source_fig = parentMap.get(source_id);
+
+                                let exitX = Number(line_int.exitX) || 0;
+                                let exitY = Number(line_int.exitY) || 0;
+                                
+                                if(source_fig) {
+                                    let relX = source_fig.origux + Math.round(exitX * source_fig.origWidth);
+                                    let relY = source_fig.origuy + Math.round(exitY * source_fig.origHeight);
+
+                                    originalPath[0].x = relX;
+                                    originalPath[0].y = relY; 
+                                } 
+                                line_int.source = '';
+                            }
+
+                            let target_id = line_int.target || '';
+                            if(target_id !== '') {
+                                let target_fig = parentMap.get(target_id);
+
+                                let entryX = Number(line_int.entryX) || 0;
+                                let entryY = Number(line_int.entryY) || 0;
+                                
+                                if(target_fig) {
+                                    let relX = target_fig.origux + entryX * target_fig.origWidth;
+                                    let relY = target_fig.origuy + entryY * target_fig.origHeight;
+
+                                    originalPath[originalPath.length - 1].x = relX;
+                                    originalPath[originalPath.length - 1].y = relY; 
+                                } 
+                                line_int.target = '';
+                            }
+
+
+                            line_int.originalPath = originalPath;
+                            
+                            linePath = addBezierPoints(originalPath);
+                            for(let i = 0; i < linePath.length; i++) {
+                                const px = Math.round(linePath[i].x / scale_x);
+                                const py = Math.round(linePath[i].y / scale_y);
+
+                                linePath[i] = {x: px, y: py};
+
+                                bounds.x_max = Math.max(bounds.x_max, px);
+                                bounds.x_min = Math.min(bounds.x_min, px);
+
+                                bounds.y_max = Math.max(bounds.y_max, py);
+                                bounds.y_min = Math.min(bounds.y_min, py);
+                            }   
+
+                            line_int.path = linePath;
+                            type = "line";
                         }
-                        linePath[linePath.length - 1] = temp_pair;
-
-                        line_int.path = linePath;
                         /////////////////////////////////////////////////////////////////////////////////
 
                         /////////////////////////////////////////////////////////////////////////////////
@@ -245,7 +317,7 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                         /////////////////////////////////////////////////////////////////////////////////
 
                         /////////////////////////////////////////////////////////////////////////////////
-                        figures.push({ type, id, text: text_int, line: line_int, upperLeft_x, upperLeft_y, width, height, parent });
+                        figures.push({ type, id, text: text_int, line: line_int, origux, origuy, upperLeft_x, upperLeft_y, width, height, origWidth: orig_width, origHeight: orig_height, parent });
 
                         parentMap.set(id, figures[data['numFigures']]);
                         data['idMap'].set(id, data['numFigures']);
