@@ -5,6 +5,7 @@ export interface Line {
     endArrow?: boolean;
     dashed?: boolean;
     dashPattern?: string;
+    curved?: number;
 
     exitX?: string;
     exitY?: string;

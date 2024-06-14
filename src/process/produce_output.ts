@@ -9,6 +9,7 @@ import { drawCircleSmall } from '../draw/drawCircleSmall';
 import { drawCircleLarge } from '../draw/drawCircleLarge';
 import { drawEllipse } from '../draw/drawEllipse';
 import { drawLine } from '../draw/drawLine';
+import { drawCurve } from '../draw/drawCurve';
 
 export function produceOutput(data: Data) {
     let rows = data['limit'].y_max - data['limit'].y_min + 1;
@@ -44,6 +45,11 @@ export function produceOutput(data: Data) {
                     drawRectangle(data, i);
                     // drawLine();
                     break;
+
+                case "curved":
+                    drawCurve(data, i);
+                    break;
+                    
                 default:
                     vscode.window.showWarningMessage("Unknown Figure Detected!!");
                     break;

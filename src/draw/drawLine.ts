@@ -1,6 +1,9 @@
+import * as vscode from 'vscode';
+
 import { LineConnect } from "../interfaces/LineConnect";
 import { LineSegment } from "../interfaces/LineSegment";
 import { Point } from "../interfaces/Point";
+import { addBezierPoints } from "./addBezierPoints";
 import characters from "./characters";
 import { connectorMap } from "./connectorMap";
 
@@ -565,7 +568,7 @@ export function drawLine(data: any, index: number): void {
                                         connectors[segment.source_index].line_out.y = 1;
                                     } else {
                                         connectors[segment.source_index].line_out.x = 0;
-                                        connectors[segment.source_index].line_out.y = 0;
+                                        connectors[segment.source_index].line_out.y = 1;
                                     }
                                     
                                 } else if(segment.direction === "D") {
@@ -574,7 +577,7 @@ export function drawLine(data: any, index: number): void {
                                         connectors[segment.source_index + 1].line_in.y = 1;
                                     } else {
                                         connectors[segment.source_index + 1].line_in.x = 0;
-                                        connectors[segment.source_index + 1].line_in.y = 0;
+                                        connectors[segment.source_index + 1].line_in.y = 1;
                                     }
                                 }
     
@@ -586,7 +589,8 @@ export function drawLine(data: any, index: number): void {
                                         connectors[segment.source_index + 1].line_in.x = 1;
                                         connectors[segment.source_index + 1].line_in.y = 1;
                                     } else {
-
+                                        connectors[segment.source_index + 1].line_in.x = 0;
+                                        connectors[segment.source_index + 1].line_in.y = 1;
                                     }
                                     
                                 } else if(segment.direction === "D") {
@@ -594,7 +598,8 @@ export function drawLine(data: any, index: number): void {
                                         connectors[segment.source_index].line_out.x = 1;
                                         connectors[segment.source_index].line_out.y = 1;
                                     } else {
-
+                                        connectors[segment.source_index + 1].line_in.x = 0;
+                                        connectors[segment.source_index + 1].line_in.y = 1;
                                     }
                                 }
                             }

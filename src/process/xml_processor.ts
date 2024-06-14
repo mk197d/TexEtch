@@ -95,6 +95,11 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                                         }
                                         break;
 
+                                    case "curved":
+                                        line_int.curved = val;
+                                        type = "curved";
+                                        break;
+                                        
                                     case "shape":
                                         line_int.dashPattern = val;
                                         break;
@@ -174,9 +179,9 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                         /////////////////////////////////////////////////////////////////////////////////
                         const linePath: Point[] = [];
                         if(cell.mxGeometry[0].mxPoint) {
-                            // if(type !== '') {
+                            if(type !== "curved") {
                                 type = "line";
-                            // }
+                            }
                             cell.mxGeometry[0].mxPoint.forEach((point: any) => {
                                 const px = Math.round((parseFloat(point.$.x)) / scale_x);
                                 const py = Math.round((parseFloat(point.$.y)) / scale_y);
