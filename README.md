@@ -62,7 +62,10 @@ The extension can be installed from Visual Studio Code Marketplace.
 - **Rectangle** 
 
 - **Curved Lines** <br>
-  ![Curve](/images/curve.png)
+  <div style="display: flex; align-items: center;">
+    <img src="/images/curve.png" alt="curve_d" width="50%">
+    <img src="/images/curve_web.png" alt="curve_w" width="50%">
+  </div>
 
 **CAUTION**
 Please don't use arrows which originate directly from figures like shown below:<br>
