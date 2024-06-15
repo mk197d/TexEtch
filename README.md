@@ -64,7 +64,7 @@ The extension can be installed from Visual Studio Code Marketplace.
 - **Curved Lines** <br>
   <div style="display: flex; align-items: center;">
     <img src="/images/curve.png" alt="curve_d" width="40%">
-    <img src="/images/curve_web.png" alt="curve_w" width="40%">
+    <img src="/images/curve_web.png" alt="curve_w" width="50%">
   </div>
 
 **CAUTION**
