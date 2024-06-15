@@ -61,11 +61,14 @@ The extension can be installed from Visual Studio Code Marketplace.
 
 - **Rectangle** 
 
-**Caution**
+- **Curved Lines**
+  ![Curve](/images/curve.png)
+
+**CAUTION**
 Please don't use arrows which originate directly from figures like shown below:<br>
 ![notArrow](/images/notArrow.png)
 
-**Support for curves and other figures coming soon in future versions**
+**Support more figures coming soon in future versions**
 
 ## Examples
 

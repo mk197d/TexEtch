@@ -47,6 +47,15 @@ export default {
     RIGHT_ARROW:        ">",
     UP_ARROW:           "▲",
     DOWN_ARROW:         "▼",
+    // NE_ARROW:           "↗",
+    // SW_ARROW:           "↙",
+    // SE_ARROW:           "↘",
+    // NW_ARROW:           "↖",
+
+    NE_ARROW:           "⬈",
+    SW_ARROW:           "⬋",
+    SE_ARROW:           "⬊",
+    NW_ARROW:           "⬉",
 
     N_C_TL:             "╭",
     N_C_TR:             "╮",
