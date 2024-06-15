@@ -61,7 +61,7 @@ The extension can be installed from Visual Studio Code Marketplace.
 
 - **Rectangle** 
 
-- **Curved Lines**
+- **Curved Lines** <br>
   ![Curve](/images/curve.png)
 
 **CAUTION**
