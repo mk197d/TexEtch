@@ -22,7 +22,7 @@ export default {
     // RECT_C_BL:          "╚",
     // RECT_C_BR:          "╝",
 
-    RECT_V_WALL:        "│",
+    RECT_V_WALL:        "|",
     RECT_H_WALL:        "─",
     RECT_C_TL:          "╭",
     RECT_C_TR:          "╮",
@@ -33,7 +33,8 @@ export default {
     BOTTOM_BLOCK:       "▄",
     FULL_BLOCK:         "█",
 
-    LINE_N_V:           "│",
+    // LINE_N_V:           "│",
+    LINE_N_V:           "|",
     LINE_N_H:           "─",
     LINE_DASH_V:        "¦",
     LINE_DASH_H:        "-",

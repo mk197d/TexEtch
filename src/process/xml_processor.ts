@@ -6,16 +6,13 @@ import { Figure } from '../interfaces/Figure';
 import { Text } from '../interfaces/Text';
 import { Line } from '../interfaces/Line';
 import { Point } from '../interfaces/Point';
-import characters from '../draw/characters';
+
 import { addBezierPoints } from '../draw/addBezierPoints';
 import { organizePoints } from '../draw/organizePoints';
-// import { Connector } from '../interfaces/Connector';
-
-
-/*  ╔═════════════════════════════════════════════════════╗  
-    ║Parse the selected .xml file into the required form. ║  
-    ╚═════════════════════════════════════════════════════╝   */
-    
+                                                           
+/*╭─────────────────────────────────────────────────────╮  
+  │ Parse the selected .xml file into the required form │  
+  ╰─────────────────────────────────────────────────────╯  */
 export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
     return new Promise((resolve, reject) => {
         const bounds: Boundary = data['limit'];       // stores the region of interest (ROI) in the drawing

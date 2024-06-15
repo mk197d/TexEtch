@@ -392,8 +392,8 @@ export function drawLine(data: any, index: number): void {
                                 
                             } else if(segment.direction === "D") {
                                 if(curr_y === start_point.y) {
-                                    connectors[segment.source_index + 1].line_in.x = 0;
-                                    connectors[segment.source_index + 1].line_in.y = 0;
+                                    connectors[segment.source_index].line_out.x = 0;
+                                    connectors[segment.source_index].line_out.y = 0;
                                 } else {
                                     connectors[segment.source_index].line_out.x = 0;
                                     connectors[segment.source_index].line_out.y = 1;
@@ -568,7 +568,7 @@ export function drawLine(data: any, index: number): void {
                                         connectors[segment.source_index].line_out.y = 1;
                                     } else {
                                         connectors[segment.source_index].line_out.x = 0;
-                                        connectors[segment.source_index].line_out.y = 1;
+                                        connectors[segment.source_index].line_out.y = 0;
                                     }
                                     
                                 } else if(segment.direction === "D") {
@@ -577,7 +577,7 @@ export function drawLine(data: any, index: number): void {
                                         connectors[segment.source_index + 1].line_in.y = 1;
                                     } else {
                                         connectors[segment.source_index + 1].line_in.x = 0;
-                                        connectors[segment.source_index + 1].line_in.y = 1;
+                                        connectors[segment.source_index + 1].line_in.y = 0;
                                     }
                                 }
     
@@ -679,9 +679,19 @@ export function drawLine(data: any, index: number): void {
         connectors[i].connectChar = connectorMap.get(connectString);
 
         if(connectors[i].connectChar) {
-            data['charMat'][py][px] = connectors[i].connectChar;
+            if((connectors[i].connectChar === characters.F_SLASH || connectors[i].connectChar === characters.MIDDLE_BAR)  && data['charMat'][py][px + 1] === characters.B_SLASH) {
+                data['charMat'][py][px] = characters.N_HB_WALL;
+                data['charMat'][py][px + 1] = characters.N_HB_WALL;
+            } else if((connectors[i].connectChar === characters.B_SLASH || connectors[i].connectChar === characters.MIDDLE_BAR) && data['charMat'][py][px - 1] === characters.F_SLASH) {
+                data['charMat'][py][px - 1] = characters.N_HB_WALL;
+                data['charMat'][py][px] = characters.N_HB_WALL;
+            } else {
+                data['charMat'][py][px] = connectors[i].connectChar;
+            }
         }
     }
+
+
 
     // Placing the endArrow
     if(endArrow === "classic") {

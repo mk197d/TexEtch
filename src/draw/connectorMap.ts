@@ -104,16 +104,16 @@ connectorMap.set("0.5_1_0_1", characters.N_HB_WALL);
 connectorMap.set("1_1_0.5_1", characters.N_HB_WALL);
 connectorMap.set("1_1_0.5_1", characters.N_HB_WALL);
 
-connectorMap.set("0_0.5_1_0", characters.F_SLASH);
-connectorMap.set("1_0_0_0.5", characters.F_SLASH);
-connectorMap.set("1_0.5_0_1", characters.F_SLASH);
-connectorMap.set("0_1_1_0.5", characters.F_SLASH); 
+connectorMap.set("0_0.5_1_0", characters.RECT_C_BR);
+connectorMap.set("1_0_0_0.5", characters.RECT_C_BR);
+connectorMap.set("1_0.5_0_1", characters.RECT_C_TL);
+connectorMap.set("0_1_1_0.5", characters.RECT_C_TL); 
 
-connectorMap.set("0_0_1_0.5", characters.B_SLASH);
-connectorMap.set("1_0.5_0_0", characters.B_SLASH);
+connectorMap.set("0_0_1_0.5", characters.RECT_C_BL);
+connectorMap.set("1_0.5_0_0", characters.RECT_C_BL);
 connectorMap.set("1_0.5_1_1", characters.B_SLASH);
 connectorMap.set("1_1_1_0.5", characters.B_SLASH);
-connectorMap.set("0_0.5_1_1", characters.B_SLASH);
-connectorMap.set("1_1_0_0.5", characters.B_SLASH);
+connectorMap.set("0_0.5_1_1", characters.RECT_C_TR);
+connectorMap.set("1_1_0_0.5", characters.RECT_C_TR);
 
 export { connectorMap };
