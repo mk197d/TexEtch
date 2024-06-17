@@ -68,7 +68,9 @@ The extension can be installed from Visual Studio Code Marketplace.
   </div> 
 
 - **List and Container**<br>
-  ![List & Container](/images/List&Container.png)
+  <div style="display: flex; align-items: center;">
+    <img src="/images/List&Container.png" alt="curve_d" width="40%">
+  </div> 
 
 
 **CAUTION**
