@@ -82,6 +82,7 @@ export function drawLine(data: any, index: number): void {
         vc_char = characters.LINE_DASH_V;
     }
 
+    
     // Separating the segments 
     for(let i = 0; i < end_index; i++) {                                                                                                              
         if(points[i].x === points[i + 1].x) {                                                                                                             
@@ -180,7 +181,6 @@ export function drawLine(data: any, index: number): void {
         let curr_y = sy;
         let curr_x = sx;
 
-        // | /
         if(v_change >= h_change) {
             let num_vc_lines = v_change - h_change;
             stride = num_vc_lines / h_change;
@@ -732,7 +732,7 @@ export function drawLine(data: any, index: number): void {
             case "1_1":
                 data['charMat'][py][px] = characters.NW_ARROW;
                 break;
-                
+
             default:
                 break;
         }
