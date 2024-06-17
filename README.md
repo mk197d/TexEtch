@@ -61,11 +61,15 @@ The extension can be installed from Visual Studio Code Marketplace.
 
 - **Rectangle** 
 
-- **Curved Lines** <br>
+- **Curve** <br>
   <div style="display: flex; align-items: center;">
     <img src="/images/curve.png" alt="curve_d" width="40%">
     <img src="/images/curve_web.png" alt="curve_w" width="50%">
-  </div>
+  </div> 
+
+- **List and Container**<br>
+  ![List & Container](/images/List&Container.png)
+
 
 **CAUTION**
 Please don't use arrows which originate directly from figures like shown below:<br>
