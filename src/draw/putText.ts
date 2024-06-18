@@ -12,8 +12,8 @@ export function putText(data: any, index: number): void {
     let width = data['fig'][index].width;              
     
     let startSize = data['fig'][index].startSize;
-    if(startSize !== 0) {
-        height = startSize;
+    if(startSize !== -1) {
+        height = startSize - 1;
     }
 
     let parent = data['fig'][index].parent;

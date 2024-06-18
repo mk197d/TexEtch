@@ -719,19 +719,19 @@ export function drawLine(data: any, index: number): void {
                 break;
 
             case "0_1":
-                data['charMat'][py][px] = characters.NE_ARROW;
+                data['charMat'][py][px] = characters.F_SLASH;
                 break;
 
             case "1_0":
-                data['charMat'][py][px] = characters.SW_ARROW;
+                data['charMat'][py][px] = characters.F_SLASH;
                 break;
 
             case "0_0":
-                data['charMat'][py][px] = characters.SE_ARROW;
+                data['charMat'][py][px] = characters.B_SLASH;
                 break;
 
             case "1_1":
-                data['charMat'][py][px] = characters.NW_ARROW;
+                data['charMat'][py][px] = characters.B_SLASH;
                 break;
 
             default:
@@ -764,19 +764,19 @@ export function drawLine(data: any, index: number): void {
                 break;
 
             case "0_1":
-                data['charMat'][py][px] = characters.NE_ARROW;
+                data['charMat'][py][px] = characters.F_SLASH;
                 break;
 
             case "1_0":
-                data['charMat'][py][px] = characters.SW_ARROW;
+                data['charMat'][py][px] = characters.F_SLASH;
                 break;
 
             case "0_0":
-                data['charMat'][py][px] = characters.SE_ARROW;
+                data['charMat'][py][px] = characters.B_SLASH;
                 break;
 
             case "1_1":
-                data['charMat'][py][px] = characters.NW_ARROW;
+                data['charMat'][py][px] = characters.B_SLASH;
                 break;
 
             default:

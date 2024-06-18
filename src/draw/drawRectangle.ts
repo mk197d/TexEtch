@@ -25,7 +25,7 @@ export function drawRectangle(data: any, index: number): void {
 
     if(data['fig'][index].type === "swimlane" && startSize !== 0) {
         for(let i = col_start + 1; i < col_end; i++) {
-            data['charMat'][row_start + startSize - 1][i] = characters.LINE_DASH_H;
+            data['charMat'][row_start + startSize][i] = characters.LINE_DASH_H;
         }
     }
 

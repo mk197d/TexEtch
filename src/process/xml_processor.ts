@@ -53,7 +53,7 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                             type = "line";
                         }
 
-                        let startSize = 0;
+                        let startSize = -1;
                         let shape = "";
                         const fields = styleAttr.split(';');
                         fields.forEach((field: any) => {
@@ -325,6 +325,10 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                             bounds.y_min = Math.min(bounds.y_min, upperLeft_y);
                         }
                         /////////////////////////////////////////////////////////////////////////////////
+
+                        if(type === "swimlane" && startSize === -1) {
+                            startSize = 3;
+                        }
 
                         /////////////////////////////////////////////////////////////////////////////////
                         figures.push({ 

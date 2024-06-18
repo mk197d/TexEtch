@@ -19,11 +19,20 @@ export function addBezierPoints(points: Point[]): Point[] {
             end_point = {x: ex, y: ey};
         }
 
+        let curr_x = 0, curr_y = 0;
         for (let t = 0; t < 1; t += 0.20) {
             const ix = Math.pow(1 - t, 2) * start_point.x + 2 * (1 - t) * t * control_point.x + Math.pow(t, 2) * end_point.x;
             const iy = Math.pow(1 - t, 2) * start_point.y + 2 * (1 - t) * t * control_point.y + Math.pow(t, 2) * end_point.y;
-            // new_points.push({ x: Math.round(ix), y: Math.round(iy) });
-            new_points.push({ x: ix, y: iy });
+
+            let this_x = Math.round(ix / 5);
+            let this_y = Math.round(iy / 10);
+
+            if(curr_x !== this_x || curr_y !== this_y) {
+                new_points.push({ x: ix, y: iy });
+                curr_x = this_x;
+                curr_y = this_y;
+            }
+            
         }
         // new_points.push(end_point);
         start_point = end_point;
