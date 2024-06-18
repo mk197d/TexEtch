@@ -92,6 +92,3 @@ Please don't use arrows which originate directly from figures like shown below:<
   ![ex3b](/images/ex3b.png) 
   **AFTER**<br>
   ![ex3a](/images/ex3a.png)
-
-- Algorithm on arrays<br>
-  ![ex1](/images/ex1.png)

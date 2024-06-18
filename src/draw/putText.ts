@@ -1,4 +1,8 @@
 export function putText(data: any, index: number): void {
+    if(!data['fig'][index].text.horizontal) {
+        return;
+    }
+
     const limit = data['limit'];                                                                                                          
                                                            
     let upperLeft_x = data['fig'][index].upperLeft_x;      
@@ -6,10 +10,15 @@ export function putText(data: any, index: number): void {
                                                        
     let height = data['fig'][index].height;            
     let width = data['fig'][index].width;              
-        
+    
+    let startSize = data['fig'][index].startSize;
+    if(startSize !== 0) {
+        height = startSize;
+    }
+
     let parent = data['fig'][index].parent;
     if(parent !== '' && data['fig'][index].type !== "swimlane") {
-        upperLeft_x += 2;   
+        upperLeft_x += 1;   
     }
 
     let col_start = upperLeft_x - limit['x_min'];    

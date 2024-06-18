@@ -39,7 +39,7 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
 
                         const parent = cell.$.parent || '';
 
-                        const text_int: Text = {};
+                        const text_int: Text = {horizontal: true};
                         text_int.value = value;
                         // let spacingRight = 0;
                         // let spacingLeft = 0;
@@ -53,7 +53,8 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                             type = "line";
                         }
 
-                        let startSize = 3;
+                        let startSize = 0;
+                        let shape = "";
                         const fields = styleAttr.split(';');
                         fields.forEach((field: any) => {
                             if(field === "ellipse") {
@@ -66,7 +67,19 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                             const [key, val] = field.split('=');
                             if (key && val !== undefined) {
                                 switch(key){
+                                    case "shape":
+                                        shape = val;
+                                        break;
 
+                                    case "startSize":
+                                        startSize = Math.round(val / scale_y);
+                                        break;
+
+                                    case "horizontal":
+                                        if(val === "0") {
+                                            text_int.horizontal = false;
+                                        }
+                                        break;
                                     case "align":
                                         text_int.align = val;
                                         break;
@@ -314,7 +327,12 @@ export function xmlProcessor(xmlData: string, data: Data): Promise<Figure[]> {
                         /////////////////////////////////////////////////////////////////////////////////
 
                         /////////////////////////////////////////////////////////////////////////////////
-                        figures.push({ type, id, text: text_int, line: line_int, origux, origuy, upperLeft_x, upperLeft_y, width, height, origWidth: orig_width, origHeight: orig_height, parent });
+                        figures.push({ 
+                            type, id, text: text_int, line: line_int, 
+                            origux, origuy, upperLeft_x, upperLeft_y, 
+                            width, height, origWidth: orig_width, origHeight: orig_height, 
+                            parent, startSize, shape
+                        });
 
                         parentMap.set(id, figures[data['numFigures']]);
                         data['idMap'].set(id, data['numFigures']);

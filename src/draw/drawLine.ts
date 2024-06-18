@@ -1,9 +1,8 @@
-import * as vscode from 'vscode';
 
 import { LineConnect } from "../interfaces/LineConnect";
 import { LineSegment } from "../interfaces/LineSegment";
 import { Point } from "../interfaces/Point";
-import { addBezierPoints } from "./addBezierPoints";
+
 import characters from "./characters";
 import { connectorMap } from "./connectorMap";
 
@@ -195,7 +194,7 @@ export function drawLine(data: any, index: number): void {
 
                 for(let j = 0; j < curr_stride; j++) {
                     if(i < total_pieces) {
-                        if(i !== 0) {
+                        if(i !== 0 || (total_pieces === 1 && i === 0)) {
                             data['charMat'][curr_y][curr_x] = characters.LEFT_BAR;
                             if(i === 1) {
                                 if(segment.direction === "U") {
@@ -225,7 +224,8 @@ export function drawLine(data: any, index: number): void {
                                         connectors[segment.source_index + 1].line_in.x = 0;
                                         connectors[segment.source_index + 1].line_in.y = 1;
                                     } else {
-
+                                        connectors[segment.source_index + 1].line_in.x = 0;
+                                        connectors[segment.source_index + 1].line_in.y = 1;
                                     }
                                     
                                 } else if(segment.direction === "D") {
@@ -233,7 +233,8 @@ export function drawLine(data: any, index: number): void {
                                         connectors[segment.source_index].line_out.x = 0;
                                         connectors[segment.source_index].line_out.y = 1;
                                     } else {
-
+                                        connectors[segment.source_index].line_out.x = 0;
+                                        connectors[segment.source_index].line_out.y = 1;
                                     }
                                 }
                             }
@@ -244,7 +245,7 @@ export function drawLine(data: any, index: number): void {
                 }
 
                 if(i < total_pieces) {
-                    if(i !== 0) {
+                    if(i !== 0 || (total_pieces === 1 && i === 0)) {
                         data['charMat'][curr_y][curr_x] = characters.BIG_F_SLASH;
                         if(i === 1) {
                             if(segment.direction === "U") {
@@ -310,7 +311,7 @@ export function drawLine(data: any, index: number): void {
 
                 for(let j = 0; j < curr_stride; j++) {
                     if(i < total_pieces) {
-                        if(i !== 0) {
+                        if(i !== 0 || (total_pieces === 1 && i === 0)) {
                             data['charMat'][curr_y][curr_x] = characters.N_HB_WALL;
                             if(i === 1) {
                                 if(segment.direction === "U") {
@@ -356,7 +357,7 @@ export function drawLine(data: any, index: number): void {
                     }
                 }
                 if(i < total_pieces) {
-                    if(i !== 0) {
+                    if(i !== 0 || (total_pieces === 1 && i === 0)) {
                         data['charMat'][curr_y][curr_x] = characters.BIG_F_SLASH;
                         if(i === 1 && i) {
                             if(segment.direction === "U") {
@@ -446,7 +447,7 @@ export function drawLine(data: any, index: number): void {
 
                 for(let j = 0; j < curr_stride; j++) {
                     if(i < total_pieces) {
-                        if(i !== 0) {
+                        if(i !== 0 || (total_pieces === 1 && i === 0)) {
                             data['charMat'][curr_y][curr_x] = characters.RIGHT_BAR;
                             if(i === 1) {
                                 if(segment.direction === "U") {
@@ -494,7 +495,7 @@ export function drawLine(data: any, index: number): void {
                     }
                 }
                 if(i < total_pieces) {
-                    if(i !== 0) {
+                    if(i !== 0 || (total_pieces === 1 && i === 0)) {
                         data['charMat'][curr_y][curr_x] = characters.BIG_B_SLASH;
                         if(i === 1) {
                             if(segment.direction === "U") {
@@ -559,7 +560,7 @@ export function drawLine(data: any, index: number): void {
 
                 for(let j = 0; j < curr_stride; j++) {
                     if(i < total_pieces) {
-                        if(i !== 0) {
+                        if(i !== 0 || (total_pieces === 1 && i === 0)) {
                             data['charMat'][curr_y][curr_x] = characters.N_HB_WALL;
                             if(i === 1) {
                                 if(segment.direction === "U") {
@@ -610,7 +611,7 @@ export function drawLine(data: any, index: number): void {
                 }
 
                 if(i < total_pieces) {
-                    if(i !== 0) {
+                    if(i !== 0 || (total_pieces === 1 && i === 0)) {
                         data['charMat'][curr_y][curr_x] = characters.BIG_B_SLASH;
                         if(i === 1) {
                             if(segment.direction === "U") {

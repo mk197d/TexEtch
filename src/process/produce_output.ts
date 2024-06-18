@@ -58,11 +58,7 @@ export function produceOutput(data: Data) {
                 }
 
                 if(!data['fig'][i].text.verticalAlign) {
-                    if(data['fig'][i].type === "swimlane") {
-                        data['fig'][i].text.verticalAlign = "top";
-                    } else {
-                        data['fig'][i].text.verticalAlign = "middle";
-                    }
+                    data['fig'][i].text.verticalAlign = "middle";
                 }
                 
                 putText(data, i);

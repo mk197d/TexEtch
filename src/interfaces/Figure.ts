@@ -21,4 +21,5 @@ export interface Figure {
 
     parent?: string;
     startSize?: number;
+    shape?: string;
 }

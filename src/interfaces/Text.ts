@@ -4,4 +4,5 @@ export interface Text {
     value?: string;
     divisons?: any[];
 
+    horizontal: boolean;
 }
