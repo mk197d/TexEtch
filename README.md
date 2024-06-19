@@ -72,6 +72,8 @@ The extension can be installed from Visual Studio Code Marketplace.
     <img src="/images/List_Container.png" alt="curve_d" width="60%">
   </div> 
 
+- **Tables** <br>
+  ![Tables](/images/Tables.png)
 
 **CAUTION**
 Please don't use arrows which originate directly from figures like shown below:<br>
