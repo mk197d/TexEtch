@@ -73,7 +73,7 @@ The extension can be installed from Visual Studio Code Marketplace.
   </div> 
 
 - **Tables** <br>
-  ![Tables](/images/Tables.png)
+  ![Tables](/images/tables.png)
 
 **CAUTION**
 Please don't use arrows which originate directly from figures like shown below:<br>
