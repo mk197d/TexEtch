@@ -10,7 +10,7 @@ export function drawEllipseLine(data: any, index: number): void {
     let upperLeft_y = data['fig'][index].upperLeft_y;   //  ║       ¦                 │                                                 ║      
                                                         //  ║       ¦                 │                                                 ║      
     let vertical_axis = data['fig'][index].height;      //  ║-------¦-------------------------------------------------------------------║      
-    let height = vertical_axis - 2;                     //  ║       ¦                 │                                                 ║      
+    let height = vertical_axis - 1;                     //  ║       ¦                 │                                                 ║      
     let width = data['fig'][index].width;               //  ║       ¦                 │                                   │             ║      
                                                         //  ║       ¦                 │                                   │             ║      
     let col_start = upperLeft_x - limit['x_min'];       //  ║       ¦                 │ upperLeft_y                       │             ║      
