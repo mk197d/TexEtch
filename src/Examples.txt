@@ -304,3 +304,25 @@
                                                                                                                      
                                                                                                                      
                                                                                                                      
+                                                     
+                                                     
+                                                     
+                ╭─────  m : top block                
+                |      m1: first layer               
+                ▼      m2: second layer              
+           __╭───────╮__     /div                    
+     _╭──╮/             \╭──╮_                       
+    /                         \                      
+    |                         |   ▲                  
+   /                           \  |                  
+  \           ELLIPSE           \ |  main_blocks     
+   \                           |  |                  
+    \                         |   ▼                  
+     \                       /▲                      
+      ╰───╮_           __╭──╯ |                      
+            \╭───────╮/       |                      
+                              ╰───  1x1 blocks       
+                                                     
+                                                     
+                                                     
+                                                     

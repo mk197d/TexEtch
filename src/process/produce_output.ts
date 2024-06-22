@@ -28,18 +28,17 @@ export function produceOutput(data: Data) {
                     text_done = true;
                     break;
                 case "small_circle":
-                    // drawEllipseLine(data, i);
                     drawCircleSmall(data, i);
                     break;
                 case "large_circle":
-                    // drawEllipseLine(data, i);
                     drawCircleLarge(data, i);
                     break;
                 case "rectangle":
                     drawRectangle(data, i);
                     break;
                 case "ellipse":
-                    drawEllipseLine(data, i);
+                    drawEllipse(data, i);
+                    // drawEllipseLine(data, i);
                     break;
                 case "line":
                     drawLine(data, i);
